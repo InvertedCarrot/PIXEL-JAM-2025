@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dxg4ddslja36"]
 
-[ext_resource type="Texture2D" uid="uid://dpgxyggti58ow" path="res://assets/placeholder_background.jpg" id="1_d15l8"]
+[ext_resource type="Texture2D" uid="uid://cc3tcfdssn0ru" path="res://assets/placeholder_background.jpg" id="1_d15l8"]
 [ext_resource type="PackedScene" uid="uid://cy4th7add1tw0" path="res://scenes/player/player.tscn" id="1_hjbd2"]
 
 [node name="LevelDebug" type="Node2D"]
