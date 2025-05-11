@@ -1,9 +1,8 @@
 extends CharacterBody2D
 
-class_name Player
 
 @onready var player_animation = $PlayerAnimation
-var speed = 300
+var speed = 500
 var direction: Vector2
 
 

@@ -1,0 +1,126 @@
+[gd_scene load_steps=16 format=3 uid="uid://b1a0bq8lddn7w"]
+
+[ext_resource type="PackedScene" uid="uid://cy4th7add1tw0" path="res://scenes/player/player.tscn" id="1_vjnn7"]
+[ext_resource type="Script" path="res://scenes/player/fireball_animation.gd" id="2_eubwv"]
+[ext_resource type="Script" path="res://scenes/player/fireball.gd" id="2_ih8my"]
+[ext_resource type="Texture2D" uid="uid://dn5pmppt4e13u" path="res://assets/fireball_spritesheet.png" id="3_77cdq"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wm4ss"]
+animation = &"run_up"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wlfug"]
+animation = &"run_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_n7syj"]
+animation = &"run_right"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_kmkrb"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_wm4ss")
+blend_point_0/pos = Vector2(0, 1)
+blend_point_1/node = SubResource("AnimationNodeAnimation_wlfug")
+blend_point_1/pos = Vector2(-1, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_n7syj")
+blend_point_2/pos = Vector2(1, 0)
+blend_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_esq75"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_s72jj"]
+states/Run/node = SubResource("AnimationNodeBlendSpace2D_kmkrb")
+states/Run/position = Vector2(433.622, 56)
+transitions = ["Start", "Run", SubResource("AnimationNodeStateMachineTransition_esq75")]
+graph_offset = Vector2(-297.878, 0)
+
+[sub_resource type="Animation" id="Animation_a6oms"]
+resource_name = "RESET"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_nrdtp"]
+resource_name = "run_left"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_7qjrr"]
+resource_name = "run_right"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_afvcq"]
+resource_name = "run_up"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 11, 10]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dx2j8"]
+_data = {
+"RESET": SubResource("Animation_a6oms"),
+"run_left": SubResource("Animation_nrdtp"),
+"run_right": SubResource("Animation_7qjrr"),
+"run_up": SubResource("Animation_afvcq")
+}
+
+[node name="Fireball" instance=ExtResource("1_vjnn7")]
+script = ExtResource("2_ih8my")
+
+[node name="PlayerImage" parent="." index="0"]
+texture = ExtResource("3_77cdq")
+hframes = 12
+
+[node name="AnimationTree" parent="." index="2"]
+tree_root = SubResource("AnimationNodeStateMachine_s72jj")
+parameters/Run/blend_position = Vector2(0.130705, -0.579268)
+
+[node name="AnimationPlayer" parent="." index="3"]
+libraries = {
+"": SubResource("AnimationLibrary_dx2j8")
+}
+
+[node name="PlayerAnimation" parent="." index="4"]
+script = ExtResource("2_eubwv")

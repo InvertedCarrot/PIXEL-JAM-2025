@@ -1,54 +1,12 @@
-[gd_scene load_steps=25 format=3 uid="uid://cy4th7add1tw0"]
+[gd_scene load_steps=16 format=3 uid="uid://cy4th7add1tw0"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_ipa0w"]
 [ext_resource type="Texture2D" uid="uid://bv46pasqeytlu" path="res://assets/npc_spritesheet.png" id="2_p5fdr"]
-[ext_resource type="AnimationNodeBlendSpace2D" uid="uid://c2a2ycf3v48rd" path="res://scenes/player/player_run_blend.tres" id="3_iraag"]
+[ext_resource type="AnimationNodeStateMachine" uid="uid://c5o3s1m2txgym" path="res://scenes/player/player_animation_sm.tres" id="3_5b2ij"]
 [ext_resource type="Script" path="res://scenes/player/player_animation_tree.gd" id="3_tf2at"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x1034"]
 size = Vector2(34, 31)
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_c3ctu"]
-animation = &"idle_down"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_aivhi"]
-animation = &"idle_up"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_s0hqv"]
-animation = &"idle_left"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7y13e"]
-animation = &"idle_right"
-
-[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_0k133"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_c3ctu")
-blend_point_0/pos = Vector2(0, 1)
-blend_point_1/node = SubResource("AnimationNodeAnimation_aivhi")
-blend_point_1/pos = Vector2(0, -1)
-blend_point_2/node = SubResource("AnimationNodeAnimation_s0hqv")
-blend_point_2/pos = Vector2(-1, 0)
-blend_point_3/node = SubResource("AnimationNodeAnimation_7y13e")
-blend_point_3/pos = Vector2(1, 0)
-blend_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xtthi"]
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0bj6g"]
-advance_mode = 2
-advance_expression = "!direction"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wqw6w"]
-advance_mode = 2
-advance_expression = "direction"
-
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_b6cjv"]
-states/Idle/node = SubResource("AnimationNodeBlendSpace2D_0k133")
-states/Idle/position = Vector2(436.5, 158.5)
-states/Run/node = ExtResource("3_iraag")
-states/Run/position = Vector2(437.5, 20.5)
-transitions = ["Start", "Run", SubResource("AnimationNodeStateMachineTransition_xtthi"), "Run", "Idle", SubResource("AnimationNodeStateMachineTransition_0bj6g"), "Idle", "Run", SubResource("AnimationNodeStateMachineTransition_wqw6w")]
-graph_offset = Vector2(-648, -84)
 
 [sub_resource type="Animation" id="Animation_wjpd6"]
 length = 0.001
@@ -65,76 +23,8 @@ tracks/0/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_f4eqe"]
-resource_name = "run_left"
-loop_mode = 1
-step = 0.25
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerImage:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3]
-}
-
-[sub_resource type="Animation" id="Animation_bum0v"]
-resource_name = "run_left"
-loop_mode = 1
-step = 0.25
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerImage:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [4, 5, 6, 7]
-}
-
-[sub_resource type="Animation" id="Animation_7fhee"]
-resource_name = "run_up"
-loop_mode = 1
-step = 0.25
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerImage:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [8, 9, 10, 11]
-}
-
-[sub_resource type="Animation" id="Animation_1jcbt"]
-resource_name = "run_down"
-loop_mode = 1
-step = 0.25
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerImage:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [12, 13, 14, 15]
-}
-
-[sub_resource type="Animation" id="Animation_ewfug"]
-resource_name = "idle_right"
+[sub_resource type="Animation" id="Animation_03umj"]
+resource_name = "idle_down"
 loop_mode = 1
 step = 0.5
 tracks/0/type = "value"
@@ -147,7 +37,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [16, 17]
+"values": [22, 23]
 }
 
 [sub_resource type="Animation" id="Animation_4xor0"]
@@ -167,6 +57,23 @@ tracks/0/keys = {
 "values": [18, 19]
 }
 
+[sub_resource type="Animation" id="Animation_ewfug"]
+resource_name = "idle_right"
+loop_mode = 1
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [16, 17]
+}
+
 [sub_resource type="Animation" id="Animation_i5hmt"]
 resource_name = "idle_up"
 loop_mode = 1
@@ -184,10 +91,10 @@ tracks/0/keys = {
 "values": [20, 21]
 }
 
-[sub_resource type="Animation" id="Animation_03umj"]
-resource_name = "idle_down"
+[sub_resource type="Animation" id="Animation_1jcbt"]
+resource_name = "run_down"
 loop_mode = 1
-step = 0.5
+step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -195,10 +102,61 @@ tracks/0/path = NodePath("PlayerImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [22, 23]
+"values": [12, 13, 14, 15]
+}
+
+[sub_resource type="Animation" id="Animation_bum0v"]
+resource_name = "run_left"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_f4eqe"]
+resource_name = "run_left"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_7fhee"]
+resource_name = "run_up"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qvd21"]
@@ -227,7 +185,7 @@ position = Vector2(-1, 0.5)
 shape = SubResource("RectangleShape2D_x1034")
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource("AnimationNodeStateMachine_b6cjv")
+tree_root = ExtResource("3_5b2ij")
 advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Idle/blend_position = Vector2(-0.00205976, 0.990536)

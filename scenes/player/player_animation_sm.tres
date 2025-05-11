@@ -38,8 +38,8 @@ advance_expression = "direction"
 
 [resource]
 states/Idle/node = SubResource("AnimationNodeBlendSpace2D_0k133")
-states/Idle/position = Vector2(436.5, 158.5)
+states/Idle/position = Vector2(437.75, 158.5)
 states/Run/node = ExtResource("1_do8ex")
 states/Run/position = Vector2(437.5, 20.5)
 transitions = ["Start", "Run", SubResource("AnimationNodeStateMachineTransition_xtthi"), "Run", "Idle", SubResource("AnimationNodeStateMachineTransition_0bj6g"), "Idle", "Run", SubResource("AnimationNodeStateMachineTransition_wqw6w")]
-graph_offset = Vector2(-648, -84)
+graph_offset = Vector2(-536.374, -32.5527)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dxg4ddslja36"]
+[gd_scene load_steps=4 format=3 uid="uid://dxg4ddslja36"]
 
 [ext_resource type="Texture2D" uid="uid://cc3tcfdssn0ru" path="res://assets/placeholder_background.jpg" id="1_d15l8"]
 [ext_resource type="PackedScene" uid="uid://cy4th7add1tw0" path="res://scenes/player/player.tscn" id="1_hjbd2"]
+[ext_resource type="PackedScene" uid="uid://b1a0bq8lddn7w" path="res://scenes/player/fireball.tscn" id="3_jrlbv"]
 
 [node name="LevelDebug" type="Node2D"]
 
@@ -13,3 +14,5 @@ texture = ExtResource("1_d15l8")
 [node name="Player" parent="." instance=ExtResource("1_hjbd2")]
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+
+[node name="Fireball" parent="." instance=ExtResource("3_jrlbv")]
