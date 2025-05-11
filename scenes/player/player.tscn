@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=3 uid="uid://cy4th7add1tw0"]
+
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_ipa0w"]
+[ext_resource type="Texture2D" uid="uid://ccxig04sakm61" path="res://assets/npc_spritesheet.png" id="2_p5fdr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x1034"]
+size = Vector2(48, 55)
+
+[sub_resource type="Animation" id="Animation_1u3rr"]
+resource_name = "new_animation"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_irutn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ekcel"]
+_data = {
+"RESET": SubResource("Animation_irutn"),
+"new_animation": SubResource("Animation_1u3rr")
+}
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_ipa0w")
+
+[node name="PlayerImage" type="Sprite2D" parent="."]
+position = Vector2(-4, 0)
+texture = ExtResource("2_p5fdr")
+hframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-4, -0.5)
+shape = SubResource("RectangleShape2D_x1034")
+
+[node name="PlayerAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ekcel")
+}
+autoplay = "new_animation"
