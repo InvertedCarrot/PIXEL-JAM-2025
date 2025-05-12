@@ -1,18 +1,18 @@
 [gd_scene load_steps=4 format=3 uid="uid://dxg4ddslja36"]
 
-[ext_resource type="Texture2D" uid="uid://dpgxyggti58ow" path="res://assets/placeholder_background.jpg" id="1_d15l8"]
-[ext_resource type="PackedScene" uid="uid://cy4th7add1tw0" path="res://scenes/player/player.tscn" id="1_hjbd2"]
-[ext_resource type="PackedScene" uid="uid://dx2uqx7f8pqg1" path="res://scenes/player/fireball.tscn" id="3_ag77l"]
+[ext_resource type="Texture2D" uid="uid://cc3tcfdssn0ru" path="res://assets/placeholder_background.jpg" id="1_d15l8"]
+[ext_resource type="PackedScene" uid="uid://bkh4c6v2mbx4k" path="res://scenes/entities/cat/cat.tscn" id="2_xdcg5"]
+[ext_resource type="PackedScene" uid="uid://cnaiwqoaoxh5b" path="res://scenes/entities/fireball/fireball.tscn" id="3_u4f2v"]
 
 [node name="LevelDebug" type="Node2D"]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="TempBackground" type="Sprite2D" parent="."]
 position = Vector2(2.67061, 1.49998)
 scale = Vector2(1.93175, 1.93175)
 texture = ExtResource("1_d15l8")
 
-[node name="Player" parent="." instance=ExtResource("1_hjbd2")]
+[node name="Cat" parent="." instance=ExtResource("2_xdcg5")]
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D" type="Camera2D" parent="Cat"]
 
-[node name="Fireball" parent="." instance=ExtResource("3_ag77l")]
+[node name="Fireball" parent="." instance=ExtResource("3_u4f2v")]
