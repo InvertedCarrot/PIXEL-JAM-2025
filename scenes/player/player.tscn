@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://cy4th7add1tw0"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_ipa0w"]
-[ext_resource type="Texture2D" uid="uid://bv46pasqeytlu" path="res://assets/npc_spritesheet.png" id="2_p5fdr"]
+[ext_resource type="Texture2D" uid="uid://ccxig04sakm61" path="res://assets/npc_spritesheet.png" id="2_p5fdr"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://c5o3s1m2txgym" path="res://scenes/player/player_animation_sm.tres" id="3_5b2ij"]
 [ext_resource type="Script" path="res://scenes/player/player_animation_tree.gd" id="3_tf2at"]
 

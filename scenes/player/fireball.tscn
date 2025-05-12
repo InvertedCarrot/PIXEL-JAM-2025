@@ -1,9 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://b1a0bq8lddn7w"]
+[gd_scene load_steps=16 format=3 uid="uid://dx2uqx7f8pqg1"]
 
 [ext_resource type="PackedScene" uid="uid://cy4th7add1tw0" path="res://scenes/player/player.tscn" id="1_vjnn7"]
 [ext_resource type="Script" path="res://scenes/player/fireball_animation.gd" id="2_eubwv"]
 [ext_resource type="Script" path="res://scenes/player/fireball.gd" id="2_ih8my"]
-[ext_resource type="Texture2D" uid="uid://dn5pmppt4e13u" path="res://assets/fireball_spritesheet.png" id="3_77cdq"]
+[ext_resource type="Texture2D" uid="uid://bt3xytqgsfn48" path="res://assets/fireball_spritesheet.png" id="3_77cdq"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wm4ss"]
 animation = &"run_up"
@@ -16,7 +16,7 @@ animation = &"run_right"
 
 [sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_kmkrb"]
 blend_point_0/node = SubResource("AnimationNodeAnimation_wm4ss")
-blend_point_0/pos = Vector2(0, 1)
+blend_point_0/pos = Vector2(0, -1)
 blend_point_1/node = SubResource("AnimationNodeAnimation_wlfug")
 blend_point_1/pos = Vector2(-1, 0)
 blend_point_2/node = SubResource("AnimationNodeAnimation_n7syj")
@@ -115,7 +115,7 @@ hframes = 12
 
 [node name="AnimationTree" parent="." index="2"]
 tree_root = SubResource("AnimationNodeStateMachine_s72jj")
-parameters/Run/blend_position = Vector2(0.130705, -0.579268)
+parameters/Run/blend_position = Vector2(0.449921, 0.347432)
 
 [node name="AnimationPlayer" parent="." index="3"]
 libraries = {

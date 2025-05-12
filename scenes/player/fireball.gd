@@ -7,7 +7,7 @@ var direction: Vector2
 
 
 func _ready() -> void:
-	position = Vector2.ZERO
+	position = Vector2(40,40)
 
 
 func _process(delta: float) -> void:
@@ -15,8 +15,4 @@ func _process(delta: float) -> void:
 	# directional input
 	direction = Input.get_vector("left","right","up","down") # unit vector
 	velocity = direction * speed
-
-
-
-func _physics_process(delta: float) -> void:
 	move_and_slide()
