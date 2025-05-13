@@ -1,25 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://dhr52l8yyg2hc"]
+[gd_scene load_steps=12 format=3 uid="uid://dhr52l8yyg2hc"]
 
 [ext_resource type="PackedScene" uid="uid://cy4th7add1tw0" path="res://scenes/entities/entity.tscn" id="1_5xwr1"]
-[ext_resource type="Texture2D" uid="uid://bxypxfjbrkgy2" path="res://assets/reaper_spritesheet.png" id="2_rgw5y"]
+[ext_resource type="Script" path="res://scenes/entities/reaper/reaper.gd" id="2_lvsa1"]
+[ext_resource type="Texture2D" uid="uid://cmo3ik7ysw41d" path="res://assets/reaper_spritesheet.png" id="2_rgw5y"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://cq6bnog4y0yxh" path="res://scenes/entities/reaper/reaper_animation_sm.tres" id="3_0yxfk"]
-
-[sub_resource type="Animation" id="Animation_yejwc"]
-resource_name = "reaper_run_right"
-loop_mode = 1
-step = 0.25
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("%AnimationTree/../EntityImage:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3]
-}
 
 [sub_resource type="Animation" id="Animation_mvmxq"]
 length = 0.001
@@ -34,40 +18,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_f5o5l"]
-resource_name = "reaper_run_left"
-loop_mode = 1
-step = 0.25
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("%AnimationTree/../EntityImage:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [4, 5, 6, 7]
-}
-
-[sub_resource type="Animation" id="Animation_kxwqn"]
-resource_name = "reaper_run_up"
-loop_mode = 1
-step = 0.25
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("%AnimationTree/../EntityImage:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [8, 9, 10, 11]
 }
 
 [sub_resource type="Animation" id="Animation_8lceh"]
@@ -87,6 +37,57 @@ tracks/0/keys = {
 "values": [12, 13, 14, 15]
 }
 
+[sub_resource type="Animation" id="Animation_f5o5l"]
+resource_name = "reaper_run_left"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%AnimationTree/../EntityImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_yejwc"]
+resource_name = "reaper_run_right"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%AnimationTree/../EntityImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_kxwqn"]
+resource_name = "reaper_run_up"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%AnimationTree/../EntityImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mo3gb"]
 _data = {
 "RESET": SubResource("Animation_mvmxq"),
@@ -96,7 +97,12 @@ _data = {
 "reaper_run_up": SubResource("Animation_kxwqn")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n3lkp"]
+size = Vector2(34, 30)
+
 [node name="Reaper" instance=ExtResource("1_5xwr1")]
+script = ExtResource("2_lvsa1")
+speed = 100.0
 
 [node name="EntityImage" parent="." index="0"]
 texture = ExtResource("2_rgw5y")
@@ -111,3 +117,9 @@ libraries = {
 tree_root = ExtResource("3_0yxfk")
 parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Run/blend_position = Vector2(0, 0)
+
+[node name="Area2D" type="Area2D" parent="." index="5"]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource("RectangleShape2D_n3lkp")
