@@ -6,11 +6,13 @@ extends CharacterBody2D
 @export var speed: float
 var direction: Vector2
 
+var start_position = Vector2.ZERO
+
 # Set to false for auto-controlled characters
 var can_control: bool = false
 
 func _ready() -> void:
-	position = Vector2.ZERO
+	position = start_position
 
 
 func _process(delta: float) -> void:

@@ -1,0 +1,58 @@
+[gd_scene load_steps=5 format=3 uid="uid://c100e6hgm76ay"]
+
+[ext_resource type="Script" path="res://scenes/UI/healthbar/healthbar.gd" id="1_hoq6d"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e3sx0"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+corner_detail = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kirro"]
+bg_color = Color(0.282353, 0.337255, 0.635294, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tamin"]
+bg_color = Color(0.486275, 0.552941, 0.843137, 1)
+
+[node name="Healthbar" type="CanvasLayer"]
+script = ExtResource("1_hoq6d")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = -552.0
+offset_bottom = 61.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_e3sx0")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HealthBar" type="ProgressBar" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 27.0
+theme_override_styles/background = SubResource("StyleBoxFlat_kirro")
+theme_override_styles/fill = SubResource("StyleBoxFlat_tamin")
+value = 50.0
+show_percentage = false
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2

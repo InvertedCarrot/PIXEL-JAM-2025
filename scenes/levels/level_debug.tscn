@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://dxg4ddslja36"]
 
-[ext_resource type="Texture2D" uid="uid://cc3tcfdssn0ru" path="res://assets/placeholder_background.jpg" id="1_d15l8"]
+[ext_resource type="Texture2D" uid="uid://dpgxyggti58ow" path="res://assets/placeholder_background.jpg" id="1_d15l8"]
 [ext_resource type="PackedScene" uid="uid://bkh4c6v2mbx4k" path="res://scenes/entities/cat/cat.tscn" id="2_xdcg5"]
 [ext_resource type="PackedScene" uid="uid://cnaiwqoaoxh5b" path="res://scenes/entities/fireball/fireball.tscn" id="3_u4f2v"]
-[ext_resource type="PackedScene" uid="uid://c100e6hgm76ay" path="res://scenes/healthbar/healthbar.tscn" id="4_u3ta5"]
+[ext_resource type="PackedScene" uid="uid://c100e6hgm76ay" path="res://scenes/UI/healthbar/healthbar.tscn" id="4_u3ta5"]
 [ext_resource type="PackedScene" uid="uid://dhr52l8yyg2hc" path="res://scenes/entities/reaper/reaper.tscn" id="5_g5m4i"]
 
 [node name="LevelDebug" type="Node2D"]
@@ -20,7 +20,6 @@ texture = ExtResource("1_d15l8")
 [node name="Fireball" parent="." instance=ExtResource("3_u4f2v")]
 
 [node name="Healthbar" parent="." instance=ExtResource("4_u3ta5")]
-position = Vector2(-577, -324)
 
 [node name="Reaper" parent="." instance=ExtResource("5_g5m4i")]
 speed = 75.0

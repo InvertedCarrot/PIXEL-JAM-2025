@@ -1,3 +1,4 @@
 extends Node
 
-var health = 10
+var health = 100
+var MAX_HEALTH = 100
