@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cy4th7add1tw0" path="res://scenes/entities/entity.tscn" id="1_5xwr1"]
 [ext_resource type="Script" path="res://scenes/entities/reaper/reaper.gd" id="2_lvsa1"]
-[ext_resource type="Texture2D" uid="uid://cmo3ik7ysw41d" path="res://assets/reaper_spritesheet.png" id="2_rgw5y"]
+[ext_resource type="Texture2D" uid="uid://bxypxfjbrkgy2" path="res://assets/reaper_spritesheet.png" id="2_rgw5y"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://cq6bnog4y0yxh" path="res://scenes/entities/reaper/reaper_animation_sm.tres" id="3_0yxfk"]
 
 [sub_resource type="Animation" id="Animation_mvmxq"]
@@ -102,7 +102,6 @@ size = Vector2(34, 30)
 
 [node name="Reaper" instance=ExtResource("1_5xwr1")]
 script = ExtResource("2_lvsa1")
-speed = 100.0
 
 [node name="EntityImage" parent="." index="0"]
 texture = ExtResource("2_rgw5y")

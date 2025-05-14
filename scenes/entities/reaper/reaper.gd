@@ -1,7 +1,7 @@
 extends Entity
 
 func _ready() -> void:
-	can_control = false
+	is_player = false
 	start_position = Vector2(500,500)
 	super()
 

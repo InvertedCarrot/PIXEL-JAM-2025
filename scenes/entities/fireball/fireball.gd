@@ -1,8 +1,8 @@
 extends Entity
 
 func _ready() -> void:
-	can_control = false
-	start_position = Vector2(200,200)
+	is_player = false
+	start_position = Vector2(200,400)
 	super()
 
 func _process(delta: float) -> void:
