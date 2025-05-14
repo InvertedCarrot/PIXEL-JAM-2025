@@ -7,7 +7,6 @@ extends CharacterBody2D
 
 
 # abstract properties
-var enemy_name: String # the enemy name for enemies
 var max_speed: float # maximum speed attainable by the entity
 var speed: float # travel speed through input
 var detect_zone_ranges: Array[float] # sizes of the detect zones, dertermining behaviour of enemies
@@ -25,10 +24,11 @@ var dist_to_player: float
 var dir_to_player: Vector2
 var curr_behaviour: Callable = idle_behaviour # chosen behaviour determined by zones
 
-func set_enemy_properties(enemy_name: String)->void:
-	var enemy_data = Globals.ENEMIES_DATA[enemy_name]
+func set_properties(entity_name: String)->void:
+	# Set properties from globals
+	var enemy_data = Globals.ENTITIES_DATA[entity_name]
 	speed = enemy_data["speed"]
-	max_speed = Globals.ENEMIES_DATA[enemy_name]["max_speed"]
+	max_speed = Globals.ENTITIES_DATA[entity_name]["max_speed"]
 	detect_zone_ranges = enemy_data["detect_zone_ranges"]
 	start_position = enemy_data["start_position"]
 	$Timers/AttackCooldownTimer.wait_time = enemy_data["attack_cooldown"]

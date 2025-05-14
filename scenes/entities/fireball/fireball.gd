@@ -1,7 +1,7 @@
 extends Entity
 
 func _ready() -> void:
-	set_enemy_properties("fireball")
+	set_properties("fireball")
 	super()
 
 func _process(delta: float) -> void:

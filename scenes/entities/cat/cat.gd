@@ -2,10 +2,8 @@ extends Entity
 
 
 func _ready() -> void:
-	detect_zone_ranges = [400, 300, 200, 100]
+	set_properties("cat")
 	is_player = true
-	max_speed = 400
-	speed = max_speed
 	super()
 
 func _process(delta: float) -> void:
