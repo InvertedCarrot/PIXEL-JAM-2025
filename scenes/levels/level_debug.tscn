@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dxg4ddslja36"]
+[gd_scene load_steps=6 format=3 uid="uid://dxg4ddslja36"]
 
 [ext_resource type="Texture2D" uid="uid://cc3tcfdssn0ru" path="res://assets/placeholder_background.jpg" id="1_d15l8"]
 [ext_resource type="PackedScene" uid="uid://bkh4c6v2mbx4k" path="res://scenes/entities/cat/cat.tscn" id="2_xdcg5"]
 [ext_resource type="PackedScene" uid="uid://cnaiwqoaoxh5b" path="res://scenes/entities/fireball/fireball.tscn" id="3_u4f2v"]
 [ext_resource type="PackedScene" uid="uid://c100e6hgm76ay" path="res://scenes/UI/healthbar/healthbar.tscn" id="4_u3ta5"]
+[ext_resource type="PackedScene" uid="uid://dhr52l8yyg2hc" path="res://scenes/entities/reaper/reaper.tscn" id="5_bl58q"]
 
 [node name="LevelDebug" type="Node2D"]
 
@@ -20,7 +21,6 @@ unique_name_in_owner = true
 [node name="Cat" parent="Player" instance=ExtResource("2_xdcg5")]
 
 [node name="Camera2D" type="Camera2D" parent="Player/Cat"]
-zoom = Vector2(0.5, 0.5)
 
 [node name="Enemies" type="Node2D" parent="."]
 
@@ -29,3 +29,9 @@ zoom = Vector2(0.5, 0.5)
 [node name="Fireball2" parent="Enemies" instance=ExtResource("3_u4f2v")]
 
 [node name="Fireball3" parent="Enemies" instance=ExtResource("3_u4f2v")]
+
+[node name="Fireball4" parent="Enemies" instance=ExtResource("3_u4f2v")]
+
+[node name="Reaper" parent="Enemies" instance=ExtResource("5_bl58q")]
+
+[node name="Fireball5" parent="Enemies" instance=ExtResource("3_u4f2v")]
