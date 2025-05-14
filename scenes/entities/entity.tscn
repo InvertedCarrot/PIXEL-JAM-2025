@@ -1,10 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://cy4th7add1tw0"]
+[gd_scene load_steps=7 format=3 uid="uid://cy4th7add1tw0"]
 
 [ext_resource type="Script" path="res://scenes/entities/entity.gd" id="1_ipa0w"]
 [ext_resource type="Script" path="res://scenes/entities/entity_animation.gd" id="3_tf2at"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x1034"]
-size = Vector2(34, 31)
+[sub_resource type="CircleShape2D" id="CircleShape2D_5jfjd"]
+resource_local_to_scene = true
+radius = 53.0377
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ti163"]
+resource_local_to_scene = true
+radius = 44.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_whso5"]
+resource_local_to_scene = true
+radius = 32.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1y5sk"]
+radius = 18.0
 
 [node name="Entity" type="CharacterBody2D"]
 script = ExtResource("1_ipa0w")
@@ -12,8 +24,11 @@ script = ExtResource("1_ipa0w")
 [node name="EntityImage" type="Sprite2D" parent="."]
 hframes = 24
 
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_x1034")
 disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -27,3 +42,48 @@ anim_player = NodePath("../AnimationPlayer")
 
 [node name="EntityAnimation" type="Node2D" parent="."]
 script = ExtResource("3_tf2at")
+metadata/_edit_lock_ = true
+
+[node name="DetectZones" type="Node2D" parent="."]
+visible = false
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="Zone0" type="Area2D" parent="DetectZones"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectZones/Zone0"]
+shape = SubResource("CircleShape2D_5jfjd")
+debug_color = Color(0, 0.6, 0.701961, 0.156863)
+
+[node name="Zone1" type="Area2D" parent="DetectZones"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectZones/Zone1"]
+shape = SubResource("CircleShape2D_ti163")
+debug_color = Color(0.14902, 0.662745, 0, 0.156863)
+
+[node name="Zone2" type="Area2D" parent="DetectZones"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectZones/Zone2"]
+shape = SubResource("CircleShape2D_whso5")
+debug_color = Color(0.670588, 0.545098, 0, 0.156863)
+
+[node name="Zone3" type="Area2D" parent="DetectZones"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectZones/Zone3"]
+shape = SubResource("CircleShape2D_1y5sk")
+disabled = true
+debug_color = Color(1, 0.239216, 0.223529, 0.156863)
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="AttackCooldownTimer" type="Timer" parent="Timers"]
+wait_time = 0.5
+one_shot = true
+
+[node name="StateSwitchTimer" type="Timer" parent="Timers"]
+wait_time = 0.7
+one_shot = true
+
+[node name="IdlePositionTimer" type="Timer" parent="Timers"]
+wait_time = 3.0
+one_shot = true

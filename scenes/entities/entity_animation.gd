@@ -7,7 +7,7 @@ extends Node2D
 
 var last_facing_direction: Vector2
 
-func _physics_process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	
 	var is_idle = (player.direction == Vector2.ZERO)
 	# if moving, update the player's direction
