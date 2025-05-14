@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dxg4ddslja36"]
 
-[ext_resource type="Texture2D" uid="uid://cc3tcfdssn0ru" path="res://assets/placeholder_background.jpg" id="1_d15l8"]
+[ext_resource type="Texture2D" uid="uid://dpgxyggti58ow" path="res://assets/placeholder_background.jpg" id="1_d15l8"]
 [ext_resource type="PackedScene" uid="uid://bkh4c6v2mbx4k" path="res://scenes/entities/cat/cat.tscn" id="2_xdcg5"]
 [ext_resource type="PackedScene" uid="uid://cnaiwqoaoxh5b" path="res://scenes/entities/fireball/fireball.tscn" id="3_u4f2v"]
 [ext_resource type="PackedScene" uid="uid://c100e6hgm76ay" path="res://scenes/UI/healthbar/healthbar.tscn" id="4_u3ta5"]
@@ -18,7 +18,6 @@ texture = ExtResource("1_d15l8")
 unique_name_in_owner = true
 
 [node name="Cat" parent="Player" instance=ExtResource("2_xdcg5")]
-speed = 0.0
 
 [node name="Camera2D" type="Camera2D" parent="Player/Cat"]
 

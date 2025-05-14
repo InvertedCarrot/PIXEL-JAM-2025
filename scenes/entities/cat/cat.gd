@@ -1,7 +1,9 @@
 extends Entity
 
+
 func _ready() -> void:
 	is_player = true
+	speed = 300
 	super()
 
 func _process(delta: float) -> void:

@@ -5,7 +5,8 @@ extends CharacterBody2D
 @onready var player_node = %Player.get_child(0)
 @onready var timers = $Timers
 @export var detect_zone_ranges: Array[float]
-@export var speed: float
+
+var speed: float
 
 var dist_to_player: float
 var dir_to_player: Vector2
@@ -21,6 +22,9 @@ func _ready() -> void:
 	if detect_zone_ranges.size() != 4:
 		detect_zone_ranges = [500, 300, 200, 100]
 	# set area2D sizes for visual clarity
+	if (!speed):
+		assert(false,"Speed must be defined!")
+
 	for i in range(zones.size()):
 		var zone = zones[i]
 		var collision_shape = zone.get_node("CollisionShape2D")
