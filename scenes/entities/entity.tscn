@@ -72,5 +72,13 @@ debug_color = Color(1, 0.239216, 0.223529, 0.156863)
 [node name="Timers" type="Node" parent="."]
 
 [node name="AttackCooldownTimer" type="Timer" parent="Timers"]
+wait_time = 0.5
+one_shot = true
 
 [node name="StateSwitchTimer" type="Timer" parent="Timers"]
+wait_time = 0.7
+one_shot = true
+
+[node name="IdlePositionTimer" type="Timer" parent="Timers"]
+wait_time = 3.0
+one_shot = true

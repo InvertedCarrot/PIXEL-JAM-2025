@@ -1,15 +1,12 @@
-[gd_scene load_steps=13 format=3 uid="uid://cnaiwqoaoxh5b"]
+[gd_scene load_steps=12 format=3 uid="uid://cnaiwqoaoxh5b"]
 
 [ext_resource type="PackedScene" uid="uid://cy4th7add1tw0" path="res://scenes/entities/entity.tscn" id="1_vjnn7"]
-[ext_resource type="Texture2D" uid="uid://bt3xytqgsfn48" path="res://assets/fireball_spritesheet.png" id="2_l366j"]
+[ext_resource type="Texture2D" uid="uid://dn5pmppt4e13u" path="res://assets/fireball_spritesheet.png" id="2_l366j"]
 [ext_resource type="Script" path="res://scenes/entities/fireball/fireball.gd" id="2_tnljr"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://c5klp6iouvywb" path="res://scenes/entities/fireball/fireball_animation_sm.tres" id="3_0egjs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dej0i"]
 size = Vector2(34, 32)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x1034"]
-size = Vector2(34, 31)
 
 [sub_resource type="Animation" id="Animation_hw420"]
 length = 0.001
@@ -119,23 +116,17 @@ collision_layer = 2
 position = Vector2(-1, 5)
 shape = SubResource("RectangleShape2D_dej0i")
 
-[node name="DetectZones_Zone4#CollisionShape2D" type="CollisionShape2D" parent="." index="2"]
-visible = false
-position = Vector2(-1, 5)
-shape = SubResource("RectangleShape2D_x1034")
-debug_color = Color(1, 0.241143, 0.222318, 0.156863)
-
-[node name="AnimationPlayer" parent="." index="4"]
+[node name="AnimationPlayer" parent="." index="3"]
 libraries = {
 "": SubResource("AnimationLibrary_rw17j")
 }
 
-[node name="AnimationTree" parent="." index="5"]
+[node name="AnimationTree" parent="." index="4"]
 tree_root = ExtResource("3_0egjs")
 parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Run/blend_position = Vector2(-0.330464, 0.60105)
 
-[node name="DetectZones" parent="." index="7"]
+[node name="DetectZones" parent="." index="6"]
 visible = true
 
 [node name="CollisionShape2D" parent="DetectZones/Zone2" index="0"]
@@ -144,6 +135,8 @@ debug_color = Color(0.150672, 0.661547, 0, 0.156863)
 [node name="CollisionShape2D" parent="DetectZones/Zone3" index="0"]
 debug_color = Color(0.66965, 0.5469, 1.92523e-07, 0.156863)
 
+[node name="AttackCooldownTimer" parent="Timers" index="0"]
+wait_time = 1.0
+
 [node name="StateSwitchTimer" parent="Timers" index="1"]
-wait_time = 2.0
-one_shot = true
+wait_time = 1.0
