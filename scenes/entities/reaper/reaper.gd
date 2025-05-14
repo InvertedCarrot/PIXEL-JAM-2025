@@ -1,10 +1,7 @@
 extends Entity
 
 func _ready() -> void:
-	detect_zone_ranges = [500, 200, 100, 0]
-	start_position = Vector2(-600, 0)
-	max_speed = 75
-	speed = max_speed
+	set_enemy_properties("reaper")
 	super()
 
 func _process(delta: float) -> void:

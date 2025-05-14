@@ -7,6 +7,7 @@ extends CharacterBody2D
 
 
 # abstract properties
+var enemy_name: String # the enemy name for enemies
 var max_speed: float # maximum speed attainable by the entity
 var speed: float # travel speed through input
 var detect_zone_ranges: Array[float] # sizes of the detect zones, dertermining behaviour of enemies
@@ -24,8 +25,17 @@ var dist_to_player: float
 var dir_to_player: Vector2
 var curr_behaviour: Callable = idle_behaviour # chosen behaviour determined by zones
 
+func set_enemy_properties(enemy_name: String)->void:
+	var enemy_data = Globals.ENEMIES_DATA[enemy_name]
+	speed = enemy_data["speed"]
+	max_speed = Globals.ENEMIES_DATA[enemy_name]["max_speed"]
+	detect_zone_ranges = enemy_data["detect_zone_ranges"]
+	start_position = enemy_data["start_position"]
+	$Timers/AttackCooldownTimer.wait_time = enemy_data["attack_cooldown"]
+	$Timers/StateSwitchTimer.wait_time = enemy_data["state_switch_cooldown"]
+	$Timers/IdlePositionTimer.wait_time = enemy_data["idle_position_cooldown"]
 
-func abstract_properties() -> void:
+func abstract_properties_checks() -> void:
 	if (!speed):
 		assert(false, "Error: speed must be defined")
 	if (!max_speed):
@@ -35,7 +45,7 @@ func abstract_properties() -> void:
 
 
 func _ready() -> void:
-	abstract_properties()
+	abstract_properties_checks()
 	
 	position = start_position
 	# set area2D sizes for visual clarity
@@ -110,13 +120,13 @@ func zone_0_behaviour():
 	assert(false, "Error: zone_0_behaviour() must be defined")
 
 func zone_1_behaviour():
-	assert(false, "Error: zone_0_behaviour() must be defined")
+	assert(false, "Error: zone_1_behaviour() must be defined")
 
 func zone_2_behaviour():
-	assert(false, "Error: zone_0_behaviour() must be defined")
+	assert(false, "Error: zone_2_behaviour() must be defined")
 
 func zone_3_behaviour():
-	assert(false, "Error: zone_0_behaviour() must be defined")
+	assert(false, "Error: zone_3_behaviour() must be defined")
 
 # used by both the player and enemies
 func attack():
