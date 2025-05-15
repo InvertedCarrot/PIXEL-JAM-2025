@@ -24,15 +24,18 @@ script = ExtResource("1_ipa0w")
 [node name="EntityImage" type="Sprite2D" parent="."]
 hframes = 24
 
-[node name="AttackArea2D" type="Area2D" parent="."]
+[node name="AttackHitbox" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+debug_color = Color(0.621869, 0.533616, 0, 0.42)
 
-[node name="DamageArea2D" type="Area2D" parent="."]
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+debug_color = Color(0.970564, 0, 0.453872, 0.42)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="WallCollideShape" type="CollisionShape2D" parent="."]
 disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -88,12 +91,18 @@ debug_color = Color(1, 0.239216, 0.223529, 0.156863)
 wait_time = 0.5
 one_shot = true
 
-[node name="StateSwitchTimer" type="Timer" parent="Timers"]
-wait_time = 0.7
-one_shot = true
-
 [node name="IdlePositionTimer" type="Timer" parent="Timers"]
 wait_time = 3.0
 one_shot = true
 
-[connection signal="area_entered" from="DamageArea2D" to="." method="_on_damage_area_2d_area_entered"]
+[node name="StrafeTimer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="FleeTimer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="ImmunityCooldownTimer" type="Timer" parent="Timers"]
+one_shot = true
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="area_exited" from="Hurtbox" to="." method="_on_hurtbox_area_exited"]

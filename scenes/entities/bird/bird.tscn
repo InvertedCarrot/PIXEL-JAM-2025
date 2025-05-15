@@ -1,15 +1,19 @@
-[gd_scene load_steps=10 format=3 uid="uid://b3jtcxkis05b1"]
+[gd_scene load_steps=15 format=3 uid="uid://b3jtcxkis05b1"]
 
 [ext_resource type="PackedScene" uid="uid://cy4th7add1tw0" path="res://scenes/entities/entity.tscn" id="1_k5awq"]
 [ext_resource type="Texture2D" uid="uid://dgheyrx2hgwjd" path="res://assets/bird_spritesheet.png" id="2_0tkum"]
+[ext_resource type="Script" path="res://scenes/entities/bird/bird.gd" id="2_lemla"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://cc8xhe0d52myl" path="res://scenes/entities/bird/bird_animation_sm.tres" id="3_wmgs5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cn515"]
+radius = 21.0
 
 [sub_resource type="Animation" id="Animation_x1a32"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("%AnimationTree/../EntityImage:frame")
+tracks/0/path = NodePath("../EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -26,7 +30,7 @@ step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("%AnimationTree/../EntityImage:frame")
+tracks/0/path = NodePath("../EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -43,7 +47,7 @@ step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("%AnimationTree/../EntityImage:frame")
+tracks/0/path = NodePath("../EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -60,7 +64,7 @@ step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("%AnimationTree/../EntityImage:frame")
+tracks/0/path = NodePath("../EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -77,7 +81,7 @@ step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("%AnimationTree/../EntityImage:frame")
+tracks/0/path = NodePath("../EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -96,18 +100,50 @@ _data = {
 "bird_run_up": SubResource("Animation_3xebl")
 }
 
-[node name="Entity" instance=ExtResource("1_k5awq")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_otghf"]
+resource_local_to_scene = true
+radius = 53.0377
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3vrf6"]
+resource_local_to_scene = true
+radius = 44.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i0hq4"]
+resource_local_to_scene = true
+radius = 32.0
+
+[node name="Bird" instance=ExtResource("1_k5awq")]
+script = ExtResource("2_lemla")
 
 [node name="EntityImage" parent="." index="0"]
 texture = ExtResource("2_0tkum")
 hframes = 16
 
-[node name="AnimationPlayer" parent="." index="2"]
+[node name="Hurtbox" parent="." index="2"]
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+shape = SubResource("CircleShape2D_cn515")
+
+[node name="AnimationPlayer" parent="." index="4"]
 libraries = {
 "": SubResource("AnimationLibrary_lfvu5")
 }
 
-[node name="AnimationTree" parent="." index="3"]
+[node name="AnimationTree" parent="." index="5"]
 tree_root = ExtResource("3_wmgs5")
-parameters/Idle/blend_position = Vector2(-0.00105077, -0.983333)
+parameters/Idle/blend_position = Vector2(-0.210057, -0.150396)
 parameters/Run/blend_position = Vector2(0, 0)
+
+[node name="DetectZones" parent="." index="7"]
+visible = true
+
+[node name="CollisionShape2D" parent="DetectZones/Zone0" index="0"]
+shape = SubResource("CircleShape2D_otghf")
+
+[node name="CollisionShape2D" parent="DetectZones/Zone1" index="0"]
+shape = SubResource("CircleShape2D_3vrf6")
+
+[node name="CollisionShape2D" parent="DetectZones/Zone2" index="0"]
+shape = SubResource("CircleShape2D_i0hq4")

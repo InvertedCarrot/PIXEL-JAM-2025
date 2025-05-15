@@ -1,8 +1,15 @@
-[gd_scene load_steps=14 format=3 uid="uid://uog3n06gpx2s"]
+[gd_scene load_steps=20 format=3 uid="uid://uog3n06gpx2s"]
 
 [ext_resource type="PackedScene" uid="uid://cy4th7add1tw0" path="res://scenes/entities/entity.tscn" id="1_x056f"]
+[ext_resource type="Script" path="res://scenes/entities/lily/lily.gd" id="2_1wixg"]
 [ext_resource type="Texture2D" uid="uid://bolwty3rkil1t" path="res://assets/lily_spritesheet.png" id="2_y2f4v"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://chvy8d8i31nmg" path="res://scenes/entities/lily/lily_animation_sm.tres" id="3_o1aml"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_h78wm"]
+radius = 83.0241
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mebsn"]
+size = Vector2(28, 52)
 
 [sub_resource type="Animation" id="Animation_yrip7"]
 length = 0.001
@@ -168,18 +175,54 @@ _data = {
 "lily_run_up": SubResource("Animation_11ln3")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_cutt3"]
+resource_local_to_scene = true
+radius = 53.0377
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x5p5r"]
+resource_local_to_scene = true
+radius = 44.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1452b"]
+resource_local_to_scene = true
+radius = 32.0
+
 [node name="Lily" instance=ExtResource("1_x056f")]
+script = ExtResource("2_1wixg")
 
 [node name="EntityImage" parent="." index="0"]
 texture = ExtResource("2_y2f4v")
 hframes = 18
 
-[node name="AnimationPlayer" parent="." index="2"]
+[node name="CollisionShape2D" parent="AttackHitbox" index="0"]
+shape = SubResource("CircleShape2D_h78wm")
+
+[node name="Hurtbox" parent="." index="2"]
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2(0, 9)
+shape = SubResource("RectangleShape2D_mebsn")
+
+[node name="AnimationPlayer" parent="." index="4"]
 libraries = {
 "": SubResource("AnimationLibrary_ic5tj")
 }
 
-[node name="AnimationTree" parent="." index="3"]
+[node name="AnimationTree" parent="." index="5"]
 tree_root = ExtResource("3_o1aml")
-parameters/Idle/blend_position = Vector2(0.000350237, 1)
+parameters/Idle/blend_position = Vector2(0.0235199, 0.630607)
 parameters/Run/blend_position = Vector2(-0.201401, -0.56875)
+
+[node name="DetectZones" parent="." index="7"]
+visible = true
+
+[node name="CollisionShape2D" parent="DetectZones/Zone0" index="0"]
+shape = SubResource("CircleShape2D_cutt3")
+
+[node name="CollisionShape2D" parent="DetectZones/Zone1" index="0"]
+shape = SubResource("CircleShape2D_x5p5r")
+
+[node name="CollisionShape2D" parent="DetectZones/Zone2" index="0"]
+shape = SubResource("CircleShape2D_1452b")

@@ -2,7 +2,6 @@ extends Entity
 
 func _ready() -> void:
 	entity_name = "fireball"
-	is_player = false
 	super()
 
 func _process(delta: float) -> void:
@@ -12,25 +11,17 @@ func _process(delta: float) -> void:
 # idle = -1, pursuit = 0, attack = 1
 
 func idle_behaviour() -> void:
-	var ipt: Timer = timers.get_node("IdlePositionTimer")
-	if ipt.is_stopped():
-		# choose new direction to travel
-		var new_angle = randf_range(0, 2*PI)
-		direction = Vector2(cos(new_angle), sin(new_angle))
-		velocity = direction * speed/3
-		ipt.start()
+	default_roam(0.3)
 
 func zone_0_behaviour() -> void:
-	direction = dir_to_player
-	velocity = direction * speed
+	default_pursuit()
 
 func zone_1_behaviour() -> void:
-	var act: Timer = timers.get_node("AttackCooldownTimer")
-	if act.is_stopped():
+	if atkTimer.is_stopped():
 		direction = dir_to_player
 		attack()
-		act.start()
-	velocity = Vector2.ZERO
+		atkTimer.start()
+	raw_velocity = Vector2.ZERO
 
 func zone_2_behaviour() -> void:
 	pass
@@ -39,7 +30,7 @@ func zone_3_behaviour() -> void:
 	pass
 
 func attack() -> void:
-	momentum = direction * speed * 3 # increase speed when dashing at player
+	momentum = direction * max_momentum_scalar # increase speed when dashing at player
 
-func damage():
+func take_damage():
 	pass
