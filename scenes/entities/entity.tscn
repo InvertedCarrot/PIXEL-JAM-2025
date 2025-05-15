@@ -54,24 +54,28 @@ metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
 [node name="Zone0" type="Area2D" parent="DetectZones"]
+collision_layer = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectZones/Zone0"]
 shape = SubResource("CircleShape2D_5jfjd")
 debug_color = Color(0, 0.6, 0.701961, 0.156863)
 
 [node name="Zone1" type="Area2D" parent="DetectZones"]
+collision_layer = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectZones/Zone1"]
 shape = SubResource("CircleShape2D_ti163")
 debug_color = Color(0.14902, 0.662745, 0, 0.156863)
 
 [node name="Zone2" type="Area2D" parent="DetectZones"]
+collision_layer = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectZones/Zone2"]
 shape = SubResource("CircleShape2D_whso5")
 debug_color = Color(0.670588, 0.545098, 0, 0.156863)
 
 [node name="Zone3" type="Area2D" parent="DetectZones"]
+collision_layer = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectZones/Zone3"]
 shape = SubResource("CircleShape2D_1y5sk")

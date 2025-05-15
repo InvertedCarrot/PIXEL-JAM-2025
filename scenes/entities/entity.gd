@@ -5,8 +5,6 @@ extends CharacterBody2D
 Notes:
 	1. DamageArea2D = Area where the entity may take damage
 	2. AttackArea2D = Area where entity may attack another entity
-		AttackArea2D is only required when is_player is true, otherwise the enemy
-			will use zone-based system to attack
 """
 
 @onready var zones = $DetectZones.get_children()
@@ -45,6 +43,7 @@ func set_properties()->void:
 	$Timers/AttackCooldownTimer.wait_time = entity_data["attack_cooldown"]
 	$Timers/StateSwitchTimer.wait_time = entity_data["state_switch_cooldown"]
 	$Timers/IdlePositionTimer.wait_time = entity_data["idle_position_cooldown"]
+	health = entity_data["max_health"]
 
 func abstract_properties_checks() -> void:
 	if (!entity_name):
@@ -58,11 +57,9 @@ func abstract_properties_checks() -> void:
 
 
 func _ready() -> void:
+	set_properties()
 	abstract_properties_checks()
-	
-	health = Globals.MAX_PLAYER_HEALTH if (is_player) else Globals.MAX_ENEMY_HEALTH
-	# TODO: Make max health different for different enemies
-	
+		
 	position = start_position
 	# set area2D sizes for visual clarity
 	for i in range(zones.size()):
@@ -174,26 +171,16 @@ func reflect_velocity() -> void:
 	pass
 
 func _on_damage_area_2d_area_entered(area: Area2D) -> void:
-	# OK so for some reason it detects ALL area2d's regardless of masks/layers????
-	# I HAVE NO IDEA WHY
-	# my solution: just check that the opponent is valid
 	var opponent = area.get_parent()
-
-	if (opponent.name=="DetectZones"):
-		return
-	if (!is_player && !opponent.is_player):
-		return
-	if (is_player && opponent.is_player):
-		return
-
+	
 	damage()
 	if (is_player):
 		Globals.player_health -= 5
 	else:
-		print("hi")
 		health -= 1
-		if (health==0):
+		if (health<=0):
 			# Delete the node
 			queue_free()
 			# increase mFactor
-			
+			Globals.multiplier +=1
+			# TODO: Scaling logic

@@ -3,17 +3,17 @@
 [ext_resource type="Texture2D" uid="uid://dpgxyggti58ow" path="res://assets/placeholder_background.jpg" id="1_d15l8"]
 [ext_resource type="PackedScene" uid="uid://bkh4c6v2mbx4k" path="res://scenes/entities/cat/cat.tscn" id="2_xdcg5"]
 [ext_resource type="PackedScene" uid="uid://cnaiwqoaoxh5b" path="res://scenes/entities/fireball/fireball.tscn" id="3_u4f2v"]
-[ext_resource type="PackedScene" uid="uid://c100e6hgm76ay" path="res://scenes/UI/healthbar/healthbar.tscn" id="4_u3ta5"]
 [ext_resource type="PackedScene" uid="uid://dhr52l8yyg2hc" path="res://scenes/entities/reaper/reaper.tscn" id="5_bl58q"]
+[ext_resource type="PackedScene" uid="uid://4ixo48h447bf" path="res://scenes/UI.tscn" id="5_h234r"]
 
 [node name="LevelDebug" type="Node2D" groups=["Enemies", "Player"]]
+
+[node name="UI" parent="." instance=ExtResource("5_h234r")]
 
 [node name="TempBackground" type="Sprite2D" parent="."]
 position = Vector2(2.67061, 1.49998)
 scale = Vector2(4, 4)
 texture = ExtResource("1_d15l8")
-
-[node name="Healthbar" parent="." instance=ExtResource("4_u3ta5")]
 
 [node name="Player" type="Node2D" parent="."]
 unique_name_in_owner = true

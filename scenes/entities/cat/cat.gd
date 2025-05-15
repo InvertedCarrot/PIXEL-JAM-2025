@@ -3,7 +3,6 @@ extends Entity
 
 func _ready() -> void:
 	entity_name = "cat"
-	set_properties()
 	is_player = true
 	super()
 
@@ -26,6 +25,7 @@ func zone_3_behaviour() -> void:
 	pass
 
 func attack() -> void:
+	momentum = direction * speed * 1.1 # i just made it's attack a dash for now
 	pass
 
 func damage():

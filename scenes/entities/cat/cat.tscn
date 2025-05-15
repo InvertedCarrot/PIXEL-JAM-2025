@@ -199,6 +199,7 @@ position = Vector2(0, -7)
 texture = ExtResource("3_m2oyb")
 
 [node name="AttackArea2D" parent="." index="1"]
+collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" parent="AttackArea2D" index="0"]
@@ -206,7 +207,7 @@ position = Vector2(8.5, -4)
 shape = SubResource("RectangleShape2D_3p1kc")
 
 [node name="DamageArea2D" parent="." index="2"]
-collision_mask = 2
+collision_mask = 8
 
 [node name="CollisionShape2D" parent="DamageArea2D" index="0"]
 position = Vector2(6, -1)
@@ -228,6 +229,9 @@ parameters/Run/blend_position = Vector2(0, 0)
 
 [node name="EntityAnimation" parent="." index="6"]
 script = ExtResource("4_isrl0")
+
+[node name="Zone0" parent="DetectZones" index="0"]
+collision_mask = 16
 
 [node name="CollisionShape2D" parent="DetectZones/Zone0" index="0"]
 shape = SubResource("CircleShape2D_hdfss")

@@ -3,7 +3,6 @@ extends Entity
 func _ready() -> void:
 	entity_name = "reaper"
 	is_player = false
-	set_properties()
 	super()
 
 func _process(delta: float) -> void:
