@@ -12,6 +12,7 @@ var MAX_MULTIPLIER = 10
 # Layers (to set dynamically depending on whether its an enemy or player)
 # Store in binary repr, each bit represents whether that layer is included or not (right to left)
 # e.g. 0b0001 => only layer 1, 0b0011 => layers 1 and 2, 0b0010 => only layer 2
+var NO_LAYER = 0b0000
 var PLAYER_LAYER = 0b0001
 var ENEMY_LAYER = 0b0010
 var PLAYER_ATTACK_LAYER = 0b0100
@@ -20,33 +21,52 @@ var ENEMY_ATTACK_LAYER = 0b1000
 # Entities metadata
 var ENTITIES_DATA = {
 	"cat": {
-		"speed": 400,
-		"max_speed": 400,
+		"max_health": 100,
+		"speed": 300,
+		"max_momentum_scalar": 300,
 		"start_position": Vector2(0,0),
 		"detect_zone_ranges": [400, 300, 200, 100] as Array[float],
 		"attack_cooldown": 0.5,
 		"idle_position_cooldown": 2,
-		"state_switch_cooldown": 0.7,
-		"max_health": 100,
+	},
+	"bird": {
+		"max_health": 5,
+		"speed": 150,
+		"max_momentum_scalar": 150,
+		"start_position": Vector2(500, 0),
+		"detect_zone_ranges": [450, 200, 0, 0] as Array[float],
+		"attack_cooldown": 5,
+		"idle_position_cooldown": 2,
+		"strafe_timer": 0.8,
+		"flee_timer": 2.5
 	},
 	"fireball": {
-		"speed": 150,
-		"max_speed": 150,
-		"start_position": Vector2(500,0),
-		"detect_zone_ranges": [300, 200, 0, 0] as Array[float],
-		"attack_cooldown": 2,
-		"idle_position_cooldown": 3,
-		"state_switch_cooldown": 0.7,
 		"max_health": 5,
+		"speed": 150,
+		"max_momentum_scalar": 450,
+		"start_position": Vector2(500,0),
+		"detect_zone_ranges": [400, 200, 0, 0] as Array[float],
+		"attack_cooldown": 2,
+		"idle_position_cooldown": 2,
+	},
+	"lily": { #TODO: change value once damage is implemented
+		"max_health": 3,
+		"speed": 120,
+		"max_momentum_scalar": 120,
+		"start_position": Vector2(400, 0),
+		"detect_zone_ranges": [500, 250, 0, 0] as Array[float],
+		"attack_cooldown": 5,
+		"idle_position_cooldown": 2,
+		"strafe_timer": 1,
+		"flee_timer": 3
 	},
 	"reaper": {
-		"speed": 150,
-		"max_speed": 150,
+		"max_health": 5,
+		"speed": 75,
+		"max_momentum_scalar": 75,
 		"start_position": Vector2(-600, 0),
 		"detect_zone_ranges": [500, 200, 100, 0] as Array[float],
-		"attack_cooldown": 0.5,
-		"idle_position_cooldown": 3,
-		"state_switch_cooldown": 0.7,
-		"max_health": 5
+		"attack_cooldown": 5,
+		"idle_position_cooldown": 2,
 	},
 }
