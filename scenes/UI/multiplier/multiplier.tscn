@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://c100e6hgm76ay"]
+[gd_scene load_steps=8 format=3 uid="uid://bslc78nxumklv"]
 
-[ext_resource type="Script" path="res://scenes/UI/healthbar/healthbar.gd" id="1_hoq6d"]
-[ext_resource type="Texture2D" uid="uid://c6lnj10vajqis" path="res://assets/heart.png" id="2_w58m4"]
+[ext_resource type="Script" path="res://scenes/UI/multiplier/multiplier.gd" id="1_bl8h2"]
+[ext_resource type="Texture2D" uid="uid://dshj12hxfllmp" path="res://assets/swords.png" id="2_iltnv"]
+[ext_resource type="FontFile" uid="uid://e4xw2xsn1u5k" path="res://assets/tinypixel.otf" id="3_n428j"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e3sx0"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -13,8 +14,11 @@ bg_color = Color(0.282353, 0.337255, 0.635294, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tamin"]
 bg_color = Color(0.486275, 0.552941, 0.843137, 1)
 
-[node name="Healthbar" type="CanvasLayer"]
-script = ExtResource("1_hoq6d")
+[sub_resource type="LabelSettings" id="LabelSettings_s8mjj"]
+font = ExtResource("3_n428j")
+
+[node name="Multiplier" type="CanvasLayer"]
+script = ExtResource("1_bl8h2")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 10
@@ -45,10 +49,10 @@ layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("2_w58m4")
-expand_mode = 2
+texture = ExtResource("2_iltnv")
+expand_mode = 3
 
-[node name="HealthBar" type="ProgressBar" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="MulitplierBar" type="ProgressBar" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
@@ -59,3 +63,9 @@ theme_override_styles/background = SubResource("StyleBoxFlat_kirro")
 theme_override_styles/fill = SubResource("StyleBoxFlat_tamin")
 value = 50.0
 show_percentage = false
+
+[node name="MultiplierLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "X 1.0"
+label_settings = SubResource("LabelSettings_s8mjj")

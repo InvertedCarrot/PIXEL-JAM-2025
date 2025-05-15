@@ -24,9 +24,13 @@ script = ExtResource("1_ipa0w")
 [node name="EntityImage" type="Sprite2D" parent="."]
 hframes = 24
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="AttackArea2D" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea2D"]
+
+[node name="DamageArea2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 disabled = true
@@ -50,24 +54,28 @@ metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
 [node name="Zone0" type="Area2D" parent="DetectZones"]
+collision_layer = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectZones/Zone0"]
 shape = SubResource("CircleShape2D_5jfjd")
 debug_color = Color(0, 0.6, 0.701961, 0.156863)
 
 [node name="Zone1" type="Area2D" parent="DetectZones"]
+collision_layer = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectZones/Zone1"]
 shape = SubResource("CircleShape2D_ti163")
 debug_color = Color(0.14902, 0.662745, 0, 0.156863)
 
 [node name="Zone2" type="Area2D" parent="DetectZones"]
+collision_layer = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectZones/Zone2"]
 shape = SubResource("CircleShape2D_whso5")
 debug_color = Color(0.670588, 0.545098, 0, 0.156863)
 
 [node name="Zone3" type="Area2D" parent="DetectZones"]
+collision_layer = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectZones/Zone3"]
 shape = SubResource("CircleShape2D_1y5sk")
@@ -87,3 +95,5 @@ one_shot = true
 [node name="IdlePositionTimer" type="Timer" parent="Timers"]
 wait_time = 3.0
 one_shot = true
+
+[connection signal="area_entered" from="DamageArea2D" to="." method="_on_damage_area_2d_area_entered"]

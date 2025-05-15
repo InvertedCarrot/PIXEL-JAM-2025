@@ -1,10 +1,8 @@
 extends Entity
 
 func _ready() -> void:
-	detect_zone_ranges = [500, 200, 100, 0]
-	start_position = Vector2(-600, 0)
-	max_speed = 75
-	speed = max_speed
+	entity_name = "reaper"
+	is_player = false
 	super()
 
 func _process(delta: float) -> void:
@@ -46,3 +44,6 @@ func zone_3_behaviour() -> void:
 
 func attack() -> void:
 	pass # swings a scythe at you but don't have the asset yet
+
+func damage():
+	pass # reduces enemy health
