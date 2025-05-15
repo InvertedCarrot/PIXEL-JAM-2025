@@ -55,6 +55,18 @@ func abstract_properties_checks() -> void:
 	if (detect_zone_ranges.size() != 4):
 		assert(false, "Error: detect_zone_ranges must be given sizes for zones [0, 1, 2, 3]")
 
+func set_layers() -> void:
+	if (is_player):
+		$AttackArea2D.collision_layer = Globals.PLAYER_ATTACK_LAYER
+		$AttackArea2D.collision_mask = Globals.ENEMY_LAYER
+		$DamageArea2D.collision_layer = Globals.PLAYER_LAYER
+		$DamageArea2D.collision_mask = Globals.ENEMY_ATTACK_LAYER
+	else:
+		$AttackArea2D.collision_layer = Globals.ENEMY_ATTACK_LAYER
+		$AttackArea2D.collision_mask = Globals.PLAYER_LAYER
+		$DamageArea2D.collision_layer = Globals.ENEMY_LAYER
+		$DamageArea2D.collision_mask = Globals.PLAYER_ATTACK_LAYER
+
 
 func _ready() -> void:
 	set_properties()
@@ -66,6 +78,9 @@ func _ready() -> void:
 		var zone = zones[i]
 		var collision_shape = zone.get_node("CollisionShape2D")
 		collision_shape.shape.radius = detect_zone_ranges[i]
+	
+	set_layers()
+	
 
 func _process(delta: float) -> void:
 	#momentum = Vector2.ZERO # this is for outside forces affecting the base movement
@@ -170,9 +185,7 @@ func reflect_velocity() -> void:
 	# do this once we add a TileMapLayer and a prototype room
 	pass
 
-func _on_damage_area_2d_area_entered(area: Area2D) -> void:
-	var opponent = area.get_parent()
-	
+func _on_damage_area_2d_area_entered(_area: Area2D) -> void:
 	damage()
 	if (is_player):
 		Globals.player_health -= 5
