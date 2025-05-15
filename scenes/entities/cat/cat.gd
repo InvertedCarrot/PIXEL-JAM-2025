@@ -2,7 +2,8 @@ extends Entity
 
 
 func _ready() -> void:
-	set_properties("cat")
+	entity_name = "cat"
+	set_properties()
 	is_player = true
 	super()
 
@@ -27,7 +28,5 @@ func zone_3_behaviour() -> void:
 func attack() -> void:
 	pass
 
-
-
-func _on_area_2d_area_entered(area: Area2D) -> void:
-	Globals.health -= 5
+func damage():
+	pass

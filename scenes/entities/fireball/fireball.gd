@@ -1,12 +1,13 @@
 extends Entity
 
 func _ready() -> void:
-	set_properties("fireball")
+	entity_name = "fireball"
+	is_player = false
+	set_properties()
 	super()
 
 func _process(delta: float) -> void:
 	super(delta)
-
 
 # for fireballs, we need 2 zones ("pursuit" and "attack")
 # idle = -1, pursuit = 0, attack = 1
@@ -40,3 +41,6 @@ func zone_3_behaviour() -> void:
 
 func attack() -> void:
 	momentum = direction * speed * 3 # increase speed when dashing at player
+
+func damage():
+	pass

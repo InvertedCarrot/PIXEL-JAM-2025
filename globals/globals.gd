@@ -1,12 +1,15 @@
 extends Node
 
 # For player
-var health = 100
+var player_health = 100
 
 # Constants
-var MAX_HEALTH = 100
+var MAX_PLAYER_HEALTH = 100
+var MAX_ENEMY_HEALTH = 5
 
-# Enemies metadata
+var mFactor:int = 1
+
+# Entities metadata
 var ENTITIES_DATA = {
 	"cat": {
 		"speed": 400,

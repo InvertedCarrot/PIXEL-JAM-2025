@@ -28,6 +28,11 @@ Globals="*res://globals/globals.gd"
 window/size/viewport_width=1280
 window/size/viewport_height=720
 
+[global_group]
+
+Enemies=""
+Player=""
+
 [input]
 
 left={
@@ -61,5 +66,7 @@ attack={
 2d_render/layer_1="s"
 2d_physics/layer_1="Player"
 2d_physics/layer_2="Enemies"
-2d_physics/layer_3="Dead"
-2d_physics/layer_4="Level"
+2d_physics/layer_3="Player attack"
+2d_physics/layer_4="Enemies attack"
+2d_physics/layer_5="Dead"
+2d_physics/layer_6="Enemies"

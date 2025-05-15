@@ -1,7 +1,9 @@
 extends Entity
 
 func _ready() -> void:
-	set_properties("reaper")
+	entity_name = "reaper"
+	is_player = false
+	set_properties()
 	super()
 
 func _process(delta: float) -> void:
@@ -43,3 +45,6 @@ func zone_3_behaviour() -> void:
 
 func attack() -> void:
 	pass # swings a scythe at you but don't have the asset yet
+
+func damage():
+	pass # reduces enemy health

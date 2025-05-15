@@ -6,11 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://c100e6hgm76ay" path="res://scenes/UI/healthbar/healthbar.tscn" id="4_u3ta5"]
 [ext_resource type="PackedScene" uid="uid://dhr52l8yyg2hc" path="res://scenes/entities/reaper/reaper.tscn" id="5_bl58q"]
 
-[node name="LevelDebug" type="Node2D"]
+[node name="LevelDebug" type="Node2D" groups=["Enemies", "Player"]]
 
 [node name="TempBackground" type="Sprite2D" parent="."]
 position = Vector2(2.67061, 1.49998)
-scale = Vector2(1.93175, 1.93175)
+scale = Vector2(4, 4)
 texture = ExtResource("1_d15l8")
 
 [node name="Healthbar" parent="." instance=ExtResource("4_u3ta5")]
@@ -19,8 +19,10 @@ texture = ExtResource("1_d15l8")
 unique_name_in_owner = true
 
 [node name="Cat" parent="Player" instance=ExtResource("2_xdcg5")]
+visible = true
 
 [node name="Camera2D" type="Camera2D" parent="Player/Cat"]
+zoom = Vector2(0.6, 0.6)
 
 [node name="Enemies" type="Node2D" parent="."]
 

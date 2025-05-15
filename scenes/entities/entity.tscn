@@ -24,9 +24,13 @@ script = ExtResource("1_ipa0w")
 [node name="EntityImage" type="Sprite2D" parent="."]
 hframes = 24
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="AttackArea2D" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea2D"]
+
+[node name="DamageArea2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 disabled = true
@@ -87,3 +91,5 @@ one_shot = true
 [node name="IdlePositionTimer" type="Timer" parent="Timers"]
 wait_time = 3.0
 one_shot = true
+
+[connection signal="area_entered" from="DamageArea2D" to="." method="_on_damage_area_2d_area_entered"]

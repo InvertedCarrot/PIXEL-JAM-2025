@@ -1,16 +1,24 @@
 class_name Entity
 extends CharacterBody2D
 
+"""
+Notes:
+	1. DamageArea2D = Area where the entity may take damage
+	2. AttackArea2D = Area where entity may attack another entity
+		AttackArea2D is only required when is_player is true, otherwise the enemy
+			will use zone-based system to attack
+"""
+
 @onready var zones = $DetectZones.get_children()
 @onready var player_node = %Player.get_child(0)
 @onready var timers = $Timers
 
 
 # abstract properties
+var entity_name: String 
 var max_speed: float # maximum speed attainable by the entity
 var speed: float # travel speed through input
 var detect_zone_ranges: Array[float] # sizes of the detect zones, dertermining behaviour of enemies
-
 
 var is_player: bool = false # whether or not the entity is controllable through input
 var direction: Vector2 # direction travelled by input
@@ -18,24 +26,29 @@ var start_position = Vector2.ZERO
 var momentum: Vector2 # for outside forces affecting the base movement (for random bursts of motion, like knockback, dashing)
 var friction: float = 300 # rate at which movement decays if over max_speed
 var zone_number: int # the zone the player is currently in wrt the enemy
+var health: int
 
 # for enemies:
 var dist_to_player: float
 var dir_to_player: Vector2
 var curr_behaviour: Callable = idle_behaviour # chosen behaviour determined by zones
 
-func set_properties(entity_name: String)->void:
+func set_properties()->void:
+	if (!entity_name): 
+		assert(false, "Define entity_name before calling set_properties()")
 	# Set properties from globals
-	var enemy_data = Globals.ENTITIES_DATA[entity_name]
-	speed = enemy_data["speed"]
+	var entity_data = Globals.ENTITIES_DATA[entity_name]
+	speed = entity_data["speed"]
 	max_speed = Globals.ENTITIES_DATA[entity_name]["max_speed"]
-	detect_zone_ranges = enemy_data["detect_zone_ranges"]
-	start_position = enemy_data["start_position"]
-	$Timers/AttackCooldownTimer.wait_time = enemy_data["attack_cooldown"]
-	$Timers/StateSwitchTimer.wait_time = enemy_data["state_switch_cooldown"]
-	$Timers/IdlePositionTimer.wait_time = enemy_data["idle_position_cooldown"]
+	detect_zone_ranges = entity_data["detect_zone_ranges"]
+	start_position = entity_data["start_position"]
+	$Timers/AttackCooldownTimer.wait_time = entity_data["attack_cooldown"]
+	$Timers/StateSwitchTimer.wait_time = entity_data["state_switch_cooldown"]
+	$Timers/IdlePositionTimer.wait_time = entity_data["idle_position_cooldown"]
 
 func abstract_properties_checks() -> void:
+	if (!entity_name):
+		assert(false, "Error: entity_name must be defined")
 	if (!speed):
 		assert(false, "Error: speed must be defined")
 	if (!max_speed):
@@ -47,6 +60,9 @@ func abstract_properties_checks() -> void:
 func _ready() -> void:
 	abstract_properties_checks()
 	
+	health = Globals.MAX_PLAYER_HEALTH if (is_player) else Globals.MAX_ENEMY_HEALTH
+	# TODO: Make max health different for different enemies
+	
 	position = start_position
 	# set area2D sizes for visual clarity
 	for i in range(zones.size()):
@@ -54,10 +70,8 @@ func _ready() -> void:
 		var collision_shape = zone.get_node("CollisionShape2D")
 		collision_shape.shape.radius = detect_zone_ranges[i]
 
-
 func _process(delta: float) -> void:
 	#momentum = Vector2.ZERO # this is for outside forces affecting the base movement
-	
 	if (!is_player):
 		dist_to_player = player_node.global_position.distance_to(global_position)
 		dir_to_player = (player_node.global_position - global_position).normalized()
@@ -96,6 +110,11 @@ func _process(delta: float) -> void:
 		# get directional input and convert to unit vector
 		direction = Input.get_vector("left","right","up","down")
 		velocity = direction * speed
+		# Player attack
+		var act: Timer = timers.get_node("AttackCooldownTimer")
+		if Input.is_action_just_pressed("attack") and act.is_stopped():
+			attack()
+			act.start()
 	
 	# reduce momentum towards 0
 	if momentum.length() > 0:
@@ -107,10 +126,6 @@ func _process(delta: float) -> void:
 	reflect_velocity() #TODO: later
 	
 	move_and_slide() # move with physics engine (already accounts for deltaTime)
-
-
-
-
 
 
 func idle_behaviour():
@@ -132,9 +147,10 @@ func zone_3_behaviour():
 func attack():
 	assert(false, "Error: attack() must be defined")
 
-func hit():
-	# call when the entity gets hit (take damage, die, e.t.c)
-	pass
+func damage():
+	# Do any animations for taking damage here (and lowering health)
+	assert(false, "Error: damage() must be defined")
+
 
 func calculate_zone():
 	var zone_num: int = -1
@@ -156,3 +172,28 @@ func reflect_velocity() -> void:
 	# this is so that enemies bounce off walls and don't continually run into them
 	# do this once we add a TileMapLayer and a prototype room
 	pass
+
+func _on_damage_area_2d_area_entered(area: Area2D) -> void:
+	# OK so for some reason it detects ALL area2d's regardless of masks/layers????
+	# I HAVE NO IDEA WHY
+	# my solution: just check that the opponent is valid
+	var opponent = area.get_parent()
+
+	if (opponent.name=="DetectZones"):
+		return
+	if (!is_player && !opponent.is_player):
+		return
+	if (is_player && opponent.is_player):
+		return
+
+	damage()
+	if (is_player):
+		Globals.player_health -= 5
+	else:
+		print("hi")
+		health -= 1
+		if (health==0):
+			# Delete the node
+			queue_free()
+			# increase mFactor
+			
