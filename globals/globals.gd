@@ -16,7 +16,7 @@ var NO_LAYER = 0b0000
 var PLAYER_LAYER = 0b0001
 var ENEMY_LAYER = 0b0010
 var ATTACK_LAYER = 0b0100
-var WALL_LAYER = 0b100000
+var WALL_LAYER = 0b1000
 
 # Entities metadata
 var ENTITIES_DATA = {
