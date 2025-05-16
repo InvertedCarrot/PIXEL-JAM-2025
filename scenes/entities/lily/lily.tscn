@@ -1,12 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://uog3n06gpx2s"]
+[gd_scene load_steps=19 format=3 uid="uid://uog3n06gpx2s"]
 
 [ext_resource type="PackedScene" uid="uid://cy4th7add1tw0" path="res://scenes/entities/entity.tscn" id="1_x056f"]
 [ext_resource type="Script" path="res://scenes/entities/lily/lily.gd" id="2_1wixg"]
 [ext_resource type="Texture2D" uid="uid://bodxoyy0m6b5o" path="res://assets/entities/lily_spritesheet.png" id="3_j8ppr"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://chvy8d8i31nmg" path="res://scenes/entities/lily/lily_animation_sm.tres" id="3_o1aml"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_h78wm"]
-radius = 83.0241
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mebsn"]
 size = Vector2(28, 52)
@@ -193,9 +190,6 @@ script = ExtResource("2_1wixg")
 [node name="EntityImage" parent="." index="0"]
 texture = ExtResource("3_j8ppr")
 hframes = 30
-
-[node name="CollisionShape2D" parent="AttackHitbox" index="0"]
-shape = SubResource("CircleShape2D_h78wm")
 
 [node name="Hurtbox" parent="." index="2"]
 metadata/_edit_lock_ = true

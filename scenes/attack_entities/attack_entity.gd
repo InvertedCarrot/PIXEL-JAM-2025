@@ -7,11 +7,13 @@ extends CharacterBody2D
 
 # abstract properties
 var attack_entity_name: String
+var damage: float
 var speed: float
 var can_bounce = null
 # uptime is also abstract
 var remove_upon_hit = null
 var uptime_autostart = null
+var knockback_scalar = null
 
 # regular properties
 var decceleration: float
@@ -28,17 +30,21 @@ func set_properties() -> void:
 		assert(false, "Define attack_entity_name before calling set_properties()")
 	attack_entity_data = Globals.ATTACK_ENTITIES_DATA[attack_entity_name]
 	# Set properties from globals
+	damage = attack_entity_data["damage"]
 	speed = attack_entity_data["speed"]
 	decceleration = attack_entity_data["decceleration"]
 	can_bounce = attack_entity_data["can_bounce"]
-	uptime_autostart = attack_entity_data["uptime_autostart"]
 	remove_upon_hit = attack_entity_data["remove_upon_hit"]
+	uptime_autostart = attack_entity_data["uptime_autostart"]
+	knockback_scalar = attack_entity_data["knockback_scalar"]
 	uptime_timer.wait_time = attack_entity_data["uptime"]
 
 
 func abstract_properties_checks() -> void:
 	if (!attack_entity_name):
 		assert(false, "Error: attack_entity_name must be defined")
+	if (!damage):
+		assert(false, "Error: damage must be defined")
 	if (!speed):
 		assert(false, "Error: speed must be defined")
 	if (can_bounce == null):
@@ -49,6 +55,8 @@ func abstract_properties_checks() -> void:
 		assert(false, "Error: remove_upon_hit must be defined")
 	if (!attack_entity_data.has("uptime_autostart")):
 		assert(false, "Error: uptime_autostart must be defined")
+	if (knockback_scalar == null):
+		assert(false, "Error: knockback_scalar must be defined")
 	# for PackedScene initialization
 	if (start_global_position == null):
 		assert(false, "Error: start_global_position must be initialized when adding a PackedScene")

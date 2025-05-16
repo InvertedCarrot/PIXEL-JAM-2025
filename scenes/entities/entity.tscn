@@ -27,6 +27,7 @@ hframes = 24
 [node name="AttackHitbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+disabled = true
 debug_color = Color(0.621869, 0.533616, 0, 0.42)
 
 [node name="Hurtbox" type="Area2D" parent="."]

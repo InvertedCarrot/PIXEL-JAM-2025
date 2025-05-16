@@ -59,8 +59,3 @@ func attack() -> void:
 		var fire_trail_entity: Node = spawn_attack_entity(fire_trail_scene, direction)
 		fire_trail_entity.velocity = momentum * (i+0.8)/fire_trail_amount
 		fire_trail_entity.decceleration = friction
-		
-
-
-func take_damage():
-	pass

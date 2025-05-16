@@ -24,10 +24,12 @@ var entity_name: String
 var speed: float # travel speed through input
 var max_momentum_scalar: float # maximum momentum attainable by the entity
 var detect_zone_ranges: Array[float] # sizes of the detect zones, dertermining behaviour of enemies
+var knockback_scalar = null
 
 var is_player: bool = false # whether or not the entity is controllable through input
 var is_dead: bool = false # contextually means two things: if the entity is dead (enemy), or if the entity is in spirit form (player)
-var health: int
+var health: float
+var damage: float
 var start_position = Vector2.ZERO
 var direction: Vector2 # direction travelled by input
 var raw_velocity: Vector2 # the "default" movement patterns of the entity
@@ -35,7 +37,7 @@ var momentum: Vector2 = Vector2.ZERO # for outside forces affecting the base mov
 var friction: float = 300 # rate at which momentum decays
 var zone_number: int # the zone the player is currently in wrt the enemy
 
-var enemies_in_hurtbox: int = 0
+var entities_in_hurtbox: Array[Variant] = []
 
 # for enemies:
 var dist_to_player: float
@@ -50,10 +52,12 @@ func set_properties() -> void:
 		assert(false, "Define entity_name before calling set_properties()")
 	# Set properties from globals
 	entity_data = Globals.ENTITIES_DATA[entity_name]
-	health = entity_data["max_health"]
+	health = entity_data["health"]
+	damage = entity_data["damage"]
 	speed = entity_data["speed"]
 	max_momentum_scalar = entity_data["max_momentum_scalar"]
 	detect_zone_ranges = entity_data["detect_zone_ranges"]
+	knockback_scalar = entity_data["knockback_scalar"]
 	start_position = entity_data["start_position"]
 	atk_timer.wait_time = entity_data["attack_cooldown"]
 	idle_pos_timer.wait_time = entity_data["idle_position_cooldown"]
@@ -63,12 +67,18 @@ func set_properties() -> void:
 func abstract_properties_checks() -> void:
 	if (!entity_name):
 		assert(false, "Error: entity_name must be defined")
+	if (!health):
+		assert(false, "Error: health must be defined")
+	if (!damage):
+		assert(false, "Error: damage must be defined")
 	if (!speed):
 		assert(false, "Error: speed must be defined")
 	if (!max_momentum_scalar):
 		assert(false, "Error: max_momentum_scalar must be defined")
 	if (detect_zone_ranges.size() != 4):
 		assert(false, "Error: detect_zone_ranges must be given sizes for zones [0, 1, 2, 3]")
+	if (knockback_scalar == null):
+		assert(false, "Error: knockback_scalar must be defined")
 
 func set_layers() -> void: # invoked at _ready()
 	var melee_range = get_node("AttackHitbox")
@@ -139,14 +149,14 @@ func _process(delta: float) -> void:
 		melee_range_shape.disabled = !melee_range_shape.disabled
 	
 	# damage calculations
-	if enemies_in_hurtbox > 0:
+	if entities_in_hurtbox.size() > 0:
 		if immune_timer.is_stopped(): # if immune, don't take damage
-			take_damage()
-			print(entity_name + " took damage!")
-			if (is_player):
-				Globals.player_health -= 5
-			else: # is enemy
-				health -= 1
+			
+			take_damage() # apply damage (we deal with death below)
+			
+			if is_player:
+				Globals.player_health = health # assign current health to global file
+			else: # is an enemy
 				if (health <= 0):
 					# Delete the node
 					queue_free()
@@ -180,14 +190,31 @@ func attack():
 	assert(false, "Error: attack() must be defined")
 
 func take_damage():
-	# Do any animations for taking damage here (and lowering health)
-	assert(false, "Error: take_damage() must be defined")
-
+	# calculate closest entity
+	var closest_entity = null
+	var closest_distance = INF
+	var closest_entity_direction = Vector2.ZERO
+	for e in entities_in_hurtbox:
+		var position_diff = global_position - e.global_position
+		var e_distance = position_diff.length()
+		var e_direction = (position_diff).normalized()
+		if e_distance < closest_distance:
+			closest_entity = e
+			closest_distance = e_distance
+			closest_entity_direction = e_direction
+	# apply some knockback based on the closest enemy
+	var knockback_vector: Vector2 = closest_entity_direction * closest_entity.knockback_scalar
+	momentum += knockback_vector
+	# apply damage
+	health -= closest_entity.damage
+	print("%s took %d damage! (%d health left)" % [entity_name, closest_entity.damage, health])
 
 
 func turn_into_player(): # change collision masks when possessing?
 	is_player = true
 	set_layers()
+	Globals.MAX_PLAYER_HEALTH = health
+	Globals.player_health = health
 
 func turn_into_enemy(): # change collision masks when possessing?
 	is_player = false
@@ -201,10 +228,12 @@ func reflect_velocity() -> void:
 
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
-	enemies_in_hurtbox += 1
+	var root_node = area.get_parent() # could be entity OR attack_entity
+	entities_in_hurtbox.append(root_node)
 
 func _on_hurtbox_area_exited(area: Area2D) -> void:
-	enemies_in_hurtbox -= 1
+	var root_node = area.get_parent() # could be entity OR attack_entity
+	entities_in_hurtbox.erase(root_node)
 
 
 func spawn_attack_entity(packed_scene: PackedScene, direction: Vector2) -> Node:

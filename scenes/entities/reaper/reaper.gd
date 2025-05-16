@@ -32,6 +32,3 @@ func zone_3_behaviour() -> void:
 
 func attack() -> void:
 	spawn_attack_entity(scythe_scene, direction)
-
-func take_damage():
-	pass # reduces enemy health

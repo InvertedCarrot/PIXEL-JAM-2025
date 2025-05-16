@@ -1,6 +1,6 @@
 extends Entity
 
-var potion_scene: PackedScene = preload("res://scenes/attack_entities/potion/potion.tscn")
+var scratch_scene: PackedScene = preload("res://scenes/attack_entities/scratch/scratch.tscn")
 
 func _ready() -> void:
 	entity_name = "cat"
@@ -25,10 +25,5 @@ func zone_3_behaviour() -> void:
 	pass
 
 func attack() -> void:
-	var potion = potion_scene.instantiate()
-	potion.start_global_position = global_position
-	potion.start_direction = direction
-	%AttackEntities.add_child(potion)
-
-func take_damage():
-	pass
+	var scratch = spawn_attack_entity(scratch_scene, direction)
+	scratch.global_position += 100 * direction

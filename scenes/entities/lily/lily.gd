@@ -79,4 +79,5 @@ func attack() -> void:
 		spore_angle_offset_deg += angle_between_spores_deg
 
 func take_damage():
+	super()
 	angered = true
