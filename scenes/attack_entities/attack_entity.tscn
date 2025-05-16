@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwovyro2ljkds"]
+
+[ext_resource type="Script" path="res://scenes/attack_entities/attack_entity.gd" id="1_4ae3q"]
+
+[node name="AttackEntity" type="CharacterBody2D"]
+script = ExtResource("1_4ae3q")
+
+[node name="EntityImage" type="Sprite2D" parent="."]
+
+[node name="AttackHitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+
+[node name="WallCollideShape" type="CollisionShape2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="UptimeTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="UptimeTimer" to="." method="_on_uptime_timer_timeout"]

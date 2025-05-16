@@ -4,20 +4,20 @@ extends CharacterBody2D
 """
 Notes:
 	1. AttackHitbox = Area where entity may attack another entity
-	2. Hitbox = Area where the entity may take damage
+	2. Hurtbox = Area where the entity may take damage
 """
 
-#onready variables (specifically for node access)
+# onready variables (specifically for node access)
 @onready var zones = $DetectZones.get_children()
 @onready var player_node = %Player.get_child(0)
 @onready var timers_node = $Timers
 
 # timers
-@onready var atkTimer: Timer = timers_node.get_node("AttackCooldownTimer")
-@onready var idlePosTimer: Timer = timers_node.get_node("IdlePositionTimer")
-@onready var strafeTimer: Timer = timers_node.get_node("StrafeTimer")
-@onready var fleeTimer: Timer = timers_node.get_node("FleeTimer")
-@onready var immuneTimer: Timer = timers_node.get_node("ImmunityCooldownTimer")
+@onready var atk_timer: Timer = timers_node.get_node("AttackCooldownTimer")
+@onready var idle_pos_timer: Timer = timers_node.get_node("IdlePositionTimer")
+@onready var strafe_timer: Timer = timers_node.get_node("StrafeTimer")
+@onready var flee_timer: Timer = timers_node.get_node("FleeTimer")
+@onready var immune_timer: Timer = timers_node.get_node("ImmunityCooldownTimer")
 
 # abstract properties
 var entity_name: String
@@ -42,8 +42,8 @@ var dist_to_player: float
 var dir_to_player: Vector2
 var curr_behaviour: Callable = idle_behaviour # chosen behaviour determined by zones
 
-# store entity_data as property for easier access
 var entity_data: Dictionary
+
 
 func set_properties() -> void:
 	if (!entity_name):
@@ -55,10 +55,10 @@ func set_properties() -> void:
 	max_momentum_scalar = entity_data["max_momentum_scalar"]
 	detect_zone_ranges = entity_data["detect_zone_ranges"]
 	start_position = entity_data["start_position"]
-	atkTimer.wait_time = entity_data["attack_cooldown"]
-	idlePosTimer.wait_time = entity_data["idle_position_cooldown"]
-	strafeTimer.wait_time = entity_data["strafe_timer"] if entity_data.has("strafe_timer") else 1
-	fleeTimer.wait_time = entity_data["flee_timer"] if entity_data.has("flee_timer") else 1
+	atk_timer.wait_time = entity_data["attack_cooldown"]
+	idle_pos_timer.wait_time = entity_data["idle_position_cooldown"]
+	strafe_timer.wait_time = entity_data["strafe_timer"] if entity_data.has("strafe_timer") else 1
+	flee_timer.wait_time = entity_data["flee_timer"] if entity_data.has("flee_timer") else 1
 
 func abstract_properties_checks() -> void:
 	if (!entity_name):
@@ -77,11 +77,7 @@ func set_layers() -> void: # invoked at _ready()
 	
 	
 	if (is_player): # this is a PLAYER
-		# melee_range.collision_layer = Globals.PLAYER_ATTACK_LAYER
-		# melee_range.collision_mask = Globals.ENEMY_LAYER
-		# damage_hitbox.collision_layer = Globals.PLAYER_LAYER
-		# damage_hitbox.collision_mask = Globals.ENEMY_ATTACK_LAYER
-		melee_range.collision_layer = Globals.PLAYER_ATTACK_LAYER
+		melee_range.collision_layer = Globals.ATTACK_LAYER
 		melee_range.collision_mask = Globals.NO_LAYER
 		damage_hitbox.collision_layer = Globals.PLAYER_LAYER
 		damage_hitbox.collision_mask = Globals.ENEMY_LAYER # only the player can be "attacked" through body contact (enemies are immune)
@@ -89,12 +85,8 @@ func set_layers() -> void: # invoked at _ready()
 		collision_mask = Globals.WALL_LAYER
 
 	else: # this is an ENEMY
-		# melee_range.collision_layer = Globals.ENEMY_ATTACK_LAYER
-		# melee_range.collision_mask = Globals.PLAYER_LAYER
-		# damage_hitbox.collision_layer = Globals.ENEMY_LAYER
-		# damage_hitbox.collision_mask = Globals.PLAYER_ATTACK_LAYER
 		damage_hitbox.collision_layer = Globals.ENEMY_LAYER
-		damage_hitbox.collision_mask = Globals.PLAYER_ATTACK_LAYER # wrt the player, enemies can only get damaged by the melee attack
+		damage_hitbox.collision_mask = Globals.ATTACK_LAYER # wrt the player, enemies can only get damaged by the melee attack
 		collision_layer = Globals.ENEMY_LAYER
 		collision_mask = Globals.WALL_LAYER
 
@@ -138,9 +130,9 @@ func _process(delta: float) -> void:
 		direction = Input.get_vector("left", "right", "up", "down")
 		raw_velocity = direction * speed
 		# Player attack
-		if Input.is_action_just_pressed("attack") and atkTimer.is_stopped():
+		if Input.is_action_just_pressed("attack") and atk_timer.is_stopped():
 			attack()
-			atkTimer.start()
+			atk_timer.start()
 	
 	# debugging
 	var melee_range_shape = $AttackHitbox/CollisionShape2D
@@ -149,7 +141,7 @@ func _process(delta: float) -> void:
 	
 	# damage calculations
 	if enemies_in_hurtbox > 0:
-		if immuneTimer.is_stopped(): # if immune, don't take damage
+		if immune_timer.is_stopped(): # if immune, don't take damage
 			take_damage()
 			print(entity_name + " took damage!")
 			if (is_player):
@@ -162,7 +154,8 @@ func _process(delta: float) -> void:
 					# increase mFactor
 					Globals.multiplier += 1
 					# TODO: Scaling logic
-			immuneTimer.start()
+			immune_timer.start()
+	
 	
 	# reduce momentum towards 0 if not updated
 	if prev_momentum == momentum:
@@ -213,6 +206,20 @@ func _on_hurtbox_area_exited(area: Area2D) -> void:
 	enemies_in_hurtbox -= 1
 
 
+func spawn_attack_entity(packed_scene: PackedScene) -> Node:
+	var attack_entity = packed_scene.instantiate()
+	var hitbox_node = attack_entity.get_node("AttackHitbox")
+	# attack entities should not keep track of anything, they should just despawn on their own
+	hitbox_node.collision_mask = Globals.NO_LAYER
+	# meanwhile, the player hurtbox should keep track of enemy projectiles (and vice versa)
+	if is_player:
+		hitbox_node.collision_layer = Globals.PLAYER_LAYER
+	else:
+		hitbox_node.collision_layer = Globals.ENEMY_LAYER
+	attack_entity.start_global_position = global_position
+	attack_entity.start_direction = dir_to_player
+	%AttackEntities.add_child(attack_entity)
+	return attack_entity
 
 
 
@@ -249,13 +256,13 @@ func zone_3_behaviour(): # abstract
 
 # some helper functions to choose as behaviours
 func default_roam(speed_scale: float = 1, angle_variation: float = 120) -> void:
-	if idlePosTimer.is_stopped():
+	if idle_pos_timer.is_stopped():
 		var angle_range = deg_to_rad(angle_variation)
 		# choose new direction to travel
 		var new_angle = direction.angle() + randf_range(-angle_range, angle_range)
 		direction = Vector2(cos(new_angle), sin(new_angle))
 		raw_velocity = direction * speed * speed_scale
-		idlePosTimer.start()
+		idle_pos_timer.start()
 
 func default_pursuit(speed_scale: float = 1, strafe: bool = false, strafe_angle_deg: float = 0) -> void:
 	var strafe_direction
@@ -263,10 +270,10 @@ func default_pursuit(speed_scale: float = 1, strafe: bool = false, strafe_angle_
 		# if strafing, decide on the angle to strafe at
 		assert(strafe_angle_deg != 0, "Warning: if the entity is strafing, specify a strafing value")
 		strafe_direction = [-1, 1].pick_random()
-		if strafeTimer.is_stopped():
+		if strafe_timer.is_stopped():
 			var pursuit_angle = dir_to_player.angle() + strafe_direction * deg_to_rad(strafe_angle_deg)
 			direction = Vector2(cos(pursuit_angle), sin(pursuit_angle))
-			strafeTimer.start()
+			strafe_timer.start()
 	# else, entity is not strafing, pursue normally (i.e. head-on)
 	else:
 		direction = dir_to_player
@@ -278,7 +285,7 @@ func default_stop(abrupt: bool = false) -> void:
 	raw_velocity = Vector2.ZERO
 
 func default_flee(speed_scale: float = 1) -> void:
-	if fleeTimer.is_stopped():
+	if flee_timer.is_stopped():
 		direction = -dir_to_player # flip direction
-		fleeTimer.start()
+		flee_timer.start()
 	raw_velocity = direction * speed * speed_scale

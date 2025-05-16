@@ -1,26 +1,30 @@
 [gd_scene load_steps=5 format=3 uid="uid://dxg4ddslja36"]
 
+[ext_resource type="Script" path="res://scenes/levels/level_debug.gd" id="1_3ryka"]
 [ext_resource type="Texture2D" uid="uid://dpgxyggti58ow" path="res://assets/placeholder_background.jpg" id="1_d15l8"]
-[ext_resource type="PackedScene" uid="uid://bkh4c6v2mbx4k" path="res://scenes/entities/cat/cat.tscn" id="2_xdcg5"]
-[ext_resource type="PackedScene" uid="uid://uog3n06gpx2s" path="res://scenes/entities/lily/lily.tscn" id="5_4hka6"]
+[ext_resource type="PackedScene" uid="uid://cnaiwqoaoxh5b" path="res://scenes/entities/fireball/fireball.tscn" id="5_blq5g"]
 [ext_resource type="PackedScene" uid="uid://4ixo48h447bf" path="res://scenes/UI.tscn" id="5_h234r"]
 
 [node name="LevelDebug" type="Node2D" groups=["Enemies", "Player"]]
+script = ExtResource("1_3ryka")
 
 [node name="UI" parent="." instance=ExtResource("5_h234r")]
 
 [node name="TempBackground" type="Sprite2D" parent="."]
-position = Vector2(2.67061, 1.49998)
+position = Vector2(1200, 673)
 scale = Vector2(4, 4)
 texture = ExtResource("1_d15l8")
 
 [node name="Player" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="Cat" parent="Player" instance=ExtResource("2_xdcg5")]
+[node name="Fireball" parent="Player" instance=ExtResource("5_blq5g")]
 
-[node name="Camera2D" type="Camera2D" parent="Player/Cat"]
+[node name="Camera2D" type="Camera2D" parent="Player/Fireball"]
 
 [node name="Enemies" type="Node2D" parent="."]
 
-[node name="Lily" parent="Enemies" instance=ExtResource("5_4hka6")]
+[node name="Fireball" parent="Enemies" instance=ExtResource("5_blq5g")]
+
+[node name="AttackEntities" type="Node2D" parent="."]
+unique_name_in_owner = true
