@@ -2,6 +2,18 @@ extends Entity
 
 var potion_scene: PackedScene = preload("res://scenes/attack_entities/potion/potion.tscn")
 
+var potion_amount: float
+
+
+func set_properties() -> void:
+	super()
+	potion_amount = entity_data["potion_amount"]
+
+func abstract_properties_checks() -> void:
+	super()
+	if (!potion_amount):
+		assert(false, "Error: potion_amount must be defined")
+
 func _ready() -> void:
 	entity_name = "bird"
 	super()
@@ -31,7 +43,16 @@ func zone_3_behaviour() -> void:
 	pass
 
 func attack() -> void:
-	spawn_attack_entity(potion_scene)
+	var deg_between_potions: float = 6
+	var angle_offset_deg = -(potion_amount - 1) * deg_between_potions/2
+	for i in range(potion_amount):
+		var attack_angle
+		if is_player:
+			attack_angle = direction.angle() + deg_to_rad(angle_offset_deg)
+		else:
+			attack_angle = dir_to_player.angle() + deg_to_rad(angle_offset_deg)
+		spawn_attack_entity(potion_scene, Vector2(cos(attack_angle), sin(attack_angle)))
+		angle_offset_deg += deg_between_potions
 
 func take_damage():
 	pass # reduces enemy health

@@ -73,8 +73,6 @@ func abstract_properties_checks() -> void:
 func set_layers() -> void: # invoked at _ready()
 	var melee_range = get_node("AttackHitbox")
 	var damage_hitbox = get_node("Hurtbox")
-
-	
 	
 	if (is_player): # this is a PLAYER
 		melee_range.collision_layer = Globals.ATTACK_LAYER
@@ -90,21 +88,22 @@ func set_layers() -> void: # invoked at _ready()
 		collision_layer = Globals.ENEMY_LAYER
 		collision_mask = Globals.WALL_LAYER
 
+
 func _ready() -> void:
 	set_properties()
 	abstract_properties_checks()
-		
 	position = start_position
 	# set area2D sizes for visual clarity
 	for i in range(zones.size()):
 		var zone = zones[i]
 		var collision_shape = zone.get_node("CollisionShape2D")
 		collision_shape.shape.radius = detect_zone_ranges[i]
+		
 		# set all timers to oneshot
 	for t: Timer in timers_node.get_children():
 		t.one_shot = true
-	
 	set_layers()
+
 
 func _process(delta: float) -> void:
 	var prev_momentum: Vector2 = momentum # momentum value of the previous frame
@@ -187,10 +186,12 @@ func take_damage():
 
 
 func turn_into_player(): # change collision masks when possessing?
-	pass
+	is_player = true
+	set_layers()
 
 func turn_into_enemy(): # change collision masks when possessing?
-	pass
+	is_player = false
+	set_layers()
 
 func reflect_velocity() -> void:
 	# function for reflecting an enemy's movement
@@ -206,18 +207,18 @@ func _on_hurtbox_area_exited(area: Area2D) -> void:
 	enemies_in_hurtbox -= 1
 
 
-func spawn_attack_entity(packed_scene: PackedScene) -> Node:
+func spawn_attack_entity(packed_scene: PackedScene, direction: Vector2) -> Node:
 	var attack_entity = packed_scene.instantiate()
 	var hitbox_node = attack_entity.get_node("AttackHitbox")
 	# attack entities should not keep track of anything, they should just despawn on their own
 	hitbox_node.collision_mask = Globals.NO_LAYER
 	# meanwhile, the player hurtbox should keep track of enemy projectiles (and vice versa)
 	if is_player:
-		hitbox_node.collision_layer = Globals.PLAYER_LAYER
+		hitbox_node.collision_layer = Globals.ATTACK_LAYER
 	else:
 		hitbox_node.collision_layer = Globals.ENEMY_LAYER
 	attack_entity.start_global_position = global_position
-	attack_entity.start_direction = dir_to_player
+	attack_entity.start_direction = direction
 	%AttackEntities.add_child(attack_entity)
 	return attack_entity
 

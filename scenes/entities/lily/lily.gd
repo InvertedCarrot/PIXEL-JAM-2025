@@ -26,7 +26,8 @@ func zone_3_behaviour() -> void:
 	idle_behaviour()
 
 func attack() -> void:
-	pass # swings a scythe at you but don't have the asset yet
+	pass
+	
 
 func take_damage():
 	pass # reduces enemy health

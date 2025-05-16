@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 # timers
 @onready var uptime_timer: Timer = $UptimeTimer
+@onready var hitbox_shape =$AttackHitbox/CollisionShape2D
 
 # abstract properties
 var attack_entity_name: String
@@ -65,7 +66,8 @@ func _process(delta: float) -> void:
 	move_and_slide()
 
 func _on_uptime_timer_timeout() -> void:
-	destroy()
-
-func destroy() -> void:
-	assert(false, "Error: destroy() must be defined")
+	var tween = get_tree().create_tween()
+	hitbox_shape.disabled = true
+	tween.tween_property($EntityImage, "modulate:a", 0.0, 1)
+	await tween.finished
+	queue_free()

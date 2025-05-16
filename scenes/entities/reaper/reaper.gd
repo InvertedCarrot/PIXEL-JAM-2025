@@ -1,5 +1,7 @@
 extends Entity
 
+var scythe_scene: PackedScene = preload("res://scenes/attack_entities/scythe/scythe.tscn")
+
 func _ready() -> void:
 	entity_name = "reaper"
 	super()
@@ -21,13 +23,15 @@ func zone_1_behaviour() -> void:
 
 func zone_2_behaviour() -> void:
 	default_stop()
-	attack()
+	if atk_timer.is_stopped():
+		attack()
+		atk_timer.start()
 
 func zone_3_behaviour() -> void:
 	pass
 
 func attack() -> void:
-	pass # swings a scythe at you but don't have the asset yet
+	spawn_attack_entity(scythe_scene, direction)
 
 func take_damage():
 	pass # reduces enemy health

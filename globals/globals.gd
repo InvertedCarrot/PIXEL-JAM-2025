@@ -35,10 +35,11 @@ var ENTITIES_DATA = {
 		"max_momentum_scalar": 120,
 		"start_position": Vector2(500, 0),
 		"detect_zone_ranges": [450, 200, 0, 0] as Array[float],
-		"attack_cooldown": 4,
+		"attack_cooldown": 3,
 		"idle_position_cooldown": 2,
 		"strafe_timer": 0.8,
 		"flee_timer": 2.5,
+		"potion_amount": 2,
 	},
 	"fireball": {
 		"max_health": 5,
@@ -46,7 +47,7 @@ var ENTITIES_DATA = {
 		"max_momentum_scalar": 450,
 		"start_position": Vector2(500,0),
 		"detect_zone_ranges": [400, 200, 0, 0] as Array[float],
-		"attack_cooldown": 2,
+		"attack_cooldown": 4,
 		"idle_position_cooldown": 2,
 		"fire_trail_amount": 6, # unique to fireballs
 	},
@@ -67,7 +68,7 @@ var ENTITIES_DATA = {
 		"max_momentum_scalar": 75,
 		"start_position": Vector2(-600, 0),
 		"detect_zone_ranges": [500, 200, 100, 0] as Array[float],
-		"attack_cooldown": 5,
+		"attack_cooldown": 6,
 		"idle_position_cooldown": 2,
 	},
 }
@@ -77,7 +78,7 @@ var ATTACK_ENTITIES_DATA = {
 	"potion": {
 		"speed": 500,
 		"decceleration": 200,
-		"can_bounce": false,
+		"can_bounce": true,
 		"uptime_autostart": true,
 		"uptime": 2,
 	},
@@ -89,9 +90,17 @@ var ATTACK_ENTITIES_DATA = {
 		"uptime": 3,
 	},
 	"spore": {
-		"a": 1
+		"speed": 500,
+		"decceleration": 500,
+		"can_bounce": false,
+		"uptime_autostart": false,
+		"uptime": 5
 	},
 	"scythe": {
-		"a": 1
+		"speed": 225,
+		"decceleration": 0,
+		"can_bounce": true,
+		"uptime_autostart": false,
+		"uptime": 6,
 	}
 }
