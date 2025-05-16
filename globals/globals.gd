@@ -15,8 +15,7 @@ var MAX_MULTIPLIER = 10
 var NO_LAYER = 0b0000
 var PLAYER_LAYER = 0b0001
 var ENEMY_LAYER = 0b0010
-var PLAYER_ATTACK_LAYER = 0b0100
-var ENEMY_ATTACK_LAYER = 0b1000
+var ATTACK_LAYER = 0b0100
 
 # Entities metadata
 var ENTITIES_DATA = {
@@ -31,14 +30,14 @@ var ENTITIES_DATA = {
 	},
 	"bird": {
 		"max_health": 5,
-		"speed": 150,
-		"max_momentum_scalar": 150,
+		"speed": 120,
+		"max_momentum_scalar": 120,
 		"start_position": Vector2(500, 0),
 		"detect_zone_ranges": [450, 200, 0, 0] as Array[float],
-		"attack_cooldown": 5,
+		"attack_cooldown": 4,
 		"idle_position_cooldown": 2,
 		"strafe_timer": 0.8,
-		"flee_timer": 2.5
+		"flee_timer": 2.5,
 	},
 	"fireball": {
 		"max_health": 5,
@@ -48,6 +47,7 @@ var ENTITIES_DATA = {
 		"detect_zone_ranges": [400, 200, 0, 0] as Array[float],
 		"attack_cooldown": 2,
 		"idle_position_cooldown": 2,
+		"fire_trail_amount": 6, # unique to fireballs
 	},
 	"lily": { #TODO: change value once damage is implemented
 		"max_health": 3,
@@ -58,7 +58,7 @@ var ENTITIES_DATA = {
 		"attack_cooldown": 5,
 		"idle_position_cooldown": 2,
 		"strafe_timer": 1,
-		"flee_timer": 3
+		"flee_timer": 3,
 	},
 	"reaper": {
 		"max_health": 5,
@@ -69,4 +69,28 @@ var ENTITIES_DATA = {
 		"attack_cooldown": 5,
 		"idle_position_cooldown": 2,
 	},
+}
+
+
+var ATTACK_ENTITIES_DATA = {
+	"potion": {
+		"speed": 500,
+		"decceleration": 200,
+		"can_bounce": false,
+		"uptime_autostart": true,
+		"uptime": 2,
+	},
+	"fire_trail": {
+		"speed": 10, # DON'T CHANGE
+		"decceleration": 1000, # DON'T CHANGE
+		"can_bounce": false,
+		"uptime_autostart": true,
+		"uptime": 3,
+	},
+	"spore": {
+		"a": 1
+	},
+	"scythe": {
+		"a": 1
+	}
 }

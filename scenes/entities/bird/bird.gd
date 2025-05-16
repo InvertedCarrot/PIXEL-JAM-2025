@@ -1,5 +1,7 @@
 extends Entity
 
+var potion_scene: PackedScene = preload("res://scenes/attack_entities/potion/potion.tscn")
+
 func _ready() -> void:
 	entity_name = "bird"
 	super()
@@ -17,7 +19,9 @@ func zone_0_behaviour() -> void:
 	default_pursuit(1, true, 60)
 
 func zone_1_behaviour() -> void:
-	attack()
+	if atk_timer.is_stopped() && calculate_zone() == 1:
+		attack()
+		atk_timer.start()
 	default_flee()
 
 func zone_2_behaviour() -> void:
@@ -27,7 +31,7 @@ func zone_3_behaviour() -> void:
 	pass
 
 func attack() -> void:
-	pass # swings a scythe at you but don't have the asset yet
+	spawn_attack_entity(potion_scene)
 
 func take_damage():
 	pass # reduces enemy health
