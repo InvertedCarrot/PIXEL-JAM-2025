@@ -239,10 +239,10 @@ func _on_hurtbox_area_exited(area: Area2D) -> void:
 	entities_in_hurtbox.erase(root_node)
 
 
-func spawn_attack_entity(packed_scene: PackedScene, direction: Vector2) -> Node:
+func spawn_attack_entity(packed_scene: PackedScene, entity_direction: Vector2) -> Node:
 	var attack_entity = packed_scene.instantiate()
 	attack_entity.start_global_position = global_position
-	attack_entity.start_direction = direction
+	attack_entity.start_direction = entity_direction
 	attack_entity.from_player = is_player
 	%AttackEntities.add_child(attack_entity)
 	return attack_entity

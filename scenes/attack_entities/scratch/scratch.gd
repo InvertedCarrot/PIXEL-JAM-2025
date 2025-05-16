@@ -10,3 +10,6 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	super(delta)
+
+func destroy() -> void:
+	queue_free()

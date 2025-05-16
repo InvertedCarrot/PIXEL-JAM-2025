@@ -84,7 +84,6 @@ var ATTACK_ENTITIES_DATA = {
 		"speed": 1,
 		"decceleration": 1000, # DON'T CHANGE
 		"knockback_scalar": 200,
-		"can_bounce": true,
 		"uptime_autostart": true,
 		"remove_upon_hit": false,
 		"uptime": 1,
@@ -94,7 +93,6 @@ var ATTACK_ENTITIES_DATA = {
 		"speed": 500,
 		"decceleration": 200,
 		"knockback_scalar": 150,
-		"can_bounce": true,
 		"uptime_autostart": true,
 		"remove_upon_hit": true,
 		"uptime": 2,
@@ -104,7 +102,6 @@ var ATTACK_ENTITIES_DATA = {
 		"speed": 10, # DON'T CHANGE
 		"decceleration": 1000, # DON'T CHANGE
 		"knockback_scalar": 100,
-		"can_bounce": false,
 		"uptime_autostart": true,
 		"remove_upon_hit": false,
 		"uptime": 3,
@@ -114,7 +111,6 @@ var ATTACK_ENTITIES_DATA = {
 		"speed": 500,
 		"decceleration": 1000,
 		"knockback_scalar": 0,
-		"can_bounce": false,
 		"uptime_autostart": true,
 		"remove_upon_hit": false,
 		"uptime": 5
@@ -124,7 +120,6 @@ var ATTACK_ENTITIES_DATA = {
 		"speed": 225,
 		"decceleration": 0,
 		"knockback_scalar": 400,
-		"can_bounce": true,
 		"uptime_autostart": false,
 		"remove_upon_hit": false,
 		"uptime": 6,

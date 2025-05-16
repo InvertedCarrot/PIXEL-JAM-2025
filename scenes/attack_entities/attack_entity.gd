@@ -9,7 +9,6 @@ extends CharacterBody2D
 var attack_entity_name: String
 var damage: float
 var speed: float
-var can_bounce = null
 # uptime is also abstract
 var remove_upon_hit = null
 var uptime_autostart = null
@@ -33,7 +32,6 @@ func set_properties() -> void:
 	damage = attack_entity_data["damage"]
 	speed = attack_entity_data["speed"]
 	decceleration = attack_entity_data["decceleration"]
-	can_bounce = attack_entity_data["can_bounce"]
 	remove_upon_hit = attack_entity_data["remove_upon_hit"]
 	uptime_autostart = attack_entity_data["uptime_autostart"]
 	knockback_scalar = attack_entity_data["knockback_scalar"]
@@ -47,8 +45,6 @@ func abstract_properties_checks() -> void:
 		assert(false, "Error: damage must be defined")
 	if (!speed):
 		assert(false, "Error: speed must be defined")
-	if (can_bounce == null):
-		assert(false, "Error: can_bounce must be defined")
 	if (!attack_entity_data.has("uptime")):
 		assert(false, "Error: uptime must be defined")
 	if (!attack_entity_data.has("remove_upon_hit")):
