@@ -8,7 +8,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	var percent = float(Globals.player_health)/(Globals.MAX_PLAYER_HEALTH) * 100 # need to do this for FP stuff
-	%HealthBar.value = percent 
+	%HealthBar.value = percent
 	if percent >= 70:
 		%HealthBar.add_theme_stylebox_override("fill", get_colored_style(Color8(60, 161, 2))) # Green
 	elif percent >= 30:

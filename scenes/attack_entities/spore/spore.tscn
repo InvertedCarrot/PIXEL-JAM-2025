@@ -1,0 +1,64 @@
+[gd_scene load_steps=8 format=3 uid="uid://fi34tbmkc4fl"]
+
+[ext_resource type="PackedScene" uid="uid://cwovyro2ljkds" path="res://scenes/attack_entities/attack_entity.tscn" id="1_mdqh8"]
+[ext_resource type="Script" path="res://scenes/attack_entities/spore/spore.gd" id="2_mnyjn"]
+[ext_resource type="Texture2D" uid="uid://cf3lonspq01j4" path="res://assets/attack_entities/spore_spritesheet.png" id="3_vjw0u"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ctp3s"]
+resource_local_to_scene = true
+radius = 15.0
+
+[sub_resource type="Animation" id="Animation_5ukgm"]
+resource_name = "travel"
+length = 0.6
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EntityImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_e3gva"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EntityImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_67dax"]
+_data = {
+"RESET": SubResource("Animation_e3gva"),
+"travel": SubResource("Animation_5ukgm")
+}
+
+[node name="Spore" instance=ExtResource("1_mdqh8")]
+script = ExtResource("2_mnyjn")
+
+[node name="EntityImage" parent="." index="0"]
+texture = ExtResource("3_vjw0u")
+hframes = 3
+
+[node name="CollisionShape2D" parent="AttackHitbox" index="0"]
+shape = SubResource("CircleShape2D_ctp3s")
+
+[node name="AnimationPlayer" parent="." index="3"]
+libraries = {
+"": SubResource("AnimationLibrary_67dax")
+}
+autoplay = "travel"
