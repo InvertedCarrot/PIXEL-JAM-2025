@@ -76,3 +76,4 @@ debug={
 2d_physics/layer_5="Zones"
 2d_physics/layer_6="Stage"
 2d_physics/layer_7="Dead"
+2d_physics/layer_8="Projectiles"

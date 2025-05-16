@@ -73,6 +73,7 @@ func abstract_properties_checks() -> void:
 func set_layers() -> void: # invoked at _ready()
 	var melee_range = get_node("AttackHitbox")
 	var damage_hitbox = get_node("Hurtbox")
+
 	
 	
 	if (is_player): # this is a PLAYER
@@ -80,11 +81,14 @@ func set_layers() -> void: # invoked at _ready()
 		melee_range.collision_mask = Globals.NO_LAYER
 		damage_hitbox.collision_layer = Globals.PLAYER_LAYER
 		damage_hitbox.collision_mask = Globals.ENEMY_LAYER # only the player can be "attacked" through body contact (enemies are immune)
-		
+		collision_layer = Globals.PLAYER_LAYER
+		collision_mask = Globals.WALL_LAYER
+
 	else: # this is an ENEMY
 		damage_hitbox.collision_layer = Globals.ENEMY_LAYER
 		damage_hitbox.collision_mask = Globals.ATTACK_LAYER # wrt the player, enemies can only get damaged by the melee attack
-
+		collision_layer = Globals.ENEMY_LAYER
+		collision_mask = Globals.WALL_LAYER
 
 func _ready() -> void:
 	set_properties()
