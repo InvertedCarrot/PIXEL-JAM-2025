@@ -36,7 +36,6 @@ collision_layer = 2
 debug_color = Color(0.970564, 0, 0.453872, 0.42)
 
 [node name="WallCollideShape" type="CollisionShape2D" parent="."]
-disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../AnimationTree")
