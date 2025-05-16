@@ -2,12 +2,12 @@
 
 [ext_resource type="PackedScene" uid="uid://cy4th7add1tw0" path="res://scenes/entities/entity.tscn" id="1_6euje"]
 [ext_resource type="Script" path="res://scenes/entities/cat/cat.gd" id="2_tub6y"]
-[ext_resource type="Texture2D" uid="uid://bv46pasqeytlu" path="res://assets/player_spritesheet.png" id="3_m2oyb"]
+[ext_resource type="Texture2D" uid="uid://nolcf1wo3yvu" path="res://assets/entities/cat_spritesheet.png" id="3_e0vkv"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://c0qeijj1iqr3n" path="res://scenes/entities/cat/cat_animation_sm.tres" id="4_3a0qp"]
 [ext_resource type="Script" path="res://scenes/entities/cat/cat_animation.gd" id="4_isrl0"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3v8qt"]
-size = Vector2(90, 89)
+[sub_resource type="CircleShape2D" id="CircleShape2D_473u6"]
+radius = 100.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_451ef"]
 size = Vector2(34, 27)
@@ -193,11 +193,12 @@ script = ExtResource("2_tub6y")
 
 [node name="EntityImage" parent="." index="0"]
 position = Vector2(0, -7)
-texture = ExtResource("3_m2oyb")
+texture = ExtResource("3_e0vkv")
+hframes = 36
 
 [node name="CollisionShape2D" parent="AttackHitbox" index="0"]
-position = Vector2(0, -7)
-shape = SubResource("RectangleShape2D_3v8qt")
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_473u6")
 
 [node name="Hurtbox" parent="." index="2"]
 collision_layer = 1
