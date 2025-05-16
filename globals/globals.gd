@@ -24,18 +24,16 @@ var ENTITIES_DATA = {
 		"damage": 1,
 		"speed": 300,
 		"max_momentum_scalar": 400,
-		"start_position": Vector2(0,0),
 		"detect_zone_ranges": [400, 300, 200, 100] as Array[float],
 		"knockback_scalar": 150,
 		"attack_cooldown": 1,
 		"idle_position_cooldown": 2,
 	},
 	"bird": {
-		"health": 3,
+		"health": 7,
 		"damage": 1,
 		"speed": 120,
 		"max_momentum_scalar": 400,
-		"start_position": Vector2(500, 0),
 		"detect_zone_ranges": [450, 200, 0, 0] as Array[float],
 		"knockback_scalar": 150,
 		"attack_cooldown": 3,
@@ -45,11 +43,10 @@ var ENTITIES_DATA = {
 		"potion_amount": 2,
 	},
 	"fireball": {
-		"health": 3,
+		"health": 5,
 		"damage": 1,
 		"speed": 150,
 		"max_momentum_scalar": 500,
-		"start_position": Vector2(500,0),
 		"detect_zone_ranges": [400, 200, 0, 0] as Array[float],
 		"knockback_scalar": 150,
 		"attack_cooldown": 4,
@@ -57,11 +54,10 @@ var ENTITIES_DATA = {
 		"fire_trail_amount": 6, # unique to fireballs
 	},
 	"lily": {
-		"health": 5,
+		"health": 10,
 		"damage": 1,
 		"speed": 120,
 		"max_momentum_scalar": 300,
-		"start_position": Vector2(400, 0),
 		"detect_zone_ranges": [500, 250, 0, 0] as Array[float],
 		"knockback_scalar": 200,
 		"attack_cooldown": 4,
@@ -70,11 +66,10 @@ var ENTITIES_DATA = {
 		"spore_amount": 20
 	},
 	"reaper": {
-		"health": 10,
+		"health": 15,
 		"damage": 1,
 		"speed": 75,
 		"max_momentum_scalar": 200,
-		"start_position": Vector2(-600, 0),
 		"detect_zone_ranges": [500, 200, 100, 0] as Array[float],
 		"knockback_scalar": 250,
 		"attack_cooldown": 6,
@@ -108,7 +103,7 @@ var ATTACK_ENTITIES_DATA = {
 		"damage": 1,
 		"speed": 10, # DON'T CHANGE
 		"decceleration": 1000, # DON'T CHANGE
-		"knockback_scalar": 50,
+		"knockback_scalar": 100,
 		"can_bounce": false,
 		"uptime_autostart": true,
 		"remove_upon_hit": false,

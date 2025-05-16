@@ -54,6 +54,3 @@ func attack() -> void:
 			attack_angle = dir_to_player.angle() + deg_to_rad(angle_offset_deg)
 		spawn_attack_entity(potion_scene, Vector2(cos(attack_angle), sin(attack_angle)))
 		angle_offset_deg += deg_between_potions
-
-func take_damage():
-	pass # reduces enemy health

@@ -30,7 +30,6 @@ var is_player: bool = false # whether or not the entity is controllable through 
 var is_dead: bool = false # contextually means two things: if the entity is dead (enemy), or if the entity is in spirit form (player)
 var health: float
 var damage: float
-var start_position = Vector2.ZERO
 var direction: Vector2 # direction travelled by input
 var raw_velocity: Vector2 # the "default" movement patterns of the entity
 var momentum: Vector2 = Vector2.ZERO # for outside forces affecting the base movement (for random bursts of motion, like knockback, dashing)
@@ -58,7 +57,6 @@ func set_properties() -> void:
 	max_momentum_scalar = entity_data["max_momentum_scalar"]
 	detect_zone_ranges = entity_data["detect_zone_ranges"]
 	knockback_scalar = entity_data["knockback_scalar"]
-	start_position = entity_data["start_position"]
 	atk_timer.wait_time = entity_data["attack_cooldown"]
 	idle_pos_timer.wait_time = entity_data["idle_position_cooldown"]
 	strafe_timer.wait_time = entity_data["strafe_timer"] if entity_data.has("strafe_timer") else 1
@@ -102,7 +100,6 @@ func set_layers() -> void: # invoked at _ready()
 func _ready() -> void:
 	set_properties()
 	abstract_properties_checks()
-	position = start_position
 	# set area2D sizes for visual clarity
 	for i in range(zones.size()):
 		var zone = zones[i]
@@ -113,6 +110,12 @@ func _ready() -> void:
 	for t: Timer in timers_node.get_children():
 		t.one_shot = true
 	set_layers()
+	
+	#DEBUG: set entities in random locations
+	var x_negate = [1, -1].pick_random()
+	var y_negate = [1, -1].pick_random()
+	var spawn_range = [500.0, 700.0]
+	position = Vector2(randf_range(spawn_range[0], spawn_range[1])*x_negate, randf_range(spawn_range[0]/2, spawn_range[1]/2)*y_negate)
 
 
 func _process(delta: float) -> void:
