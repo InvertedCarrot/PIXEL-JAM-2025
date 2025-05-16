@@ -209,16 +209,9 @@ func _on_hurtbox_area_exited(area: Area2D) -> void:
 
 func spawn_attack_entity(packed_scene: PackedScene, direction: Vector2) -> Node:
 	var attack_entity = packed_scene.instantiate()
-	var hitbox_node = attack_entity.get_node("AttackHitbox")
-	# attack entities should not keep track of anything, they should just despawn on their own
-	hitbox_node.collision_mask = Globals.NO_LAYER
-	# meanwhile, the player hurtbox should keep track of enemy projectiles (and vice versa)
-	if is_player:
-		hitbox_node.collision_layer = Globals.ATTACK_LAYER
-	else:
-		hitbox_node.collision_layer = Globals.ENEMY_LAYER
 	attack_entity.start_global_position = global_position
 	attack_entity.start_direction = direction
+	attack_entity.from_player = is_player
 	%AttackEntities.add_child(attack_entity)
 	return attack_entity
 

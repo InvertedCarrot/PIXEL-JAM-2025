@@ -31,7 +31,7 @@ func zone_0_behaviour() -> void:
 	default_pursuit(1, true, 60)
 
 func zone_1_behaviour() -> void:
-	if atk_timer.is_stopped() && calculate_zone() == 1:
+	if atk_timer.is_stopped() && zone_number == 1:
 		attack()
 		atk_timer.start()
 	default_flee()
@@ -43,6 +43,7 @@ func zone_3_behaviour() -> void:
 	pass
 
 func attack() -> void:
+	potion_amount = floor(potion_amount)
 	var deg_between_potions: float = 6
 	var angle_offset_deg = -(potion_amount - 1) * deg_between_potions/2
 	for i in range(potion_amount):

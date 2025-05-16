@@ -20,4 +20,5 @@ collision_mask = 0
 [node name="UptimeTimer" type="Timer" parent="."]
 one_shot = true
 
+[connection signal="area_entered" from="AttackHitbox" to="." method="_on_attack_hitbox_area_entered"]
 [connection signal="timeout" from="UptimeTimer" to="." method="_on_uptime_timer_timeout"]

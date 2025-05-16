@@ -51,16 +51,16 @@ var ENTITIES_DATA = {
 		"idle_position_cooldown": 2,
 		"fire_trail_amount": 6, # unique to fireballs
 	},
-	"lily": { #TODO: change value once damage is implemented
+	"lily": {
 		"max_health": 3,
 		"speed": 120,
 		"max_momentum_scalar": 120,
 		"start_position": Vector2(400, 0),
 		"detect_zone_ranges": [500, 250, 0, 0] as Array[float],
-		"attack_cooldown": 5,
+		"attack_cooldown": 4,
 		"idle_position_cooldown": 2,
 		"strafe_timer": 1,
-		"flee_timer": 3,
+		"spore_amount": 20
 	},
 	"reaper": {
 		"max_health": 5,
@@ -80,6 +80,7 @@ var ATTACK_ENTITIES_DATA = {
 		"decceleration": 200,
 		"can_bounce": true,
 		"uptime_autostart": true,
+		"remove_upon_hit": true,
 		"uptime": 2,
 	},
 	"fire_trail": {
@@ -87,13 +88,15 @@ var ATTACK_ENTITIES_DATA = {
 		"decceleration": 1000, # DON'T CHANGE
 		"can_bounce": false,
 		"uptime_autostart": true,
+		"remove_upon_hit": false,
 		"uptime": 3,
 	},
 	"spore": {
 		"speed": 500,
-		"decceleration": 500,
+		"decceleration": 1000,
 		"can_bounce": false,
-		"uptime_autostart": false,
+		"uptime_autostart": true,
+		"remove_upon_hit": false,
 		"uptime": 5
 	},
 	"scythe": {
@@ -101,6 +104,7 @@ var ATTACK_ENTITIES_DATA = {
 		"decceleration": 0,
 		"can_bounce": true,
 		"uptime_autostart": false,
+		"remove_upon_hit": false,
 		"uptime": 6,
 	}
 }

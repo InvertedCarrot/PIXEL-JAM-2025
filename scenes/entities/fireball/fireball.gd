@@ -3,7 +3,7 @@ extends Entity
 var fire_trail_scene: PackedScene = preload("res://scenes/attack_entities/fire_trail/fire_trail.tscn")
 
 var fire_trail_amount: float
-@onready var pi_timer: Timer = $PlayerInvincibilityTimer
+@onready var pi_timer: Timer = $PlayerInvincibilityTimer # special timer for player fireballs
 @onready var hurtbox_shape = $Hurtbox/CollisionShape2D
 
 func set_properties() -> void:

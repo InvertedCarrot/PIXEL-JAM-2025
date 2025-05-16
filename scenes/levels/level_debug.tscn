@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://scenes/levels/set_level.gd" id="1_3ryka"]
 [ext_resource type="Texture2D" uid="uid://dr6yu5oxwjqgd" path="res://assets/placeholder_background.jpg" id="1_d15l8"]
-[ext_resource type="PackedScene" uid="uid://cnaiwqoaoxh5b" path="res://scenes/entities/fireball/fireball.tscn" id="5_blq5g"]
 [ext_resource type="PackedScene" uid="uid://4ixo48h447bf" path="res://scenes/UI.tscn" id="5_h234r"]
+[ext_resource type="PackedScene" uid="uid://uog3n06gpx2s" path="res://scenes/entities/lily/lily.tscn" id="5_mrron"]
 [ext_resource type="PackedScene" uid="uid://dhr52l8yyg2hc" path="res://scenes/entities/reaper/reaper.tscn" id="5_v1fqb"]
 
 [node name="LevelDebug" type="Node2D" groups=["Enemies", "Player"]]
@@ -19,13 +19,15 @@ texture = ExtResource("1_d15l8")
 [node name="Player" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="Reaper" parent="Player" instance=ExtResource("5_v1fqb")]
+[node name="Lily" parent="Player" instance=ExtResource("5_mrron")]
 
-[node name="Camera2D" type="Camera2D" parent="Player/Reaper"]
+[node name="Camera2D" type="Camera2D" parent="Player/Lily"]
 
 [node name="Enemies" type="Node2D" parent="."]
 
-[node name="Fireball" parent="Enemies" instance=ExtResource("5_blq5g")]
+[node name="Reaper" parent="Enemies" instance=ExtResource("5_v1fqb")]
+
+[node name="Lily" parent="Enemies" instance=ExtResource("5_mrron")]
 
 [node name="AttackEntities" type="Node2D" parent="."]
 unique_name_in_owner = true
