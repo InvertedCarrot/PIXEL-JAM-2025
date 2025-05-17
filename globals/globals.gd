@@ -3,9 +3,9 @@ extends Node
 # For player
 var player_health = -1
 var multiplier = 0
+var max_player_health = -1
 
 # Constants
-var MAX_PLAYER_HEALTH = -1
 var MAX_MULTIPLIER = 10
 
 # Layers (to set dynamically depending on whether its an enemy or player)
@@ -44,7 +44,7 @@ var ENTITIES_DATA = {
 	},
 	"fireball": {
 		"health": 5,
-		"damage": 1,
+		"damage": 3,
 		"speed": 150,
 		"max_momentum_scalar": 500,
 		"detect_zone_ranges": [400, 200, 0, 0] as Array[float],

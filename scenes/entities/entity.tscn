@@ -24,12 +24,6 @@ script = ExtResource("1_ipa0w")
 [node name="EntityImage" type="Sprite2D" parent="."]
 hframes = 24
 
-[node name="AttackHitbox" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
-disabled = true
-debug_color = Color(0.621869, 0.533616, 0, 0.42)
-
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 2
 
@@ -108,10 +102,5 @@ one_shot = true
 [node name="ImmunityCooldownTimer" type="Timer" parent="Timers"]
 one_shot = true
 
-[node name="StageCollisionHitbox" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StageCollisionHitbox"]
-
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="area_exited" from="Hurtbox" to="." method="_on_hurtbox_area_exited"]
-[connection signal="body_entered" from="StageCollisionHitbox" to="." method="_on_stage_collision_hitbox_body_entered"]
