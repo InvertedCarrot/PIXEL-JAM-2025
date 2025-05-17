@@ -1,10 +1,13 @@
-[gd_scene load_steps=9 format=4 uid="uid://bhmdkhqhkmgir"]
+[gd_scene load_steps=12 format=4 uid="uid://bhmdkhqhkmgir"]
 
 [ext_resource type="PackedScene" uid="uid://4ixo48h447bf" path="res://scenes/UI.tscn" id="1_b4ncf"]
 [ext_resource type="Script" path="res://scenes/levels/set_level.gd" id="1_ocfma"]
 [ext_resource type="PackedScene" uid="uid://bkh4c6v2mbx4k" path="res://scenes/entities/cat/cat.tscn" id="3_362rg"]
 [ext_resource type="Texture2D" uid="uid://ch35wa3g86x6r" path="res://assets/tilemap.png" id="3_fm36j"]
 [ext_resource type="PackedScene" uid="uid://cnaiwqoaoxh5b" path="res://scenes/entities/fireball/fireball.tscn" id="4_maqkq"]
+[ext_resource type="PackedScene" uid="uid://uog3n06gpx2s" path="res://scenes/entities/lily/lily.tscn" id="6_857lm"]
+[ext_resource type="PackedScene" uid="uid://dhr52l8yyg2hc" path="res://scenes/entities/reaper/reaper.tscn" id="7_u1yoi"]
+[ext_resource type="PackedScene" uid="uid://b3jtcxkis05b1" path="res://scenes/entities/bird/bird.tscn" id="8_cch3a"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_1pslq"]
 bounce = 1.0
@@ -42,7 +45,7 @@ texture_region_size = Vector2i(60, 60)
 [sub_resource type="TileSet" id="TileSet_okaid"]
 tile_size = Vector2i(60, 60)
 physics_layer_0/collision_layer = 8
-physics_layer_0/collision_mask = 131
+physics_layer_0/collision_mask = 3
 physics_layer_0/physics_material = SubResource("PhysicsMaterial_1pslq")
 sources/0 = SubResource("TileSetAtlasSource_uxcmy")
 
@@ -61,10 +64,17 @@ unique_name_in_owner = true
 [node name="Cat" parent="Player" instance=ExtResource("3_362rg")]
 
 [node name="Camera2D" type="Camera2D" parent="Player/Cat"]
+zoom = Vector2(0.5, 0.5)
 
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="Fireball" parent="Enemies" instance=ExtResource("4_maqkq")]
+
+[node name="Lily" parent="Enemies" instance=ExtResource("6_857lm")]
+
+[node name="Reaper" parent="Enemies" instance=ExtResource("7_u1yoi")]
+
+[node name="Bird" parent="Enemies" instance=ExtResource("8_cch3a")]
 
 [node name="AttackEntities" type="Node2D" parent="."]
 unique_name_in_owner = true

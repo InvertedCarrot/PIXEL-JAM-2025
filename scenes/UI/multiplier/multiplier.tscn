@@ -50,7 +50,8 @@ layout_mode = 2
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("2_iltnv")
-expand_mode = 3
+expand_mode = 2
+stretch_mode = 6
 
 [node name="MulitplierBar" type="ProgressBar" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true

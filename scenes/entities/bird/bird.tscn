@@ -1,9 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://b3jtcxkis05b1"]
+[gd_scene load_steps=17 format=3 uid="uid://b3jtcxkis05b1"]
 
 [ext_resource type="PackedScene" uid="uid://cy4th7add1tw0" path="res://scenes/entities/entity.tscn" id="1_k5awq"]
 [ext_resource type="Script" path="res://scenes/entities/bird/bird.gd" id="2_lemla"]
-[ext_resource type="Texture2D" uid="uid://cnglhn1fi3gnj" path="res://assets/entities/bird_spritesheet.png" id="3_02kvt"]
+[ext_resource type="Texture2D" uid="uid://bfw2vl3add6fu" path="res://assets/entities/bird_spritesheet.png" id="3_02kvt"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://cc8xhe0d52myl" path="res://scenes/entities/bird/bird_animation_sm.tres" id="3_wmgs5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g5asc"]
+radius = 36.1248
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cn515"]
 radius = 21.0
@@ -112,12 +115,18 @@ radius = 44.0
 resource_local_to_scene = true
 radius = 32.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_pmsaa"]
+radius = 39.6232
+
 [node name="Bird" instance=ExtResource("1_k5awq")]
 script = ExtResource("2_lemla")
 
 [node name="EntityImage" parent="." index="0"]
 texture = ExtResource("3_02kvt")
 hframes = 28
+
+[node name="CollisionShape2D" parent="AttackHitbox" index="0"]
+shape = SubResource("CircleShape2D_g5asc")
 
 [node name="Hurtbox" parent="." index="2"]
 metadata/_edit_lock_ = true
@@ -147,3 +156,6 @@ shape = SubResource("CircleShape2D_3vrf6")
 
 [node name="CollisionShape2D" parent="DetectZones/Zone2" index="0"]
 shape = SubResource("CircleShape2D_i0hq4")
+
+[node name="CollisionShape2D" parent="StageCollisionHitbox" index="0"]
+shape = SubResource("CircleShape2D_pmsaa")
