@@ -81,7 +81,8 @@ func abstract_properties_checks() -> void:
 func set_layers() -> void: # invoked at _ready()
 	var melee_range = get_node("AttackHitbox")
 	var damage_hitbox = get_node("Hurtbox")
-	
+	var stage_hitbox = get_node("StageCollisionHitbox")
+
 	if (is_player): # this is a PLAYER
 		melee_range.collision_layer = Globals.ATTACK_LAYER
 		melee_range.collision_mask = Globals.NO_LAYER
@@ -95,6 +96,8 @@ func set_layers() -> void: # invoked at _ready()
 		damage_hitbox.collision_mask = Globals.ATTACK_LAYER # wrt the player, enemies can only get damaged by the melee attack
 		collision_layer = Globals.ENEMY_LAYER
 		collision_mask = Globals.WALL_LAYER
+		stage_hitbox.collision_layer = Globals.ENEMY_LAYER
+		stage_hitbox.collision_mask = Globals.WALL_LAYER
 
 
 func _ready() -> void:
@@ -180,8 +183,6 @@ func _process(delta: float) -> void:
 	# then, we can choose to add a decaying movement vector to it (this is momentum)
 	velocity = raw_velocity + momentum
 	
-	reflect_velocity() #TODO: later
-	
 	move_and_slide() # move with physics engine (already accounts for deltaTime)
 
 
@@ -225,9 +226,18 @@ func turn_into_enemy(): # change collision masks when possessing?
 
 func reflect_velocity() -> void:
 	# function for reflecting an enemy's movement
-	# this is so that enemies bounce off walls and don't continually run into them
-	# do this once we add a TileMapLayer and a prototype room
-	pass
+	if (!is_player):
+		var angle_from_x = velocity.angle()
+		if -PI/4 <= angle_from_x and angle_from_x <= PI/4:
+			direction = Vector2(- direction.x, direction.y)
+		elif PI/4<= angle_from_x and angle_from_x <= 3*PI/4:
+			direction = Vector2(direction.x, - direction.y)
+		elif (3*PI/4<= angle_from_x and angle_from_x <= PI) or (-PI <= angle_from_x and angle_from_x <= -3*PI/4):
+			direction = Vector2(- direction.x, direction.y)
+		elif (-3*PI/4 <= angle_from_x and angle_from_x <= -PI/4):
+			direction = Vector2(direction.x, - direction.y)
+		idle_pos_timer.stop() # To make it instantly reflect
+		
 
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
@@ -315,3 +325,7 @@ func default_flee(speed_scale: float = 1) -> void:
 		direction = -dir_to_player # flip direction
 		flee_timer.start()
 	raw_velocity = direction * speed * speed_scale
+
+
+func _on_stage_collision_hitbox_body_entered(_body: Node2D) -> void:
+	reflect_velocity()

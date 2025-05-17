@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bslc78nxumklv" path="res://scenes/UI/multiplier/multiplier.tscn" id="3_5esef"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e3sx0"]
-bg_color = Color(0.596078, 0.694118, 0.756863, 0.956863)
+bg_color = Color(0.596078, 0.694118, 0.756863, 0)
 corner_detail = 20
 
 [node name="UI" type="CanvasLayer"]
