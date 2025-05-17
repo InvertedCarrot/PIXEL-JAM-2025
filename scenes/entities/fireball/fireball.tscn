@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cnaiwqoaoxh5b"]
+[gd_scene load_steps=16 format=3 uid="uid://cnaiwqoaoxh5b"]
 
 [ext_resource type="PackedScene" uid="uid://cy4th7add1tw0" path="res://scenes/entities/entity.tscn" id="1_vjnn7"]
 [ext_resource type="Script" path="res://scenes/entities/fireball/fireball.gd" id="2_tnljr"]
@@ -115,9 +115,6 @@ radius = 44.0
 resource_local_to_scene = true
 radius = 32.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_lxhxq"]
-radius = 25.0
-
 [node name="Fireball" instance=ExtResource("1_vjnn7")]
 collision_layer = 2
 collision_mask = 2
@@ -128,7 +125,11 @@ position = Vector2(0, -9)
 texture = ExtResource("3_u5o1f")
 hframes = 28
 
+[node name="AttackHitbox" parent="." index="1"]
+visible = false
+
 [node name="Hurtbox" parent="." index="2"]
+visible = false
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
@@ -168,8 +169,5 @@ debug_color = Color(0.66965, 0.5469, 1.92523e-07, 0.156863)
 wait_time = 2.0
 
 [node name="PlayerInvincibilityTimer" type="Timer" parent="." index="9"]
-
-[node name="CollisionShape2D" parent="StageCollisionHitbox" index="0"]
-shape = SubResource("CircleShape2D_lxhxq")
 
 [connection signal="timeout" from="PlayerInvincibilityTimer" to="." method="_on_player_invincibility_timer_timeout"]

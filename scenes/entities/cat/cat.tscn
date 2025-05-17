@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bkh4c6v2mbx4k"]
+[gd_scene load_steps=23 format=3 uid="uid://bkh4c6v2mbx4k"]
 
 [ext_resource type="PackedScene" uid="uid://cy4th7add1tw0" path="res://scenes/entities/entity.tscn" id="1_6euje"]
 [ext_resource type="Script" path="res://scenes/entities/cat/cat.gd" id="2_tub6y"]
@@ -191,6 +191,9 @@ radius = 44.0
 resource_local_to_scene = true
 radius = 32.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ha6k"]
+size = Vector2(48, 61)
+
 [node name="Cat" instance=ExtResource("1_6euje")]
 script = ExtResource("2_tub6y")
 
@@ -247,3 +250,7 @@ wait_time = 2.0
 
 [node name="ImmunityCooldownTimer" parent="Timers" index="4"]
 wait_time = 1.5
+
+[node name="CollisionShape2D" parent="StageCollisionHitbox" index="0"]
+position = Vector2(-1, -5.5)
+shape = SubResource("RectangleShape2D_1ha6k")

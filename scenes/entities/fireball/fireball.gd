@@ -4,7 +4,7 @@ var fire_trail_scene: PackedScene = preload("res://scenes/attack_entities/fire_t
 
 var fire_trail_amount: float
 @onready var pi_timer: Timer = $PlayerInvincibilityTimer # special timer for player fireballs
-@onready var hurtbox_shape = $Hurtbox/CollisionShape2D
+@onready var hurtbox_shape = $Hurtbox
 
 func set_properties() -> void:
 	super()
@@ -25,8 +25,10 @@ func _process(delta: float) -> void:
 
 
 func _on_player_invincibility_timer_timeout() -> void:
-	hurtbox_shape.disabled = false
-
+	if (is_player):
+		hurtbox_shape.collision_mask = Globals.ENEMY_LAYER
+	else:
+		hurtbox_shape.collision_mask = Globals.PLAYER_LAYER + Globals.ATTACK_LAYER
 
 # for fireballs, we need 2 zones ("pursuit" and "attack")
 # idle = -1, pursuit = 0, attack = 1
@@ -53,7 +55,7 @@ func zone_3_behaviour() -> void:
 func attack() -> void:
 	if is_player:
 		pi_timer.start()
-		hurtbox_shape.disabled = true
+		hurtbox_shape.collision_mask = Globals.NO_LAYER
 	momentum = direction * max_momentum_scalar # increase speed when dashing at player
 	for i in range(fire_trail_amount):
 		var fire_trail_entity: Node = spawn_attack_entity(fire_trail_scene, direction)
