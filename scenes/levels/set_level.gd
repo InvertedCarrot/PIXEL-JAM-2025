@@ -15,6 +15,26 @@ var soul_entity: PackedScene = preload("res://scenes/entities/soul/soul.tscn")
 
 var camera: Camera2D = Camera2D.new()
 
+@export_enum("Cat", "Bird", "Fireball", "Lily", "Reaper", "Soul")
+var player_entity: String = "Cat"
+
+@export var num_enemies = {
+	"Cat": 0,
+	"Bird": 0,
+	"Fireball": 0,
+	"Lily": 0,
+	"Reaper": 0,
+}
+
+var entity_scenes := {
+	"Cat": cat_entity,
+	"Bird": bird_entity,
+	"Fireball": fireball_entity,
+	"Lily": lily_entity,
+	"Reaper": reaper_entity,
+	"Soul": soul_entity
+}
+
 # DEBUG
 func start_pos():
 	var x_reflect = [-1, 1].pick_random()
@@ -24,13 +44,21 @@ func start_pos():
 	return Vector2(randf_range(x_range[0], x_range[1])*x_reflect, randf_range(y_range[0], y_range[1])*y_reflect)
 
 func _ready():
-	var zoom_factor = 1.3
+	var zoom_factor = 0.5
 	camera.zoom = Vector2(zoom_factor, zoom_factor)
-	add_entity_to_level(cat_entity, Vector2(0,0), true)
-	add_entity_to_level(bird_entity, start_pos())
-	add_entity_to_level(fireball_entity, start_pos())
-	add_entity_to_level(reaper_entity, start_pos())
-	add_entity_to_level(lily_entity, start_pos())
+	# Add player
+	add_entity_to_level(entity_scenes[player_entity], Vector2(0,0), true)
+	
+	if (!num_enemies.has_all(["Cat","Bird","Fireball","Lily","Reaper"]) or num_enemies.size()!=5):
+		assert(false, "ERROR: Enemies dict must contain the exact enemy names")
+	
+	# Add each enemy the right amount of times
+	for enemy in num_enemies:
+		if (type_string(typeof(num_enemies[enemy]))!="int"):
+			assert(false, "ERROR: Enter numbers for the number of entities!")
+		for i in range(num_enemies[enemy]):
+			# TODO: Make the position be within range of the stage
+			add_entity_to_level(entity_scenes[enemy], start_pos())
 
 func _process(delta: float):
 	var player = player_node.get_child(0)

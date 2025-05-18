@@ -141,9 +141,8 @@ var ATTACK_ENTITIES_DATA = {
 
 var dialogue_active: bool = false
 
+var dialogue_scene: String = "start"
+
 const DIALOGUE_BOX_SCENE = preload("res://scenes/UI/dialogue/dialogue_box.tscn")
 
-const CUTSCENES_PATH = "res://scenes/UI/dialogue/dialogues/"
-
-func get_cutscene_file(scene: String):
-	return load(CUTSCENES_PATH + scene+".gd")
+var CUTSCENES_GDSCRIPT = load("res://scenes/UI/dialogue/dialogue_logs.gd")

@@ -8,7 +8,6 @@
 script = ExtResource("1_6pynj")
 
 [node name="TempBackground" type="Sprite2D" parent="."]
-visible = false
 position = Vector2(1200, 673)
 scale = Vector2(4, 4)
 texture = ExtResource("3_55tbf")

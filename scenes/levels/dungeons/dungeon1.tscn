@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://d26b3yqskthn7"]
+
+[ext_resource type="PackedScene" uid="uid://c5djsy4nr40ou" path="res://scenes/levels/abstract_dungeon.tscn" id="1_7eu1p"]
+[ext_resource type="PackedScene" uid="uid://cvpnd1sdbnun3" path="res://scenes/levels/rooms/room1.tscn" id="2_x023l"]
+[ext_resource type="PackedScene" uid="uid://n1xvscibiht5" path="res://scenes/levels/rooms/room2.tscn" id="3_obtpb"]
+
+[node name="AbstractDungeon" instance=ExtResource("1_7eu1p")]
+num_enemies = {
+"Bird": 1,
+"Cat": 0,
+"Fireball": 1,
+"Lily": 1,
+"Reaper": 1
+}
+
+[node name="Room1" parent="Rooms" index="0" instance=ExtResource("2_x023l")]
+
+[node name="Room2" parent="Rooms" index="1" instance=ExtResource("3_obtpb")]
+position = Vector2(3167, 60)
