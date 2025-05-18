@@ -2,12 +2,10 @@
 
 [ext_resource type="Script" path="res://scenes/levels/set_level.gd" id="1_6pynj"]
 [ext_resource type="PackedScene" uid="uid://4ixo48h447bf" path="res://scenes/UI.tscn" id="2_cuhtr"]
-[ext_resource type="Texture2D" uid="uid://dr6yu5oxwjqgd" path="res://assets/placeholder_background.jpg" id="3_55tbf"]
+[ext_resource type="Texture2D" uid="uid://dpgxyggti58ow" path="res://assets/placeholder_background.jpg" id="3_55tbf"]
 
 [node name="LevelTemplate" type="Node2D" groups=["Enemies", "Player"]]
 script = ExtResource("1_6pynj")
-
-[node name="UI" parent="." instance=ExtResource("2_cuhtr")]
 
 [node name="TempBackground" type="Sprite2D" parent="."]
 position = Vector2(1200, 673)
@@ -25,6 +23,8 @@ unique_name_in_owner = true
 
 [node name="AttackEntities" type="Node2D" parent="."]
 unique_name_in_owner = true
+
+[node name="UI" parent="." instance=ExtResource("2_cuhtr")]
 
 [connection signal="child_entered_tree" from="Player" to="." method="_on_player_child_entered_tree"]
 [connection signal="child_entered_tree" from="Enemies" to="." method="_on_enemies_child_entered_tree"]

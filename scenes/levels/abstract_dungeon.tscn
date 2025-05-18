@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5djsy4nr40ou"]
+
+[ext_resource type="PackedScene" uid="uid://4ixo48h447bf" path="res://scenes/UI.tscn" id="1_fvsps"]
+[ext_resource type="Script" path="res://scenes/levels/set_level.gd" id="1_snu1k"]
+
+[node name="AbstractDungeon" type="Node2D"]
+script = ExtResource("1_snu1k")
+
+[node name="Rooms" type="Node2D" parent="."]
+
+[node name="Player" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Enemies" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="DeadEnemies" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="AttackEntities" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="UI" parent="." instance=ExtResource("1_fvsps")]

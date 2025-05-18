@@ -48,6 +48,7 @@ var curr_behaviour: Callable = idle_behaviour # chosen behaviour determined by z
 
 var entity_data: Dictionary
 
+signal dialogue_activate(scene)
 
 # related to the level template (i.e. the level will set this up)
 var player_node # refers to the node that contains the player (enemies need this for targeting)
@@ -102,12 +103,12 @@ func set_layers() -> void: # invoked at _ready()
 		damage_hitbox.collision_mask = Globals.PLAYER_LAYER + Globals.ATTACK_LAYER # wrt the player, enemies can only get damaged by the melee attack
 		collision_layer = Globals.ENEMY_LAYER
 		collision_mask = Globals.WALL_LAYER
-		
+
 	# any dead entity should take these layers as priority
 	if (is_dead):
 		damage_hitbox.collision_layer = Globals.DEAD_ENEMIES_LAYER
 		damage_hitbox.collision_mask = Globals.NO_LAYER # TODO: change later
-	
+
 	dead_entities_range_node.collision_layer = Globals.NO_LAYER
 	dead_entities_range_node.collision_mask = Globals.DEAD_ENEMIES_LAYER
 
@@ -124,10 +125,10 @@ func _ready() -> void:
 	# set all timers to oneshot
 	for t: Timer in timers_node.get_children():
 		t.one_shot = true
-	
+
 	set_layers()
 	
-	
+
 	# DEBUG: to see the zone areas
 	if !is_player:
 		$DetectZones.visible = true
@@ -136,9 +137,11 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if (Globals.dialogue_active):
+		return
 	var player_ref = player_node.get_child(0)
 	var prev_momentum: Vector2 = momentum # momentum value of the previous frame
-	
+
 	if (!is_player):
 		dist_to_player = player_ref.global_position.distance_to(global_position)
 		dir_to_player = (player_ref.global_position - global_position).normalized()
@@ -171,10 +174,10 @@ func _process(delta: float) -> void:
 			for dead_enemy in dead_entities_in_range:
 				dead_enemy.queue_free()
 				Globals.souls_harvested += 1
-		
+
 		if Input.is_action_just_pressed("swap_souls"):
 			swap_souls = true # the level script will handle the rest
-	
+
 	# damage calculations
 	if entities_in_hurtbox.size() > 0:
 		take_damage()
@@ -194,6 +197,12 @@ func _process(delta: float) -> void:
 	velocity = raw_velocity + momentum
 	
 	reflect_velocity(delta)
+
+	if (Input.is_action_just_pressed("debug")):
+		dialogue_activate.emit("start")
+
+	if (Input.is_action_just_pressed("debug2")):
+		dialogue_activate.emit("second")
 
 
 # used by both the player and enemies
@@ -232,6 +241,7 @@ func apply_damage():
 	# apply damage
 	health -= closest_entity.damage
 	print("%s took %d damage! (%d health left)" % [entity_name, closest_entity.damage, health])
+
 
 func turn_into_player(): # change collision masks when possessing?
 	is_player = true
@@ -288,6 +298,7 @@ func spawn_attack_entity(packed_scene: PackedScene, entity_direction: Vector2) -
 	attack_entity.from_player = is_player
 	attack_entities_node.add_child(attack_entity)
 	return attack_entity
+
 
 
 ############################## zone functionalities (enemies only) ##############################

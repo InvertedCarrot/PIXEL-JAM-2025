@@ -136,3 +136,13 @@ var ATTACK_ENTITIES_DATA = {
 		"uptime": 6,
 	}
 }
+
+## Dialogues
+
+var dialogue_active: bool = false
+
+var dialogue_scene: String = "start"
+
+const DIALOGUE_BOX_SCENE = preload("res://scenes/UI/dialogue/dialogue_box.tscn")
+
+var CUTSCENES_GDSCRIPT = load("res://scenes/UI/dialogue/dialogue_logs.gd")
