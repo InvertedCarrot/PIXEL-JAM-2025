@@ -2,11 +2,11 @@ extends Node
 
 # For player
 var player_health = -1
-var multiplier = 0
+var souls_harvested = 0
 var max_player_health = -1
 
 # Constants
-var MAX_MULTIPLIER = 10
+var SOUL_CAPACITY = 10
 
 # Layers (to set dynamically depending on whether its an enemy or player)
 # Store in binary repr, each bit represents whether that layer is included or not (right to left)
@@ -16,6 +16,7 @@ var PLAYER_LAYER = 0b0001
 var ENEMY_LAYER = 0b0010
 var ATTACK_LAYER = 0b0100
 var WALL_LAYER = 0b1000
+var DEAD_ENEMIES_LAYER = 0b10000
 
 # Entities metadata
 var ENTITIES_DATA = {
@@ -75,6 +76,16 @@ var ENTITIES_DATA = {
 		"attack_cooldown": 6,
 		"idle_position_cooldown": 2,
 	},
+	"soul": {
+		"health": 10,
+		"damage": 0,
+		"speed": 400,
+		"max_momentum_scalar": 400,
+		"detect_zone_ranges": [0, 0, 0, 0] as Array[float],
+		"knockback_scalar": 50,
+		"attack_cooldown": 0.5,
+		"idle_position_cooldown": 5,
+	},
 }
 
 
@@ -89,7 +100,7 @@ var ATTACK_ENTITIES_DATA = {
 		"uptime": 1,
 	},
 	"potion": {
-		"damage": 2,
+		"damage": 8,
 		"speed": 500,
 		"decceleration": 200,
 		"knockback_scalar": 150,
