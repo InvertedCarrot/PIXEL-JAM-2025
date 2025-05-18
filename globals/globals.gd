@@ -132,11 +132,7 @@ var dialogue_active: bool = false
 
 const DIALOGUE_BOX_SCENE = preload("res://scenes/UI/dialogue/dialogue_box.tscn")
 
-var CUTSCENE_DATA = {
-	"start":{
-		"gdscript": load("res://scenes/UI/dialogue/dialogues/start.gd")
-	},
-	"second":{
-		"gdscript": load("res://scenes/UI/dialogue/dialogues/second.gd")
-	}
-}
+const CUTSCENES_PATH = "res://scenes/UI/dialogue/dialogues/"
+
+func get_cutscene_file(scene: String):
+	return load(CUTSCENES_PATH + scene+".gd")

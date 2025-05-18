@@ -117,6 +117,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if (Globals.dialogue_active):
+		return
 	var prev_momentum: Vector2 = momentum # momentum value of the previous frame
 	if (!is_player):
 		dist_to_player = player_node.global_position.distance_to(global_position)

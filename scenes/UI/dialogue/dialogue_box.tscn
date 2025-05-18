@@ -1,33 +1,39 @@
-[gd_scene load_steps=3 format=3 uid="uid://dad4hp2wo7bg0"]
+[gd_scene load_steps=4 format=3 uid="uid://dad4hp2wo7bg0"]
 
 [ext_resource type="Script" path="res://scenes/UI/dialogue/dialogue_box.gd" id="1_6egxw"]
 [ext_resource type="PackedScene" uid="uid://dxmhk3caeu00h" path="res://scenes/UI/dialogue/dialogue.tscn" id="1_ehysd"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7xn30"]
+bg_color = Color(0.0027673, 1.20327e-08, 0.0721846, 0.584314)
+border_color = Color(1, 0.716965, 0.702132, 1)
+
 [node name="DialogueBox" type="CanvasLayer"]
 script = ExtResource("1_6egxw")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
-custom_minimum_size = Vector2(0, 230)
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="MarginContainer3" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(500, 0)
+anchors_preset = -1
+anchor_left = 0.304688
+anchor_top = 0.833333
+anchor_right = 0.695312
+anchor_bottom = 0.948611
 grow_horizontal = 2
 grow_vertical = 0
+metadata/_edit_use_anchors_ = true
 
-[node name="NinePatchRect" type="NinePatchRect" parent="PanelContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer3"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7xn30")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer3/PanelContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer"]
-layout_mode = 2
-
-[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer"]
-layout_mode = 2
-
-[node name="Dialogue" parent="PanelContainer/MarginContainer2" instance=ExtResource("1_ehysd")]
+[node name="Dialogue" parent="MarginContainer3/PanelContainer/MarginContainer" instance=ExtResource("1_ehysd")]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 4
 alignment = 1
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
