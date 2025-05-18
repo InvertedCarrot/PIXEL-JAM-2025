@@ -1,4 +1,22 @@
-[gd_resource type="AnimationNodeStateMachine" load_steps=14 format=3 uid="uid://chvy8d8i31nmg"]
+[gd_resource type="AnimationNodeStateMachine" load_steps=21 format=3 uid="uid://chvy8d8i31nmg"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_c026m"]
+animation = &"lily_dead_down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_u778h"]
+animation = &"lily_dead_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_t065u"]
+animation = &"lily_dead_right"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_qi5a5"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_c026m")
+blend_point_0/pos = Vector2(0, 1)
+blend_point_1/node = SubResource("AnimationNodeAnimation_u778h")
+blend_point_1/pos = Vector2(-0.8, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_t065u")
+blend_point_2/pos = Vector2(0.8, 0)
+blend_mode = 1
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_85y0h"]
 animation = &"lily_idle_down"
@@ -57,11 +75,25 @@ advance_expression = "direction"
 advance_mode = 2
 advance_expression = "!direction"
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sbqrv"]
+advance_mode = 2
+advance_expression = "is_dead"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5km1q"]
+advance_mode = 2
+advance_expression = "is_dead"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xin6c"]
+advance_mode = 2
+advance_expression = "!is_dead"
+
 [resource]
+states/Dead/node = SubResource("AnimationNodeBlendSpace2D_qi5a5")
+states/Dead/position = Vector2(854, 237)
 states/End/position = Vector2(1091, 218.5)
 states/Idle/node = SubResource("AnimationNodeBlendSpace2D_la6yt")
 states/Idle/position = Vector2(662.75, 297)
 states/Run/node = SubResource("AnimationNodeBlendSpace2D_0yeyh")
 states/Run/position = Vector2(662, 158.5)
 states/Start/position = Vector2(369.5, 220)
-transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_yub4v"), "Idle", "Run", SubResource("AnimationNodeStateMachineTransition_7a317"), "Run", "Idle", SubResource("AnimationNodeStateMachineTransition_n260d")]
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_yub4v"), "Idle", "Run", SubResource("AnimationNodeStateMachineTransition_7a317"), "Run", "Idle", SubResource("AnimationNodeStateMachineTransition_n260d"), "Run", "Dead", SubResource("AnimationNodeStateMachineTransition_sbqrv"), "Idle", "Dead", SubResource("AnimationNodeStateMachineTransition_5km1q"), "Dead", "Idle", SubResource("AnimationNodeStateMachineTransition_xin6c")]

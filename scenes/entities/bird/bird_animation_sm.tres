@@ -1,4 +1,22 @@
-[gd_resource type="AnimationNodeStateMachine" load_steps=14 format=3 uid="uid://cc8xhe0d52myl"]
+[gd_resource type="AnimationNodeStateMachine" load_steps=21 format=3 uid="uid://cc8xhe0d52myl"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_oihj6"]
+animation = &"bird_dead_down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5uo5t"]
+animation = &"bird_dead_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vfw2k"]
+animation = &"bird_dead_right"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_kvraa"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_oihj6")
+blend_point_0/pos = Vector2(0, 1)
+blend_point_1/node = SubResource("AnimationNodeAnimation_5uo5t")
+blend_point_1/pos = Vector2(-0.8, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_vfw2k")
+blend_point_2/pos = Vector2(0.8, 0)
+blend_mode = 1
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ikk5q"]
 animation = &"bird_run_left"
@@ -57,10 +75,24 @@ advance_expression = "direction"
 advance_mode = 2
 advance_expression = "!direction"
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_n8nld"]
+advance_mode = 2
+advance_expression = "is_dead"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_w2etj"]
+advance_mode = 2
+advance_expression = "is_dead"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8mcrn"]
+advance_mode = 2
+advance_expression = "!is_dead"
+
 [resource]
+states/Dead/node = SubResource("AnimationNodeBlendSpace2D_kvraa")
+states/Dead/position = Vector2(703.5, 71.5)
 states/Idle/node = SubResource("AnimationNodeBlendSpace2D_gjr35")
 states/Idle/position = Vector2(520.5, 158.5)
 states/Run/node = SubResource("AnimationNodeBlendSpace2D_6wmhn")
 states/Run/position = Vector2(519.875, -0.5)
-transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_du2bx"), "Idle", "Run", SubResource("AnimationNodeStateMachineTransition_lbq7c"), "Run", "Idle", SubResource("AnimationNodeStateMachineTransition_xky43")]
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_du2bx"), "Idle", "Run", SubResource("AnimationNodeStateMachineTransition_lbq7c"), "Run", "Idle", SubResource("AnimationNodeStateMachineTransition_xky43"), "Run", "Dead", SubResource("AnimationNodeStateMachineTransition_n8nld"), "Idle", "Dead", SubResource("AnimationNodeStateMachineTransition_w2etj"), "Dead", "Idle", SubResource("AnimationNodeStateMachineTransition_8mcrn")]
 graph_offset = Vector2(-218, -136)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://uog3n06gpx2s"]
+[gd_scene load_steps=23 format=3 uid="uid://uog3n06gpx2s"]
 
 [ext_resource type="PackedScene" uid="uid://cy4th7add1tw0" path="res://scenes/entities/entity.tscn" id="1_x056f"]
 [ext_resource type="Script" path="res://scenes/entities/lily/lily.gd" id="2_1wixg"]
@@ -16,7 +16,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../EntityImage:frame")
+tracks/0/path = NodePath("EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -33,7 +33,7 @@ step = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../EntityImage:frame")
+tracks/0/path = NodePath("EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -50,7 +50,7 @@ step = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../EntityImage:frame")
+tracks/0/path = NodePath("EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -67,7 +67,7 @@ step = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../EntityImage:frame")
+tracks/0/path = NodePath("EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -84,7 +84,7 @@ step = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../EntityImage:frame")
+tracks/0/path = NodePath("EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -101,7 +101,7 @@ step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../EntityImage:frame")
+tracks/0/path = NodePath("EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -118,7 +118,7 @@ step = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../EntityImage:frame")
+tracks/0/path = NodePath("EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -135,7 +135,7 @@ step = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../EntityImage:frame")
+tracks/0/path = NodePath("EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -152,7 +152,7 @@ step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../EntityImage:frame")
+tracks/0/path = NodePath("EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -162,9 +162,60 @@ tracks/0/keys = {
 "values": [14, 15, 16, 17]
 }
 
+[sub_resource type="Animation" id="Animation_vykhg"]
+resource_name = "lily_dead_right"
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EntityImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [18, 19, 20, 21]
+}
+
+[sub_resource type="Animation" id="Animation_bjrw8"]
+resource_name = "lily_dead_left"
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EntityImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [22, 23, 24, 25]
+}
+
+[sub_resource type="Animation" id="Animation_gmsi1"]
+resource_name = "lily_dead_down"
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EntityImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [26, 27, 28, 29]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ic5tj"]
 _data = {
 "RESET": SubResource("Animation_yrip7"),
+"lily_dead_down": SubResource("Animation_gmsi1"),
+"lily_dead_left": SubResource("Animation_bjrw8"),
+"lily_dead_right": SubResource("Animation_vykhg"),
 "lily_idle_down": SubResource("Animation_2x4sm"),
 "lily_idle_left": SubResource("Animation_y4upt"),
 "lily_idle_right": SubResource("Animation_2gufq"),
@@ -211,6 +262,7 @@ libraries = {
 
 [node name="AnimationTree" parent="." index="4"]
 tree_root = ExtResource("3_o1aml")
+parameters/Dead/blend_position = Vector2(0, 0)
 parameters/Idle/blend_position = Vector2(0.0235199, 0.630607)
 parameters/Run/blend_position = Vector2(-0.201401, -0.56875)
 

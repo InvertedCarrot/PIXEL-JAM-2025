@@ -44,7 +44,7 @@ func start_pos():
 	return Vector2(randf_range(x_range[0], x_range[1])*x_reflect, randf_range(y_range[0], y_range[1])*y_reflect)
 
 func _ready():
-	var zoom_factor = 0.5
+	var zoom_factor = 0.9
 	camera.zoom = Vector2(zoom_factor, zoom_factor)
 	# Add player
 	add_entity_to_level(entity_scenes[player_entity], Vector2(0,0), true)
