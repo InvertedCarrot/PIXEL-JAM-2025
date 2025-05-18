@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bkh4c6v2mbx4k"]
+[gd_scene load_steps=24 format=3 uid="uid://bkh4c6v2mbx4k"]
 
 [ext_resource type="PackedScene" uid="uid://cy4th7add1tw0" path="res://scenes/entities/entity.tscn" id="1_6euje"]
 [ext_resource type="Script" path="res://scenes/entities/cat/cat.gd" id="2_tub6y"]
@@ -17,7 +17,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../EntityImage:frame")
+tracks/0/path = NodePath("EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -34,7 +34,7 @@ step = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../EntityImage:frame")
+tracks/0/path = NodePath("EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -51,7 +51,7 @@ step = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../EntityImage:frame")
+tracks/0/path = NodePath("EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -68,7 +68,7 @@ step = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../EntityImage:frame")
+tracks/0/path = NodePath("EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -85,7 +85,7 @@ step = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../EntityImage:frame")
+tracks/0/path = NodePath("EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -102,7 +102,7 @@ step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../EntityImage:frame")
+tracks/0/path = NodePath("EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -119,7 +119,7 @@ step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../EntityImage:frame")
+tracks/0/path = NodePath("EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -136,7 +136,7 @@ step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../EntityImage:frame")
+tracks/0/path = NodePath("EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -153,7 +153,7 @@ step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../EntityImage:frame")
+tracks/0/path = NodePath("EntityImage:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -163,9 +163,60 @@ tracks/0/keys = {
 "values": [8, 9, 10, 11]
 }
 
+[sub_resource type="Animation" id="Animation_j8bbk"]
+resource_name = "cat_dead_right"
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EntityImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [24, 25, 26, 27]
+}
+
+[sub_resource type="Animation" id="Animation_ol5bj"]
+resource_name = "cat_dead_left"
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EntityImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [28, 29, 30, 31]
+}
+
+[sub_resource type="Animation" id="Animation_0y3v2"]
+resource_name = "cat_dead_up"
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EntityImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [32, 33, 34, 35]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vxowr"]
 _data = {
 "RESET": SubResource("Animation_55i5c"),
+"cat_dead_down": SubResource("Animation_0y3v2"),
+"cat_dead_left": SubResource("Animation_ol5bj"),
+"cat_dead_right": SubResource("Animation_j8bbk"),
 "cat_idle_down": SubResource("Animation_40np2"),
 "cat_idle_left": SubResource("Animation_nbjk8"),
 "cat_idle_right": SubResource("Animation_4qupr"),
@@ -216,6 +267,7 @@ libraries = {
 
 [node name="AnimationTree" parent="." index="4"]
 tree_root = ExtResource("4_3a0qp")
+parameters/Dead/blend_position = Vector2(0, 0)
 parameters/Idle/blend_position = Vector2(-0.009462, -0.799472)
 parameters/Run/blend_position = Vector2(0, 0)
 

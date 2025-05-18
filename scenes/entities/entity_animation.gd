@@ -18,3 +18,4 @@ func _process(_delta: float) -> void:
 	# set blend positions wrt player's direction
 	animation_tree.set("parameters/Run/blend_position", last_facing_direction)
 	animation_tree.set("parameters/Idle/blend_position", last_facing_direction)
+	animation_tree.set("parameters/Dead/blend_position", last_facing_direction)

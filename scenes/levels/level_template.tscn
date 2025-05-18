@@ -2,10 +2,17 @@
 
 [ext_resource type="Script" path="res://scenes/levels/set_level.gd" id="1_6pynj"]
 [ext_resource type="PackedScene" uid="uid://4ixo48h447bf" path="res://scenes/UI.tscn" id="2_cuhtr"]
-[ext_resource type="Texture2D" uid="uid://dpgxyggti58ow" path="res://assets/placeholder_background.jpg" id="3_55tbf"]
+[ext_resource type="Texture2D" uid="uid://dr6yu5oxwjqgd" path="res://assets/placeholder_background.jpg" id="3_55tbf"]
 
 [node name="LevelTemplate" type="Node2D" groups=["Enemies", "Player"]]
 script = ExtResource("1_6pynj")
+num_enemies = {
+"Bird": 3,
+"Cat": 3,
+"Fireball": 3,
+"Lily": 3,
+"Reaper": 3
+}
 
 [node name="TempBackground" type="Sprite2D" parent="."]
 position = Vector2(1200, 673)
