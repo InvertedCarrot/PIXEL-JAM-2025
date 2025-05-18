@@ -113,7 +113,6 @@ func set_layers() -> void: # invoked at _ready()
 
 
 func _ready() -> void:
-	print("ENTITY: Setting up entity ", entity_name)
 	set_properties()
 	abstract_properties_checks()
 	# set area2D sizes for visual clarity
@@ -173,7 +172,7 @@ func _process(delta: float) -> void:
 				dead_enemy.queue_free()
 				Globals.souls_harvested += 1
 		
-		if Input.is_action_just_pressed("eject"):
+		if Input.is_action_just_pressed("swap_souls"):
 			swap_souls = true # the level script will handle the rest
 	
 	# damage calculations
@@ -212,6 +211,7 @@ func take_damage():
 			momentum += velocity
 			velocity = Vector2.ZERO
 		immune_timer.start()
+
 
 func apply_damage():
 	# calculate closest entity

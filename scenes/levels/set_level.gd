@@ -24,7 +24,7 @@ func start_pos():
 	return Vector2(randf_range(x_range[0], x_range[1])*x_reflect, randf_range(y_range[0], y_range[1])*y_reflect)
 
 func _ready():
-	var zoom_factor = 1.0
+	var zoom_factor = 1.3
 	camera.zoom = Vector2(zoom_factor, zoom_factor)
 	add_entity_to_level(bird_entity, Vector2(0, 0), true)
 	add_entity_to_level(fireball_entity, start_pos())
@@ -45,10 +45,8 @@ func _process(delta: float):
 		else:
 			# if currently the soul, we want to possess the closest enemy
 			if closest_target:
-				print("i wanna take over you")
 				take_over(closest_target)
 			else:
-				print("failed :(")
 				player.swap_souls = false # if no bodies nearby, deny the swap
 	
 	for enemy in enemies_node.get_children():
@@ -157,8 +155,6 @@ func take_over(target: CharacterBody2D):
 		"reaper": entity_packed_scene = reaper_entity
 	var added_entity = add_entity_to_level(entity_packed_scene, target.global_position, true)
 	# retain previous health if the target isn't truly dead
-	
-	print(target.health)
 	if target.health > 0:
 		added_entity.health = target.health
 		Globals.player_health = target.health
