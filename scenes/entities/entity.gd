@@ -9,8 +9,9 @@ Notes:
 
 # onready variables (specifically for node access)
 @onready var zones = $DetectZones.get_children()
-@onready var player_node = %Player.get_child(0)
 @onready var timers_node = $Timers
+@onready var dead_entities_range_node = $DeadEntitiesRange
+
 
 # timers
 @onready var atk_timer: Timer = timers_node.get_node("AttackCooldownTimer")
@@ -31,12 +32,14 @@ var is_dead: bool = false # contextually means two things: if the entity is dead
 var health: float
 var damage: float
 var direction: Vector2 # direction travelled by input
-var raw_velocity: Vector2 # the "default" movement patterns of the entity
+var raw_velocity: = Vector2.ZERO # the "default" movement patterns of the entity
 var momentum: Vector2 = Vector2.ZERO # for outside forces affecting the base movement (for random bursts of motion, like knockback, dashing)
 var friction: float = 300 # rate at which momentum decays
 var zone_number: int # the zone the player is currently in wrt the enemy
 
 var entities_in_hurtbox: Array[Variant] = []
+var dead_entities_in_range: Array[Variant] = []
+var swap_souls: bool = false
 
 # for enemies:
 var dist_to_player: float
@@ -44,6 +47,13 @@ var dir_to_player: Vector2
 var curr_behaviour: Callable = idle_behaviour # chosen behaviour determined by zones
 
 var entity_data: Dictionary
+
+
+# related to the level template (i.e. the level will set this up)
+var player_node # refers to the node that contains the player (enemies need this for targeting)
+var enemies_node # the node that contains all alive enemies
+var dead_enemies_node # the node that contains all dead enemies
+var attack_entities_node # the node that contains all attack entities (i.e. projectiles)
 
 
 func set_properties() -> void:
@@ -67,7 +77,7 @@ func abstract_properties_checks() -> void:
 		assert(false, "Error: entity_name must be defined")
 	if (!health):
 		assert(false, "Error: health must be defined")
-	if (!damage):
+	if (!entity_data.has("damage")):
 		assert(false, "Error: damage must be defined")
 	if (!speed):
 		assert(false, "Error: speed must be defined")
@@ -92,6 +102,14 @@ func set_layers() -> void: # invoked at _ready()
 		damage_hitbox.collision_mask = Globals.PLAYER_LAYER + Globals.ATTACK_LAYER # wrt the player, enemies can only get damaged by the melee attack
 		collision_layer = Globals.ENEMY_LAYER
 		collision_mask = Globals.WALL_LAYER
+		
+	# any dead entity should take these layers as priority
+	if (is_dead):
+		damage_hitbox.collision_layer = Globals.DEAD_ENEMIES_LAYER
+		damage_hitbox.collision_mask = Globals.NO_LAYER # TODO: change later
+	
+	dead_entities_range_node.collision_layer = Globals.NO_LAYER
+	dead_entities_range_node.collision_mask = Globals.DEAD_ENEMIES_LAYER
 
 
 func _ready() -> void:
@@ -103,36 +121,43 @@ func _ready() -> void:
 		var collision_shape = zone.get_node("CollisionShape2D")
 		collision_shape.shape.radius = detect_zone_ranges[i]
 		
-		# set all timers to oneshot
+	# set all timers to oneshot
 	for t: Timer in timers_node.get_children():
 		t.one_shot = true
+	
 	set_layers()
 	
-	#DEBUG: set entities in random locations
-	var x_negate = [1, -1].pick_random()
-	var y_negate = [1, -1].pick_random()
-	var spawn_range = [500.0, 700.0]
-	position = Vector2(randf_range(spawn_range[0], spawn_range[1])*x_negate, randf_range(spawn_range[0]/2, spawn_range[1]/2)*y_negate)
+	
+	# DEBUG: to see the zone areas
+	if !is_player:
+		$DetectZones.visible = true
+	if is_player:
+		$DeadEntitiesRange.visible = true
 
 
 func _process(delta: float) -> void:
+	var player_ref = player_node.get_child(0)
 	var prev_momentum: Vector2 = momentum # momentum value of the previous frame
+	
 	if (!is_player):
-		dist_to_player = player_node.global_position.distance_to(global_position)
-		dir_to_player = (player_node.global_position - global_position).normalized()
+		dist_to_player = player_ref.global_position.distance_to(global_position)
+		dir_to_player = (player_ref.global_position - global_position).normalized()
 		zone_number = calculate_zone()
 		
 		# only switch states when there are no ongoing timers (i.e. a state is still "being processed")
 		var state_switch_conds: bool = all_timers_stopped()
 		# switch behaviour based on distance from player
-		match zone_number:
-			-1 when state_switch_conds: curr_behaviour = idle_behaviour
-			0 when state_switch_conds: curr_behaviour = zone_0_behaviour
-			1 when state_switch_conds: curr_behaviour = zone_1_behaviour
-			2 when state_switch_conds: curr_behaviour = zone_2_behaviour
-			3 when state_switch_conds: curr_behaviour = zone_3_behaviour
-		# run behaviour decided upon by state
-		curr_behaviour.call()
+		if !is_dead:
+			match zone_number:
+				-1 when state_switch_conds: curr_behaviour = idle_behaviour
+				0 when state_switch_conds: curr_behaviour = zone_0_behaviour
+				1 when state_switch_conds: curr_behaviour = zone_1_behaviour
+				2 when state_switch_conds: curr_behaviour = zone_2_behaviour
+				3 when state_switch_conds: curr_behaviour = zone_3_behaviour
+			# run behaviour decided upon by state
+			curr_behaviour.call()
+		else: # if dead, enemy should come to a standstill
+			default_stop(false, false)
 	
 	if (is_player):
 		# get directional input and convert to unit vector
@@ -142,23 +167,19 @@ func _process(delta: float) -> void:
 		if Input.is_action_just_pressed("attack") and atk_timer.is_stopped():
 			attack()
 			atk_timer.start()
+		if Input.is_action_just_pressed("harvest") && entity_name != "soul":
+			for dead_enemy in dead_entities_in_range:
+				dead_enemy.queue_free()
+				Globals.souls_harvested += 1
+		
+		if Input.is_action_just_pressed("swap_souls"):
+			swap_souls = true # the level script will handle the rest
 	
 	# damage calculations
 	if entities_in_hurtbox.size() > 0:
-		if immune_timer.is_stopped(): # if immune, don't take damage
-			
-			take_damage() # apply damage (we deal with death below)
-			
-			if is_player:
-				Globals.player_health = health # assign current health to global file
-			else: # is an enemy
-				if (health <= 0):
-					# Delete the node
-					queue_free()
-					# increase mFactor
-					Globals.multiplier += 1
-					# TODO: Scaling logic
-			immune_timer.start()
+		take_damage()
+		# at this point, is_dead is set to true is needed
+		# the level script will manage the enemies accordingly
 	
 	
 	# reduce momentum towards 0 if not updated
@@ -174,17 +195,25 @@ func _process(delta: float) -> void:
 	
 	reflect_velocity(delta)
 
-	# move_and_slide() # move with physics engine (already accounts for deltaTime)
-
-
-
 
 # used by both the player and enemies
-
 func attack():
 	assert(false, "Error: attack() must be defined")
 
 func take_damage():
+	if immune_timer.is_stopped(): # if immune, don't take damage
+		apply_damage() # apply damage (we deal with death below)
+		if is_player:
+			Globals.player_health = health # assign current health to global file
+		if health <= 0:
+			is_dead = true
+			# when dead, transfer all velocity to momentum (i.e. its decays, but still allows sliding)
+			momentum += velocity
+			velocity = Vector2.ZERO
+		immune_timer.start()
+
+
+func apply_damage():
 	# calculate closest entity
 	var closest_entity = null
 	var closest_distance = INF
@@ -204,15 +233,22 @@ func take_damage():
 	health -= closest_entity.damage
 	print("%s took %d damage! (%d health left)" % [entity_name, closest_entity.damage, health])
 
-
 func turn_into_player(): # change collision masks when possessing?
 	is_player = true
+	is_dead = false
 	set_layers()
 	Globals.max_player_health = health
 	Globals.player_health = health
 
 func turn_into_enemy(): # change collision masks when possessing?
 	is_player = false
+	is_dead = false
+	set_layers()
+
+func turn_dead():
+	immune_timer.stop()
+	is_player = false
+	is_dead = true
 	set_layers()
 
 func reflect_velocity(delta) -> void:
@@ -236,15 +272,22 @@ func _on_hurtbox_area_exited(area: Area2D) -> void:
 	var root_node = area.get_parent() # could be entity OR attack_entity
 	entities_in_hurtbox.erase(root_node)
 
+func _on_dead_entities_range_area_entered(area: Area2D) -> void:
+	var root_node = area.get_parent() # could be entity OR attack_entity
+	dead_entities_in_range.append(root_node)
+
+func _on_dead_entities_range_area_exited(area: Area2D) -> void:
+	var root_node = area.get_parent() # could be entity OR attack_entity
+	dead_entities_in_range.erase(root_node)
+
 
 func spawn_attack_entity(packed_scene: PackedScene, entity_direction: Vector2) -> Node:
 	var attack_entity = packed_scene.instantiate()
 	attack_entity.start_global_position = global_position
 	attack_entity.start_direction = entity_direction
 	attack_entity.from_player = is_player
-	%AttackEntities.add_child(attack_entity)
+	attack_entities_node.add_child(attack_entity)
 	return attack_entity
-
 
 
 ############################## zone functionalities (enemies only) ##############################
@@ -303,8 +346,8 @@ func default_pursuit(speed_scale: float = 1, strafe: bool = false, strafe_angle_
 		direction = dir_to_player
 	raw_velocity = direction * speed * speed_scale
 
-func default_stop(abrupt: bool = false) -> void:
-	direction = dir_to_player # need this bc the AnimationTree uses direction to face the right way
+func default_stop(abrupt: bool = false, look_at: bool = true) -> void:
+	if look_at: direction = dir_to_player # need this bc the AnimationTree uses direction to face the right way
 	momentum = Vector2.ZERO if abrupt else velocity
 	raw_velocity = Vector2.ZERO
 
