@@ -125,3 +125,13 @@ var ATTACK_ENTITIES_DATA = {
 		"uptime": 6,
 	}
 }
+
+## Dialogues
+
+var dialogue_active: bool = false
+
+enum dialogue_stage{
+	START,
+	CUTSCENE1,
+	CUTSCENE2
+}

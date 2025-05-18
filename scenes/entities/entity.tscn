@@ -18,7 +18,7 @@ radius = 32.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_1y5sk"]
 radius = 18.0
 
-[node name="Entity" type="CharacterBody2D"]
+[node name="Entity" type="CharacterBody2D" groups=["Entity"]]
 script = ExtResource("1_ipa0w")
 
 [node name="EntityImage" type="Sprite2D" parent="."]

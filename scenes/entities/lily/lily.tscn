@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://uog3n06gpx2s"]
+[gd_scene load_steps=20 format=3 uid="uid://uog3n06gpx2s"]
 
 [ext_resource type="PackedScene" uid="uid://cy4th7add1tw0" path="res://scenes/entities/entity.tscn" id="1_x056f"]
 [ext_resource type="Script" path="res://scenes/entities/lily/lily.gd" id="2_1wixg"]
@@ -187,9 +187,6 @@ radius = 44.0
 resource_local_to_scene = true
 radius = 32.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_k56cw"]
-size = Vector2(62, 72)
-
 [node name="Lily" instance=ExtResource("1_x056f")]
 script = ExtResource("2_1wixg")
 
@@ -197,7 +194,7 @@ script = ExtResource("2_1wixg")
 texture = ExtResource("3_j8ppr")
 hframes = 30
 
-[node name="Hurtbox" parent="." index="2"]
+[node name="Hurtbox" parent="." index="1"]
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
@@ -205,21 +202,21 @@ metadata/_edit_group_ = true
 position = Vector2(0, 9)
 shape = SubResource("RectangleShape2D_mebsn")
 
-[node name="WallCollideShape" parent="." index="3"]
+[node name="WallCollideShape" parent="." index="2"]
 position = Vector2(-1.5, 2)
 shape = SubResource("RectangleShape2D_ygkec")
 
-[node name="AnimationPlayer" parent="." index="4"]
+[node name="AnimationPlayer" parent="." index="3"]
 libraries = {
 "": SubResource("AnimationLibrary_ic5tj")
 }
 
-[node name="AnimationTree" parent="." index="5"]
+[node name="AnimationTree" parent="." index="4"]
 tree_root = ExtResource("3_o1aml")
 parameters/Idle/blend_position = Vector2(0.0235199, 0.630607)
 parameters/Run/blend_position = Vector2(-0.201401, -0.56875)
 
-[node name="DetectZones" parent="." index="7"]
+[node name="DetectZones" parent="." index="6"]
 visible = true
 
 [node name="CollisionShape2D" parent="DetectZones/Zone0" index="0"]
@@ -230,6 +227,3 @@ shape = SubResource("CircleShape2D_x5p5r")
 
 [node name="CollisionShape2D" parent="DetectZones/Zone2" index="0"]
 shape = SubResource("CircleShape2D_1452b")
-
-[node name="CollisionShape2D" parent="StageCollisionHitbox" index="0"]
-shape = SubResource("RectangleShape2D_k56cw")

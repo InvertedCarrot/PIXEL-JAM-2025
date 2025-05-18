@@ -125,10 +125,7 @@ position = Vector2(0, -9)
 texture = ExtResource("3_u5o1f")
 hframes = 28
 
-[node name="AttackHitbox" parent="." index="1"]
-visible = false
-
-[node name="Hurtbox" parent="." index="2"]
+[node name="Hurtbox" parent="." index="1"]
 visible = false
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
@@ -136,20 +133,20 @@ metadata/_edit_group_ = true
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 shape = SubResource("CircleShape2D_w34j2")
 
-[node name="WallCollideShape" parent="." index="3"]
+[node name="WallCollideShape" parent="." index="2"]
 shape = SubResource("CircleShape2D_ypqcs")
 
-[node name="AnimationPlayer" parent="." index="4"]
+[node name="AnimationPlayer" parent="." index="3"]
 libraries = {
 "": SubResource("AnimationLibrary_rw17j")
 }
 
-[node name="AnimationTree" parent="." index="5"]
+[node name="AnimationTree" parent="." index="4"]
 tree_root = ExtResource("3_0egjs")
 parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Run/blend_position = Vector2(-0.330464, 0.60105)
 
-[node name="DetectZones" parent="." index="7"]
+[node name="DetectZones" parent="." index="6"]
 visible = true
 
 [node name="CollisionShape2D" parent="DetectZones/Zone0" index="0"]
@@ -168,6 +165,6 @@ debug_color = Color(0.66965, 0.5469, 1.92523e-07, 0.156863)
 [node name="AttackCooldownTimer" parent="Timers" index="0"]
 wait_time = 2.0
 
-[node name="PlayerInvincibilityTimer" type="Timer" parent="." index="9"]
+[node name="PlayerInvincibilityTimer" type="Timer" parent="." index="8"]
 
 [connection signal="timeout" from="PlayerInvincibilityTimer" to="." method="_on_player_invincibility_timer_timeout"]

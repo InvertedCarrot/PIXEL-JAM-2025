@@ -45,6 +45,7 @@ var curr_behaviour: Callable = idle_behaviour # chosen behaviour determined by z
 
 var entity_data: Dictionary
 
+signal dialogue_activate(scene)
 
 func set_properties() -> void:
 	if (!entity_name):
@@ -173,6 +174,10 @@ func _process(delta: float) -> void:
 	velocity = raw_velocity + momentum
 	
 	reflect_velocity(delta)
+	
+	if (Input.is_action_just_pressed("debug")):
+		Globals.dialogue_active = ! Globals.dialogue_active
+		dialogue_activate.emit("first")
 
 	# move_and_slide() # move with physics engine (already accounts for deltaTime)
 
