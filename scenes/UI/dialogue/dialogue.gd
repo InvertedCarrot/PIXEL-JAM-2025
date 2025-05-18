@@ -7,7 +7,9 @@ var dialogue_engine : DialogueEngine = null
 
 const dialogue_box_scene = preload("res://scenes/UI/dialogue/dialogue_box.tscn")
 
-func _ready() -> void:
+#func _ready() -> void:
+
+func begin():
 	dialogue_engine = dialogue_gdscript.new()
 	dialogue_engine.dialogue_started.connect(__on_dialogue_started)
 	dialogue_engine.dialogue_continued.connect(__on_dialogue_continued)

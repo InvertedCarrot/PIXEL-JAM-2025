@@ -177,7 +177,11 @@ func _process(delta: float) -> void:
 	
 	if (Input.is_action_just_pressed("debug")):
 		Globals.dialogue_active = ! Globals.dialogue_active
-		dialogue_activate.emit("first")
+		dialogue_activate.emit("start")
+	
+	if (Input.is_action_just_pressed("debug2")):
+		Globals.dialogue_active = ! Globals.dialogue_active
+		dialogue_activate.emit("second")
 
 	# move_and_slide() # move with physics engine (already accounts for deltaTime)
 

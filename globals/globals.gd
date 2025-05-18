@@ -130,8 +130,13 @@ var ATTACK_ENTITIES_DATA = {
 
 var dialogue_active: bool = false
 
-enum dialogue_stage{
-	START,
-	CUTSCENE1,
-	CUTSCENE2
+const DIALOGUE_BOX_SCENE = preload("res://scenes/UI/dialogue/dialogue_box.tscn")
+
+var CUTSCENE_DATA = {
+	"start":{
+		"gdscript": load("res://scenes/UI/dialogue/dialogues/start.gd")
+	},
+	"second":{
+		"gdscript": load("res://scenes/UI/dialogue/dialogues/second.gd")
+	}
 }

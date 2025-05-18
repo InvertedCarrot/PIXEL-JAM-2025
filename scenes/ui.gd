@@ -3,7 +3,6 @@ extends CanvasLayer
 @onready var entity = get_tree().get_nodes_in_group("Entity")[0]
 
 var dialogue_box: DialogueBox = null
-const dialogue_box_scene = preload("res://scenes/UI/dialogue/dialogue_box.tscn")
 
 
 # Called when the node enters the scene tree for the first time.
@@ -13,9 +12,9 @@ func _ready() -> void:
 
 
 func start(scene: String):
-	print(scene)
-	dialogue_box = dialogue_box_scene.instantiate()
-	dialogue_box.dialogue_gdscript = load("res://scenes/UI/dialogue/dialogue_log.gd")
+	print("Scene:",scene)
+	dialogue_box = Globals.DIALOGUE_BOX_SCENE.instantiate()
+	dialogue_box.dialogue_gdscript = Globals.CUTSCENE_DATA[scene]["gdscript"]
 	# add dialogue_box as child
 	add_child(dialogue_box)
 	dialogue_box.begin()
