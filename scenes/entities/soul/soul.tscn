@@ -1,0 +1,213 @@
+[gd_scene load_steps=29 format=3 uid="uid://c41my2fbrae3u"]
+
+[ext_resource type="PackedScene" uid="uid://cy4th7add1tw0" path="res://scenes/entities/entity.tscn" id="1_1dcsr"]
+[ext_resource type="Script" path="res://scenes/entities/soul/soul.gd" id="2_cfaw6"]
+[ext_resource type="Texture2D" uid="uid://crd0aw7oedjdt" path="res://assets/entities/soul_spritesheet.png" id="2_w7f0w"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_st5hs"]
+radius = 19.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_26vit"]
+radius = 24.0
+
+[sub_resource type="Animation" id="Animation_gnwae"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%AnimationTree/../EntityImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_bbo41"]
+resource_name = "soul_idle_down"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%AnimationTree/../EntityImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 15]
+}
+
+[sub_resource type="Animation" id="Animation_2eymi"]
+resource_name = "soul_idle_left"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%AnimationTree/../EntityImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_etvo4"]
+resource_name = "soul_idle_right"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%AnimationTree/../EntityImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_83xbp"]
+resource_name = "soul_idle_up"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%AnimationTree/../EntityImage:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vtkap"]
+_data = {
+"RESET": SubResource("Animation_gnwae"),
+"soul_idle_down": SubResource("Animation_bbo41"),
+"soul_idle_left": SubResource("Animation_2eymi"),
+"soul_idle_right": SubResource("Animation_etvo4"),
+"soul_idle_up": SubResource("Animation_83xbp")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_h0u7e"]
+animation = &"soul_idle_up"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3do83"]
+animation = &"soul_idle_down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v5gve"]
+animation = &"soul_idle_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_di3sg"]
+animation = &"soul_idle_right"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_wdg7l"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_h0u7e")
+blend_point_0/pos = Vector2(0, -1)
+blend_point_1/node = SubResource("AnimationNodeAnimation_3do83")
+blend_point_1/pos = Vector2(0, 1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_v5gve")
+blend_point_2/pos = Vector2(-0.8, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_di3sg")
+blend_point_3/pos = Vector2(0.8, 0)
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lvwl6"]
+animation = &"soul_idle_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gsn20"]
+animation = &"soul_idle_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5hc0b"]
+animation = &"soul_idle_down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_m3xke"]
+animation = &"soul_idle_up"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_jnjt2"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_lvwl6")
+blend_point_0/pos = Vector2(-0.8, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_gsn20")
+blend_point_1/pos = Vector2(0.8, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_5hc0b")
+blend_point_2/pos = Vector2(0, 1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_m3xke")
+blend_point_3/pos = Vector2(0, -1)
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qu5hd"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_rxygf"]
+advance_mode = 2
+advance_expression = "direction"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_m3q4o"]
+advance_mode = 2
+advance_expression = "!direction"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_3wekc"]
+states/Idle/node = SubResource("AnimationNodeBlendSpace2D_wdg7l")
+states/Idle/position = Vector2(494, 185)
+states/Run/node = SubResource("AnimationNodeBlendSpace2D_jnjt2")
+states/Run/position = Vector2(496, 1)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_qu5hd"), "Idle", "Run", SubResource("AnimationNodeStateMachineTransition_rxygf"), "Run", "Idle", SubResource("AnimationNodeStateMachineTransition_m3q4o")]
+graph_offset = Vector2(-164, -100)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vnybh"]
+resource_local_to_scene = true
+radius = 53.0377
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pvlkv"]
+resource_local_to_scene = true
+radius = 44.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cbnwj"]
+resource_local_to_scene = true
+radius = 32.0
+
+[node name="Soul" instance=ExtResource("1_1dcsr")]
+script = ExtResource("2_cfaw6")
+
+[node name="EntityImage" parent="." index="0"]
+position = Vector2(0, -7)
+texture = ExtResource("2_w7f0w")
+hframes = 16
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+shape = SubResource("CircleShape2D_st5hs")
+
+[node name="WallCollideShape" parent="." index="2"]
+shape = SubResource("CircleShape2D_26vit")
+
+[node name="AnimationPlayer" parent="." index="3"]
+libraries = {
+"": SubResource("AnimationLibrary_vtkap")
+}
+
+[node name="AnimationTree" parent="." index="4"]
+tree_root = SubResource("AnimationNodeStateMachine_3wekc")
+parameters/Idle/blend_position = Vector2(-0.391331, -0.0155441)
+parameters/Run/blend_position = Vector2(0.000619173, 0.982783)
+
+[node name="CollisionShape2D" parent="DetectZones/Zone0" index="0"]
+shape = SubResource("CircleShape2D_vnybh")
+
+[node name="CollisionShape2D" parent="DetectZones/Zone1" index="0"]
+shape = SubResource("CircleShape2D_pvlkv")
+
+[node name="CollisionShape2D" parent="DetectZones/Zone2" index="0"]
+shape = SubResource("CircleShape2D_cbnwj")
