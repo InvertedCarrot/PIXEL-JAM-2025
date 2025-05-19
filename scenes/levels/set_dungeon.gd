@@ -15,27 +15,28 @@ var npc_entity: PackedScene = preload("res://scenes/entities/npc_cat/npc_cat.tsc
 
 var camera: Camera2D = Camera2D.new()
 
-@export_enum("Cat", "Bird", "Fireball", "Lily", "Reaper", "Soul")
-var player_entity: String = "Cat"
+@export_enum("cat", "bird", "fireball", "lily", "reaper", "soul")
+var player_entity: String = "cat"
+
 
 @export var num_enemies = {
-	"Bird": 0,
-	"Cat": 0,
-	"Fireball": 0,
-	"Lily": 0,
-	"Reaper": 0,
+	"bird": 0,
+	"cat": 0,
+	"fireball": 0,
+	"lily": 0,
+	"reaper": 0,
 }
 
 @export var spawn_npc: bool = false
 @export var npc_position: Vector2 = Vector2.ZERO
 
 var entity_scenes := {
-	"Bird": bird_entity,
-	"Cat": cat_entity,
-	"Fireball": fireball_entity,
-	"Lily": lily_entity,
-	"Reaper": reaper_entity,
-	"Soul": soul_entity
+	"bird": bird_entity,
+	"cat": cat_entity,
+	"fireball": fireball_entity,
+	"lily": lily_entity,
+	"reaper": reaper_entity,
+	"soul": soul_entity
 }
 
 # DEBUG
@@ -55,7 +56,7 @@ func _ready():
 	if (spawn_npc):
 		add_entity_to_level(npc_entity, npc_position)
 	
-	if (!num_enemies.has_all(["Cat","Bird","Fireball","Lily","Reaper"]) or num_enemies.size()!=5):
+	if (!num_enemies.has_all(["cat","bird","fireball","lily","reaper"]) or num_enemies.size()!=5):
 		assert(false, "ERROR: Enemies dict must contain the exact enemy names")
 	
 	# Add each enemy the right amount of times
