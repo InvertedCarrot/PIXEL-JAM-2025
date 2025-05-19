@@ -22,6 +22,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Globals="*res://globals/globals.gd"
+Transition="*res://globals/transition.gd"
 
 [display]
 
@@ -90,3 +91,5 @@ swap_souls={
 2d_physics/layer_4="Stage"
 2d_physics/layer_5="Dead Enemies"
 2d_physics/layer_6="EnemyAttack"
+2d_physics/layer_7="TransitionAreas"
+2d_physics/layer_8="CutsceneAreas"

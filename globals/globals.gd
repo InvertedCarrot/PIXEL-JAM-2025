@@ -19,6 +19,8 @@ var PLAYER_ATTACK_LAYER = 0b0100
 var WALL_LAYER = 0b1000
 var DEAD_ENEMIES_LAYER = 0b10000
 var ENEMY_ATTACK_LAYER = 0b100000
+var TRANSITION_AREA_LAYER = 0b1000000
+var CUTCENE_AREA_LAYER = 0b10000000
 
 
 # Entities metadata
@@ -26,7 +28,7 @@ var ENTITIES_DATA = {
 	"cat": {
 		"health": 100,
 		"damage": 1,
-		"speed": 150,
+		"speed": 300,
 		"max_momentum_scalar": 450,
 		"detect_zone_ranges": [550, 350, 200, 125] as Array[float],
 		"knockback_scalar": 300,
@@ -158,15 +160,30 @@ var ATTACK_ENTITIES_DATA = {
 	}
 }
 
+## Level maintaining
+var current_dungeon = 0
+
+
 ## Dialogues
 
 var dialogue_active: bool = false
 
-var dialogue_scene: String = "start"
+var dialogue_scene: String = ""
 
 const DIALOGUE_BOX_SCENE = preload("res://scenes/UI/dialogue/dialogue_box.tscn")
 
 var CUTSCENES_GDSCRIPT = load("res://scenes/UI/dialogue/dialogue_logs.gd")
 
-# Level maintaining
-var current_dungeon = 0
+enum{
+	NOT_STARTED,
+	IN_PROGRESS, 
+	DONE
+}
+
+var dialogue_stages = {
+	"intro": NOT_STARTED
+}
+
+func check_dialogue_state(dialogue: String, dungeon: int, state) -> bool:
+	## Check if dialogue is in a given state in a given dungeon
+	return dungeon==current_dungeon and dialogue_stages[dialogue]==state

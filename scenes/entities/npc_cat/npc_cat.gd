@@ -2,9 +2,6 @@ extends Entity
 
 var scratch_scene: PackedScene = preload("res://scenes/attack_entities/scratch/scratch.tscn")
 
-var dialogues_done = {
-	"intro": false
-}
 
 func _ready() -> void:
 	entity_name = "npc_cat"
@@ -12,24 +9,23 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	super(delta)
-	if Globals.current_dungeon==0 and dialogues_done["intro"] and !Globals.dialogue_active:
+	if Globals.check_dialogue_state("intro", 0, Globals.DONE):
 		direction = Vector2(1,0)
 		raw_velocity = direction * speed * 1.5
-		 
+		if (position.x >= 600):
+			queue_free()
 		
 
 func idle_behaviour() -> void:
-	if Globals.current_dungeon==0 and !dialogues_done["intro"]:
+	if Globals.check_dialogue_state("intro", 0, Globals.NOT_STARTED):
 		default_pursuit()
 	
 
 func zone_0_behaviour() -> void:
-	if Globals.current_dungeon<=1:
-		if Globals.current_dungeon==0 and !dialogues_done["intro"]:
-			default_stop(false, false)
-			dialogue_activate.emit("intro")
-			dialogues_done["intro"] = true
-			
+	if Globals.check_dialogue_state("intro", 0, Globals.NOT_STARTED):
+		default_stop(false, false)
+		dialogue_activate.emit("intro")
+
 
 func zone_1_behaviour() -> void:
 	pass

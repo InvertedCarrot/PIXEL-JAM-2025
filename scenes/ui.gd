@@ -40,6 +40,7 @@ func start(scene: String):
 	if (dialogue_box==null):
 		Globals.dialogue_active = true
 		Globals.dialogue_scene = scene
+		Globals.dialogue_stages[scene] = Globals.IN_PROGRESS
 		dialogue_box = Globals.DIALOGUE_BOX_SCENE.instantiate()
 		dialogue_box.dialogue_gdscript = Globals.CUTSCENES_GDSCRIPT
 		# add dialogue_box as child

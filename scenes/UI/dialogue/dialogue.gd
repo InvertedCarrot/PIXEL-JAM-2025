@@ -59,10 +59,14 @@ func __on_dialogue_continued(p_dialogue_entry : DialogueEntry) -> void:
 func __on_dialogue_finished() -> void:
 	print("Dialogue Exited!")
 	Globals.dialogue_active = false
+	Globals.dialogue_stages[Globals.dialogue_scene] = Globals.DONE
+	Globals.dialogue_scene = ""
 
 func __on_dialogue_canceled() -> void:
 	print("Dialogue Canceled!")
 	Globals.dialogue_active = false
+	Globals.dialogue_stages[Globals.dialogue_scene] = Globals.DONE
+	Globals.dialogue_scene = ""
 
 func __on_animation_started(p_animation_name : StringName) -> void:
 	print("Animation started:", p_animation_name)

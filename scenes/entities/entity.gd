@@ -96,24 +96,32 @@ func abstract_properties_checks() -> void:
 
 func set_layers() -> void: # invoked at _ready()
 	var damage_hitbox = get_node("Hurtbox")
+	var transition_area = get_node("TransitionArea")
 
 	if (entity_name=="npc_cat"):
 		damage_hitbox.collision_layer = Globals.NO_LAYER
 		damage_hitbox.collision_mask = Globals.NO_LAYER
 		collision_layer = Globals.NO_LAYER
 		collision_mask = Globals.WALL_LAYER
+		transition_area.collision_layer = Globals.NO_LAYER
+		transition_area.collision_mask = Globals.NO_LAYER
 
 	elif (is_player): # this is a PLAYER
 		damage_hitbox.collision_layer = Globals.PLAYER_LAYER
 		damage_hitbox.collision_mask = Globals.ENEMY_LAYER + Globals.ENEMY_ATTACK_LAYER
 		collision_layer = Globals.NO_LAYER
 		collision_mask = Globals.WALL_LAYER
+		transition_area.collision_layer = Globals.NO_LAYER
+		transition_area.collision_mask = Globals.TRANSITION_AREA_LAYER
+		
 
 	else: # this is an ENEMY
 		damage_hitbox.collision_layer = Globals.ENEMY_LAYER
 		damage_hitbox.collision_mask = Globals.PLAYER_LAYER + Globals.PLAYER_ATTACK_LAYER
 		collision_layer = Globals.NO_LAYER
-		collision_mask = Globals.WALL_LAYER
+		collision_mask = Globals.WALL_LAYER + Globals.TRANSITION_AREA_LAYER
+		transition_area.collision_layer = Globals.NO_LAYER
+		transition_area.collision_mask = Globals.NO_LAYER
 
 	# any dead entity should take these layers as priority
 	if (is_dead):
