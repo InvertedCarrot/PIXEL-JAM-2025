@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends ProgressBar
 
 @onready var atk_timer: Timer = %AttackTimer
 

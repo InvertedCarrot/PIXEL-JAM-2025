@@ -1,14 +1,10 @@
-extends CanvasLayer
+extends ProgressBar
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	pass
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	#print("in healthbar.gd: max_player_health = ", Globals.max_player_health)
-	#print("in healthbar.gd: player_health = ", Globals.player_health)
 	var percent = float(Globals.player_health)/(Globals.max_player_health) * 100 # need to do this for FP stuff
 	%HealthBar.value = percent
 	if percent >= 70:

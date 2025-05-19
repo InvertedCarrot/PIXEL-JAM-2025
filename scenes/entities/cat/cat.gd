@@ -198,7 +198,5 @@ func act_with_fire(fire_trail_amount):
 
 # when state timer is done, move to next state
 func _on_state_switch_timer_timeout() -> void:
-	print(curr_state)
 	curr_state = (curr_state + 1) % states.size()
-	print(curr_state)
 	ss_timer.start()

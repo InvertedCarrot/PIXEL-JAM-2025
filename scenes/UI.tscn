@@ -1,63 +1,158 @@
-[gd_scene load_steps=7 format=3 uid="uid://4ixo48h447bf"]
+[gd_scene load_steps=15 format=3 uid="uid://4ixo48h447bf"]
 
 [ext_resource type="Script" path="res://scenes/ui.gd" id="1_vjo20"]
-[ext_resource type="PackedScene" uid="uid://c100e6hgm76ay" path="res://scenes/UI/healthbar/healthbar.tscn" id="2_ohq0n"]
-[ext_resource type="PackedScene" uid="uid://bslc78nxumklv" path="res://scenes/UI/multiplier/multiplier.tscn" id="3_5esef"]
 [ext_resource type="PackedScene" uid="uid://dad4hp2wo7bg0" path="res://scenes/UI/dialogue/dialogue_box.tscn" id="3_387sr"]
-[ext_resource type="PackedScene" uid="uid://cqnko27h0qxmp" path="res://scenes/UI/attackbar/attackbar.tscn" id="4_k8qb2"]
+[ext_resource type="Texture2D" uid="uid://blp1lckbxo3du" path="res://assets/heart.png" id="5_b5oox"]
+[ext_resource type="Texture2D" uid="uid://bpn01myka7ps8" path="res://assets/portraits/fireball_portrait.png" id="6_bn5sj"]
+[ext_resource type="Texture2D" uid="uid://dem16q75udr1r" path="res://assets/soul.png" id="7_4mpse"]
+[ext_resource type="Script" path="res://scenes/UI/attack_bar.gd" id="7_djk1g"]
+[ext_resource type="Script" path="res://scenes/UI/health_bar.gd" id="7_sjwx2"]
+[ext_resource type="Script" path="res://scenes/UI/multiplier.gd" id="8_385kd"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e3sx0"]
-bg_color = Color(0.596078, 0.694118, 0.756863, 0)
-corner_detail = 20
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hycdd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_516jl"]
+bg_color = Color(0.42, 0.42, 0.42, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_do2vt"]
+bg_color = Color(0.79, 0.79, 0.79, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5cqy1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_clcwa"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4l2py"]
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_vjo20")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="UINode" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(0, 250)
 anchors_preset = 10
 anchor_right = 1.0
-offset_right = -880.0
-offset_bottom = 100.0
 grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_hycdd")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UINode"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UINode/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UINode/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CharacterColumn" type="VBoxContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Outline" type="PanelContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/CharacterColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_516jl")
+
+[node name="MarginContainer" type="MarginContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/CharacterColumn/Outline"]
+layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/CharacterColumn/Outline/MarginContainer"]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_e3sx0")
+theme_override_styles/panel = SubResource("StyleBoxFlat_do2vt")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 30
-
-[node name="Healthbar" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("2_ohq0n")]
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="AttackBar" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("4_k8qb2")]
+[node name="PlayerPortrait" type="TextureRect" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/CharacterColumn/Outline/MarginContainer/PanelContainer"]
 unique_name_in_owner = true
-offset = Vector2(0, 100)
-transform = Transform2D(1, 0, 0, 1, 0, 100)
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+texture = ExtResource("6_bn5sj")
+expand_mode = 3
+stretch_mode = 4
 
-[node name="Multiplier" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("3_5esef")]
-offset = Vector2(0, 50)
-transform = Transform2D(1, 0, 0, 1, 0, 50)
+[node name="AttackBar" type="ProgressBar" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/CharacterColumn"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+show_percentage = false
+script = ExtResource("7_djk1g")
+
+[node name="AttackTimer" type="Timer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/CharacterColumn/AttackBar"]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="Bars" type="VBoxContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_constants/separation = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/Bars"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_5cqy1")
+
+[node name="PlayerHealthBar" type="HBoxContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/Bars"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="HealthIcon" type="TextureRect" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/Bars/PlayerHealthBar"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("5_b5oox")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HealthBar" type="ProgressBar" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/Bars/PlayerHealthBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+size_flags_horizontal = 3
+show_percentage = false
+script = ExtResource("7_sjwx2")
+
+[node name="PlayerSoulBar" type="HBoxContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/Bars"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="SoulIcon" type="TextureRect" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/Bars/PlayerSoulBar"]
+custom_minimum_size = Vector2(50, 35)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("7_4mpse")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/Bars/PlayerSoulBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="MultiplierBar" type="ProgressBar" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/Bars/PlayerSoulBar/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 6.0
+show_percentage = false
+script = ExtResource("8_385kd")
+
+[node name="PanelContainer" type="PanelContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/Bars/PlayerSoulBar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_clcwa")
+
+[node name="EmptySpace" type="PanelContainer" parent="UINode/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_4l2py")
 
 [node name="DialogueBox" parent="." instance=ExtResource("3_387sr")]
