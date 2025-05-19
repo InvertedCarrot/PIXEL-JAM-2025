@@ -6,11 +6,11 @@
 
 [node name="Dungeon1" instance=ExtResource("1_7eu1p")]
 num_enemies = {
-"bird": 0,
+"bird": 2,
 "cat": 0,
-"fireball": 0,
-"lily": 0,
-"reaper": 1
+"fireball": 2,
+"lily": 3,
+"reaper": 3
 }
 
 [node name="Room1" parent="Rooms" index="0" instance=ExtResource("2_x023l")]

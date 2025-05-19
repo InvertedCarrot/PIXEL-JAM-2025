@@ -11,9 +11,9 @@ var curr_state: int
 var state_switch_cooldown
 
 enum states {
-	AGGRESSIVE = 0,
-	DEFENSIVE = 1,
-	HYBRID = 2
+	DEFENSIVE = 0,
+	HYBRID = 1,
+	AGGRESSIVE = 2,
 }
 
 func set_properties() -> void:
