@@ -7,12 +7,15 @@ var potion_amount: float
 
 func set_properties() -> void:
 	super()
-	potion_amount = entity_data["potion_amount"]
+	potion_amount = entity_data["potion_amount"][0]
 
 func abstract_properties_checks() -> void:
 	super()
-	if (!potion_amount):
-		assert(false, "Error: potion_amount must be defined")
+	check_array_property_exists("potion_amount")
+
+func scale_entity_stats():
+	super()
+	potion_amount = scale_property("potion_amount")
 
 func _ready() -> void:
 	entity_name = "bird"

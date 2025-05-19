@@ -9,15 +9,15 @@ extends CharacterBody2D
 var attack_entity_name: String
 var damage: float
 var speed: float
-# uptime is also abstract
-var remove_upon_hit = null
-var uptime_autostart = null
-var knockback_scalar = null
-var can_bounce = null
-
-
-# regular properties
 var decceleration: float
+var knockback_scalar: float
+# uptime is also abstract
+
+var remove_upon_hit: bool
+var uptime_autostart: bool
+var can_bounce: bool
+
+
 # attack entity data
 var attack_entity_data: Dictionary
 # used to check if direction, position, from_player were initialized upon adding a PackedScene (i.e. inside the entity's code)
@@ -26,38 +26,44 @@ var start_direction = null
 var from_player = null
 
 
+func check_array_property_exists(property_name: String, array_length: int = 2):
+	if (!attack_entity_data.has(property_name)):
+		assert(false, "Error: " + property_name + " must be defined")
+	if (attack_entity_data[property_name].size() != array_length):
+		assert(false, "Error: " + property_name + " must be an array of size " + str(array_length))
+
+func check_bool_property_exists(property_name):
+	if (!attack_entity_data[property_name] in [true, false]):
+		assert(false, "Error: " + property_name + " must be defined")
+
+
 func set_properties() -> void:
 	if (!attack_entity_name):
 		assert(false, "Define attack_entity_name before calling set_properties()")
-	attack_entity_data = Globals.ATTACK_ENTITIES_DATA[attack_entity_name]
 	# Set properties from globals
-	damage = attack_entity_data["damage"]
-	speed = attack_entity_data["speed"]
-	decceleration = attack_entity_data["decceleration"]
+	damage = attack_entity_data["damage"][0]
+	speed = attack_entity_data["speed"][0]
+	decceleration = attack_entity_data["decceleration"][0]
+	knockback_scalar = attack_entity_data["knockback_scalar"][0]
+	uptime_timer.wait_time = attack_entity_data["uptime"][0]
 	remove_upon_hit = attack_entity_data["remove_upon_hit"]
 	uptime_autostart = attack_entity_data["uptime_autostart"]
-	knockback_scalar = attack_entity_data["knockback_scalar"]
 	can_bounce = attack_entity_data["can_bounce"]
-	uptime_timer.wait_time = attack_entity_data["uptime"]
+
 
 
 func abstract_properties_checks() -> void:
 	if (!attack_entity_name):
 		assert(false, "Error: attack_entity_name must be defined")
-	if (!damage):
-		assert(false, "Error: damage must be defined")
-	if (!speed):
-		assert(false, "Error: speed must be defined")
-	if (!attack_entity_data.has("uptime")):
-		assert(false, "Error: uptime must be defined")
-	if (!attack_entity_data.has("remove_upon_hit")):
-		assert(false, "Error: remove_upon_hit must be defined")
-	if (!attack_entity_data.has("uptime_autostart")):
-		assert(false, "Error: uptime_autostart must be defined")
-	if (knockback_scalar == null):
-		assert(false, "Error: knockback_scalar must be defined")
-	if (can_bounce == null):
-		assert(false, "Error: can_bounce must be defined")
+	attack_entity_data = Globals.ATTACK_ENTITIES_DATA[attack_entity_name]
+	check_array_property_exists("damage")
+	check_array_property_exists("speed")
+	check_array_property_exists("decceleration")
+	check_array_property_exists("knockback_scalar")
+	check_array_property_exists("uptime")
+	check_bool_property_exists("remove_upon_hit")
+	check_bool_property_exists("uptime_autostart")
+	check_bool_property_exists("can_bounce")
 	# for PackedScene initialization
 	if (start_global_position == null):
 		assert(false, "Error: start_global_position must be initialized when adding a PackedScene")
@@ -66,9 +72,28 @@ func abstract_properties_checks() -> void:
 	if (from_player == null):
 		assert(false, "Error: from_player must be initialized when adding a PackedScene")
 
+
+
+func scale_attack_entity_stats():
+	damage = scale_property("damage")
+	speed = scale_property("speed")
+	decceleration = scale_property("decceleration")
+	knockback_scalar = scale_property("knockback_scalar")
+	uptime_timer.wait_time = scale_property("uptime")
+
+func scale_property(property_name: String):
+	var damage_scale_value: float
+	if from_player:
+		damage_scale_value = Globals.souls_harvested/Globals.SOUL_CAPACITY
+	else:
+		damage_scale_value = Globals.enemy_damage_scale
+	var base_value = attack_entity_data[property_name][0]
+	var top_value = attack_entity_data[property_name][1]
+	var new_value = base_value + (top_value - base_value) * Globals.damage_scale_function(damage_scale_value)
+	return new_value
+
 func set_layers():
 	var hitbox_node = get_node("AttackHitbox")
-	
 	# the player hurtbox should keep track of enemy projectiles (and vice versa)
 	if from_player:
 		hitbox_node.collision_layer = Globals.PLAYER_ATTACK_LAYER
@@ -79,7 +104,6 @@ func set_layers():
 		if remove_upon_hit:
 			hitbox_node.collision_mask = Globals.PLAYER_LAYER # same thing
 	
-	
 	# wall collision shapes should not see anything but the wall
 	collision_layer = Globals.NO_LAYER
 	if can_bounce:
@@ -88,16 +112,19 @@ func set_layers():
 		collision_mask = Globals.NO_LAYER
 
 
+
+
+
 func _ready() -> void:
-	set_properties()
 	abstract_properties_checks()
+	set_properties()
 	if uptime_autostart:
 		uptime_timer.start()
-	
+	set_layers()
+	scale_attack_entity_stats()
 	global_position = start_global_position
 	velocity = speed * start_direction
-	
-	set_layers()
+
 
 func _process(delta: float) -> void:
 	# get velocity and deccelerate
