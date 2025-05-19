@@ -26,9 +26,9 @@ func _process(delta: float) -> void:
 
 func _on_player_invincibility_timer_timeout() -> void:
 	if (is_player):
-		hurtbox_shape.collision_mask = Globals.ENEMY_LAYER
+		hurtbox_shape.collision_mask = Globals.ENEMY_LAYER + Globals.ENEMY_ATTACK_LAYER
 	else:
-		hurtbox_shape.collision_mask = Globals.PLAYER_LAYER + Globals.ATTACK_LAYER
+		hurtbox_shape.collision_mask = Globals.PLAYER_LAYER + Globals.PLAYER_ATTACK_LAYER
 
 # for fireballs, we need 2 zones ("pursuit" and "attack")
 # idle = -1, pursuit = 0, attack = 1

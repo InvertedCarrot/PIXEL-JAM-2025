@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dbxaxos34cemp"]
+[gd_scene load_steps=9 format=3 uid="uid://dbxaxos34cemp"]
 
 [ext_resource type="PackedScene" uid="uid://cwovyro2ljkds" path="res://scenes/attack_entities/attack_entity.tscn" id="1_80pib"]
 [ext_resource type="Script" path="res://scenes/attack_entities/fire_trail/fire_trail.gd" id="2_2qt03"]
@@ -6,6 +6,9 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xtpc7"]
 radius = 12.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3clqo"]
+radius = 17.0294
 
 [sub_resource type="Animation" id="Animation_cmq2y"]
 length = 0.001
@@ -56,6 +59,10 @@ hframes = 5
 
 [node name="CollisionShape2D" parent="AttackHitbox" index="0"]
 shape = SubResource("CircleShape2D_xtpc7")
+
+[node name="WallCollideShape" parent="." index="2"]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_3clqo")
 
 [node name="AnimationPlayer" parent="." index="3"]
 libraries = {
