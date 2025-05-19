@@ -30,7 +30,7 @@ var player_entity: String = "cat"
 @export var spawn_npc: bool = false
 @export var npc_position: Vector2 = Vector2.ZERO
 
-var entity_scenes := {
+var entity_scenes = {
 	"bird": bird_entity,
 	"cat": cat_entity,
 	"fireball": fireball_entity,
