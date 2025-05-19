@@ -1,12 +1,6 @@
 class_name Entity
 extends CharacterBody2D
 
-"""
-Notes:
-	1. AttackHitbox = Area where entity may attack another entity
-	2. Hurtbox = Area where the entity may take damage
-"""
-
 # onready variables (specifically for node access)
 @onready var zones = $DetectZones.get_children()
 @onready var timers_node = $Timers
@@ -48,11 +42,13 @@ var curr_behaviour: Callable = idle_behaviour # chosen behaviour determined by z
 
 var entity_data: Dictionary
 
+var stats_scale = 0
+
 signal dialogue_activate(scene)
 
 # Custom signals for attacks
 signal attack_started
-signal update_attack_timer
+signal update_attack_timer(time)
 signal reset_timer
 
 # related to the level template (i.e. the level will set this up)
@@ -62,37 +58,68 @@ var dead_enemies_node # the node that contains all dead enemies
 var attack_entities_node # the node that contains all attack entities (i.e. projectiles)
 
 
+func check_array_property_exists(property_name: String, array_length: int = 2):
+	if (!entity_data.has(property_name)):
+		assert(false, "Error: " + property_name + " must be defined")
+	if (entity_data[property_name].size() != array_length):
+		assert(false, "Error: " + property_name + " must be an array of size " + str(array_length))
+
+func check_bool_property_exists(property_name):
+	if (!entity_data[property_name] in [true, false]):
+		assert(false, "Error: " + property_name + " must be defined")
+
 func set_properties() -> void:
 	if (!entity_name):
 		assert(false, "Define entity_name before calling set_properties()")
 	# Set properties from globals
-	entity_data = Globals.ENTITIES_DATA[entity_name]
-	health = entity_data["health"]
-	damage = entity_data["damage"]
-	speed = entity_data["speed"]
-	max_momentum_scalar = entity_data["max_momentum_scalar"]
+	health = entity_data["health"][0]
+	damage = entity_data["damage"][0]
+	speed = entity_data["speed"][0]
+	max_momentum_scalar = entity_data["max_momentum_scalar"][0]
 	detect_zone_ranges = entity_data["detect_zone_ranges"]
-	knockback_scalar = entity_data["knockback_scalar"]
-	atk_timer.wait_time = entity_data["attack_cooldown"]
-	idle_pos_timer.wait_time = entity_data["idle_position_cooldown"]
-	strafe_timer.wait_time = entity_data["strafe_timer"] if entity_data.has("strafe_timer") else 1
-	flee_timer.wait_time = entity_data["flee_timer"] if entity_data.has("flee_timer") else 1
+	knockback_scalar = entity_data["knockback_scalar"][0]
+	atk_timer.wait_time = entity_data["attack_cooldown"][0]
+	idle_pos_timer.wait_time = entity_data["idle_position_cooldown"][0]
+	strafe_timer.wait_time = entity_data["strafe_timer"][0]
+	flee_timer.wait_time = entity_data["flee_timer"][0]
 
 func abstract_properties_checks() -> void:
 	if (!entity_name):
 		assert(false, "Error: entity_name must be defined")
-	if (!health):
-		assert(false, "Error: health must be defined")
-	if (!entity_data.has("damage")):
-		assert(false, "Error: damage must be defined")
-	if (!speed):
-		assert(false, "Error: speed must be defined")
-	if (!max_momentum_scalar):
-		assert(false, "Error: max_momentum_scalar must be defined")
-	if (detect_zone_ranges.size() != 4):
-		assert(false, "Error: detect_zone_ranges must be given sizes for zones [0, 1, 2, 3]")
-	if (knockback_scalar == null):
-		assert(false, "Error: knockback_scalar must be defined")
+	entity_data = Globals.ENTITIES_DATA[entity_name]
+	check_array_property_exists("health")
+	check_array_property_exists("damage")
+	check_array_property_exists("speed")
+	check_array_property_exists("max_momentum_scalar")
+	check_array_property_exists("detect_zone_ranges", 4)
+	check_array_property_exists("knockback_scalar")
+	check_array_property_exists("attack_cooldown")
+	check_array_property_exists("idle_position_cooldown")
+	check_array_property_exists("strafe_timer")
+	check_array_property_exists("flee_timer")
+
+func scale_entity_stats():
+	damage = scale_property("damage")
+	speed = scale_property("speed")
+	max_momentum_scalar = scale_property("max_momentum_scalar")
+	knockback_scalar = scale_property("knockback_scalar")
+	atk_timer.wait_time = scale_property("attack_cooldown")
+	idle_pos_timer.wait_time = scale_property("idle_position_cooldown")
+	strafe_timer.wait_time = scale_property("strafe_timer")
+	flee_timer.wait_time = scale_property("flee_timer")
+
+func scale_property(property_name: String):
+	var damage_scale_value: float
+	if is_player:
+		damage_scale_value = Globals.souls_harvested/Globals.SOUL_CAPACITY
+	else:
+		damage_scale_value = Globals.enemy_damage_scale
+	var base_value = entity_data[property_name][0]
+	var top_value = entity_data[property_name][1]
+	var new_value = base_value + (top_value - base_value) * Globals.damage_scale_function(damage_scale_value)
+	return new_value
+
+
 
 func set_layers() -> void: # invoked at _ready()
 	var damage_hitbox = get_node("Hurtbox")
@@ -126,8 +153,8 @@ func set_layers() -> void: # invoked at _ready()
 
 
 func _ready() -> void:
-	set_properties()
 	abstract_properties_checks()
+	set_properties()
 	# set area2D sizes for visual clarity
 	for i in range(zones.size()):
 		var zone = zones[i]
@@ -145,9 +172,16 @@ func _ready() -> void:
 		$DetectZones.visible = true
 	if is_player:
 		$DeadEntitiesRange.visible = true
+	
+	# scale all enemy stats upon initialization
+	scale_entity_stats()
+	health = scale_property("health") # scale health separately
+	
+	atk_timer.start()
 
 
 func _process(delta: float) -> void:
+	
 	if (Globals.dialogue_active):
 		return
 	var player_ref = player_node.get_child(0)
@@ -185,14 +219,14 @@ func _process(delta: float) -> void:
 		if Input.is_action_just_pressed("harvest") && entity_name != "soul":
 			for dead_enemy in dead_entities_in_range:
 				dead_enemy.queue_free()
-				if Globals.souls_harvested < Globals.SOUL_CAPACITY:
-					Globals.souls_harvested += 1
+				Globals.souls_harvested = min(Globals.souls_harvested + 1, Globals.SOUL_CAPACITY)
+				scale_entity_stats()
 
 		if Input.is_action_just_pressed("swap_souls"):
 			swap_souls = true # the level script will handle the rest
 		
 		# Update the attack timer of the UI every frame
-		update_attack_timer.emit()
+		update_attack_timer.emit(atk_timer.wait_time)
 		
 	# damage calculations
 	if entities_in_hurtbox.size() > 0:
@@ -227,7 +261,11 @@ func attack():
 
 func take_damage():
 	if immune_timer.is_stopped(): # if immune, don't take damage
-		apply_damage() # apply damage (we deal with death below)
+		if entity_name != "soul":
+			apply_damage() # apply damage (we deal with death below)
+		else:
+			Globals.souls_harvested = max(0, Globals.souls_harvested - 1)
+			scale_entity_stats()
 		if is_player:
 			Globals.player_health = health # assign current health to global file
 		if health <= 0:
@@ -256,8 +294,7 @@ func apply_damage():
 	momentum += knockback_vector
 	# apply damage
 	health -= closest_entity.damage
-	print("%s took %d damage! (%d health left)" % [entity_name, closest_entity.damage, health])
-
+	print(str(entity_name) + " took " + str(closest_entity.damage) + " damage! (" + str(health) + " health left)")
 
 func turn_into_player(): # change collision masks when possessing?
 	is_player = true
@@ -268,11 +305,13 @@ func turn_into_player(): # change collision masks when possessing?
 	Globals.player_entity = entity_name
 	atk_timer.stop()
 	reset_timer.emit()
+	scale_entity_stats()
 
 func turn_into_enemy(): # change collision masks when possessing?
 	is_player = false
 	is_dead = false
 	set_layers()
+	scale_entity_stats()
 
 func turn_dead():
 	immune_timer.stop()

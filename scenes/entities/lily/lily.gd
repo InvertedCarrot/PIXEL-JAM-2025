@@ -8,12 +8,16 @@ var angered = false
 
 func set_properties() -> void:
 	super()
-	spore_amount = entity_data["spore_amount"]
+	spore_amount = entity_data["spore_amount"][0]
 
 func abstract_properties_checks() -> void:
 	super()
-	if (!spore_amount):
-		assert(false, "Error: spore_amount must be defined")
+	check_array_property_exists("spore_amount")
+
+func scale_entity_stats():
+	super()
+	spore_amount = scale_property("spore_amount")
+
 
 func _ready() -> void:
 	entity_name = "lily"

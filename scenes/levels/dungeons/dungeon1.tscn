@@ -5,12 +5,13 @@
 [ext_resource type="PackedScene" uid="uid://eleagudjkq11" path="res://scenes/levels/rooms/room2.tscn" id="3_obtpb"]
 
 [node name="Dungeon1" instance=ExtResource("1_7eu1p")]
+player_entity = "soul"
 num_enemies = {
-"bird": 2,
-"cat": 0,
-"fireball": 2,
-"lily": 3,
-"reaper": 3
+"bird": 0,
+"cat": 1,
+"fireball": 0,
+"lily": 0,
+"reaper": 5
 }
 
 [node name="Room1" parent="Rooms" index="0" instance=ExtResource("2_x023l")]
