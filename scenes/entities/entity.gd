@@ -50,6 +50,11 @@ var entity_data: Dictionary
 
 signal dialogue_activate(scene)
 
+# Custom signals for attacks
+signal attack_started
+signal update_attack_timer
+signal reset_timer
+
 # related to the level template (i.e. the level will set this up)
 var player_node # refers to the node that contains the player (enemies need this for targeting)
 var enemies_node # the node that contains all alive enemies
@@ -92,7 +97,13 @@ func abstract_properties_checks() -> void:
 func set_layers() -> void: # invoked at _ready()
 	var damage_hitbox = get_node("Hurtbox")
 
-	if (is_player): # this is a PLAYER
+	if (entity_name=="npc_cat"):
+		damage_hitbox.collision_layer = Globals.NO_LAYER
+		damage_hitbox.collision_mask = Globals.NO_LAYER
+		collision_layer = Globals.NO_LAYER
+		collision_mask = Globals.WALL_LAYER
+
+	elif (is_player): # this is a PLAYER
 		damage_hitbox.collision_layer = Globals.PLAYER_LAYER
 		damage_hitbox.collision_mask = Globals.ENEMY_LAYER + Globals.ENEMY_ATTACK_LAYER
 		collision_layer = Globals.NO_LAYER
@@ -171,6 +182,7 @@ func _process(delta: float) -> void:
 		if Input.is_action_just_pressed("attack") and atk_timer.is_stopped():
 			attack()
 			atk_timer.start()
+			attack_started.emit()
 		if Input.is_action_just_pressed("harvest") && entity_name != "soul":
 			for dead_enemy in dead_entities_in_range:
 				dead_enemy.queue_free()
@@ -178,7 +190,10 @@ func _process(delta: float) -> void:
 
 		if Input.is_action_just_pressed("swap_souls"):
 			swap_souls = true # the level script will handle the rest
-
+		
+		# Update the attack timer of the UI every frame
+		update_attack_timer.emit()
+		
 	# damage calculations
 	if entities_in_hurtbox.size() > 0:
 		take_damage()
@@ -250,6 +265,9 @@ func turn_into_player(): # change collision masks when possessing?
 	set_layers()
 	Globals.max_player_health = health
 	Globals.player_health = health
+	Globals.player_entity = entity_name
+	atk_timer.stop()
+	reset_timer.emit()
 
 func turn_into_enemy(): # change collision masks when possessing?
 	is_player = false
@@ -360,6 +378,7 @@ func default_pursuit(speed_scale: float = 1, strafe: bool = false, strafe_angle_
 
 func default_stop(abrupt: bool = false, look_at: bool = true) -> void:
 	if look_at: direction = dir_to_player # need this bc the AnimationTree uses direction to face the right way
+	else: direction = Vector2.ZERO
 	momentum = Vector2.ZERO if abrupt else velocity
 	raw_velocity = Vector2.ZERO
 

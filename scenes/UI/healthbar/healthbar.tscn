@@ -45,7 +45,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 texture = ExtResource("2_w58m4")
 expand_mode = 3

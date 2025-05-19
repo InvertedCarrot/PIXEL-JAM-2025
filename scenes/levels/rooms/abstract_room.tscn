@@ -2,10 +2,10 @@
 
 [ext_resource type="Texture2D" uid="uid://ch35wa3g86x6r" path="res://assets/tilemap.png" id="1_eqq3m"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3o2xx"]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qfdqx"]
 bounce = 1.0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_63f3x"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uxsup"]
 resource_name = "dungeon"
 texture = ExtResource("1_eqq3m")
 texture_region_size = Vector2i(60, 60)
@@ -39,8 +39,8 @@ texture_region_size = Vector2i(60, 60)
 tile_size = Vector2i(60, 60)
 physics_layer_0/collision_layer = 8
 physics_layer_0/collision_mask = 3
-physics_layer_0/physics_material = SubResource("PhysicsMaterial_3o2xx")
-sources/0 = SubResource("TileSetAtlasSource_63f3x")
+physics_layer_0/physics_material = SubResource("PhysicsMaterial_qfdqx")
+sources/0 = SubResource("TileSetAtlasSource_uxsup")
 
 [node name="AbstractRoom" type="Node2D"]
 

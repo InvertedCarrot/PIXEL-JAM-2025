@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://4ixo48h447bf"]
+[gd_scene load_steps=7 format=3 uid="uid://4ixo48h447bf"]
 
 [ext_resource type="Script" path="res://scenes/ui.gd" id="1_vjo20"]
 [ext_resource type="PackedScene" uid="uid://c100e6hgm76ay" path="res://scenes/UI/healthbar/healthbar.tscn" id="2_ohq0n"]
 [ext_resource type="PackedScene" uid="uid://bslc78nxumklv" path="res://scenes/UI/multiplier/multiplier.tscn" id="3_5esef"]
 [ext_resource type="PackedScene" uid="uid://dad4hp2wo7bg0" path="res://scenes/UI/dialogue/dialogue_box.tscn" id="3_387sr"]
+[ext_resource type="PackedScene" uid="uid://cqnko27h0qxmp" path="res://scenes/UI/attackbar/attackbar.tscn" id="4_k8qb2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e3sx0"]
 bg_color = Color(0.596078, 0.694118, 0.756863, 0)
@@ -43,12 +44,20 @@ theme_override_constants/separation = 30
 
 [node name="Healthbar" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("2_ohq0n")]
 
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="AttackBar" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("4_k8qb2")]
+unique_name_in_owner = true
+offset = Vector2(0, 100)
+transform = Transform2D(1, 0, 0, 1, 0, 100)
+
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Multiplier" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("3_5esef")]
-offset = Vector2(0, 40)
-transform = Transform2D(1, 0, 0, 1, 0, 40)
+offset = Vector2(0, 50)
+transform = Transform2D(1, 0, 0, 1, 0, 50)
 
 [node name="DialogueBox" parent="." instance=ExtResource("3_387sr")]
