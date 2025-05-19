@@ -117,7 +117,7 @@ var ATTACK_ENTITIES_DATA = {
 		"uptime": 1,
 	},
 	"potion": {
-		"damage": 2,
+		"damage": 20,
 		"speed": 500,
 		"decceleration": 200,
 		"knockback_scalar": 150,

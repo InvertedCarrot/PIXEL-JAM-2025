@@ -1,18 +1,21 @@
 extends ProgressBar
 
-func _ready() -> void:
-	pass
+var healthbar_node
 
+func _ready() -> void:
+	healthbar_node = %HealthBar
 
 func _process(_delta: float) -> void:
 	var percent = float(Globals.player_health)/(Globals.max_player_health) * 100 # need to do this for FP stuff
-	%HealthBar.value = percent
-	if percent >= 70:
-		%HealthBar.add_theme_stylebox_override("fill", get_colored_style(Color8(60, 161, 2))) # Green
+	healthbar_node.value = percent
+	if percent >= 60:
+		healthbar_node.add_theme_stylebox_override("fill", get_colored_style(Color8(47, 173, 72))) # Green
 	elif percent >= 30:
-		%HealthBar.add_theme_stylebox_override("fill", get_colored_style(Color8(199, 146, 2))) # Yellow
+		healthbar_node.add_theme_stylebox_override("fill", get_colored_style(Color8(214, 170, 49))) # Yellow
+	elif percent >= 15:
+		healthbar_node.add_theme_stylebox_override("fill", get_colored_style(Color8(227, 47, 34))) # Red
 	else:
-		%HealthBar.add_theme_stylebox_override("fill", get_colored_style(Color8(255, 105, 36))) # Red
+		healthbar_node.add_theme_stylebox_override("fill", get_colored_style(Color8(107, 19, 13))) # Dark Red
 
 
 func get_colored_style(color: Color) -> StyleBoxFlat:

@@ -185,7 +185,8 @@ func _process(delta: float) -> void:
 		if Input.is_action_just_pressed("harvest") && entity_name != "soul":
 			for dead_enemy in dead_entities_in_range:
 				dead_enemy.queue_free()
-				Globals.souls_harvested += 1
+				if Globals.souls_harvested < Globals.SOUL_CAPACITY:
+					Globals.souls_harvested += 1
 
 		if Input.is_action_just_pressed("swap_souls"):
 			swap_souls = true # the level script will handle the rest

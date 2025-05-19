@@ -1,21 +1,22 @@
-[gd_scene load_steps=15 format=3 uid="uid://4ixo48h447bf"]
+[gd_scene load_steps=16 format=3 uid="uid://4ixo48h447bf"]
 
 [ext_resource type="Script" path="res://scenes/ui.gd" id="1_vjo20"]
+[ext_resource type="Script" path="res://scenes/UI/player_portrait_column.gd" id="2_0f65r"]
+[ext_resource type="Texture2D" uid="uid://cblka1215mad4" path="res://assets/portraits/soul_portrait.png" id="3_5d076"]
 [ext_resource type="PackedScene" uid="uid://dad4hp2wo7bg0" path="res://scenes/UI/dialogue/dialogue_box.tscn" id="3_387sr"]
 [ext_resource type="Texture2D" uid="uid://blp1lckbxo3du" path="res://assets/heart.png" id="5_b5oox"]
-[ext_resource type="Texture2D" uid="uid://bpn01myka7ps8" path="res://assets/portraits/fireball_portrait.png" id="6_bn5sj"]
 [ext_resource type="Texture2D" uid="uid://dem16q75udr1r" path="res://assets/soul.png" id="7_4mpse"]
 [ext_resource type="Script" path="res://scenes/UI/attack_bar.gd" id="7_djk1g"]
 [ext_resource type="Script" path="res://scenes/UI/health_bar.gd" id="7_sjwx2"]
-[ext_resource type="Script" path="res://scenes/UI/multiplier.gd" id="8_385kd"]
+[ext_resource type="Script" path="res://scenes/UI/soul_bar.gd" id="8_385kd"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hycdd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_516jl"]
-bg_color = Color(0.42, 0.42, 0.42, 1)
+bg_color = Color(0.65, 0.906667, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_do2vt"]
-bg_color = Color(0.79, 0.79, 0.79, 1)
+bg_color = Color(0.4288, 0.60568, 0.67, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5cqy1"]
 
@@ -48,41 +49,44 @@ theme_override_constants/margin_bottom = 20
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CharacterColumn" type="VBoxContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer"]
+[node name="PlayerPortraitColumn" type="VBoxContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
+script = ExtResource("2_0f65r")
 
-[node name="Outline" type="PanelContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/CharacterColumn"]
+[node name="PlayerPortraitOutline" type="PanelContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/PlayerPortraitColumn"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_516jl")
 
-[node name="MarginContainer" type="MarginContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/CharacterColumn/Outline"]
+[node name="MarginContainer" type="MarginContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/PlayerPortraitColumn/PlayerPortraitOutline"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="PanelContainer" type="PanelContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/CharacterColumn/Outline/MarginContainer"]
+[node name="PlayerPortraitBackground" type="PanelContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/PlayerPortraitColumn/PlayerPortraitOutline/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_do2vt")
 
-[node name="PlayerPortrait" type="TextureRect" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/CharacterColumn/Outline/MarginContainer/PanelContainer"]
+[node name="PlayerPortrait" type="TextureRect" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/PlayerPortraitColumn/PlayerPortraitOutline/MarginContainer/PlayerPortraitBackground"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-texture = ExtResource("6_bn5sj")
+texture = ExtResource("3_5d076")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="AttackBar" type="ProgressBar" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/CharacterColumn"]
+[node name="AttackBar" type="ProgressBar" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/PlayerPortraitColumn"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 show_percentage = false
 script = ExtResource("7_djk1g")
 
-[node name="AttackTimer" type="Timer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/CharacterColumn/AttackBar"]
+[node name="AttackTimer" type="Timer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/PlayerPortraitColumn/AttackBar"]
 unique_name_in_owner = true
 one_shot = true
 
@@ -135,7 +139,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 0
 
-[node name="MultiplierBar" type="ProgressBar" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/Bars/PlayerSoulBar/HBoxContainer"]
+[node name="SoulBar" type="ProgressBar" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/Bars/PlayerSoulBar/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
@@ -145,7 +149,7 @@ size_flags_stretch_ratio = 6.0
 show_percentage = false
 script = ExtResource("8_385kd")
 
-[node name="PanelContainer" type="PanelContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/Bars/PlayerSoulBar/HBoxContainer"]
+[node name="Padding" type="PanelContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/Bars/PlayerSoulBar/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_clcwa")

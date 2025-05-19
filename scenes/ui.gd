@@ -15,15 +15,6 @@ This script only handles stuff for the dialogue, and the logic is:
 			(and re-create for each dialogue)
 """
 
-var player_portraits = {
-	"bird": load("res://assets/portraits/bird_portrait.png"),
-	"cat": load("res://assets/portraits/cat_portrait.png"),
-	"fireball": load("res://assets/portraits/fireball_portrait.png"),
-	"lily": load("res://assets/portraits/lily_portrait.png"),
-	"reaper": load("res://assets/portraits/reaper_portrait.png"),
-	"soul": load("res://assets/portraits/soul_portrait.png"),
-}
-
 func _ready() -> void:
 	$DialogueBox.queue_free()
 
@@ -32,8 +23,6 @@ func _process(delta: float) -> void:
 	if (!Globals.dialogue_active and dialogue_box!=null):
 		dialogue_box.queue_free()
 		dialogue_box = null
-	
-	%PlayerPortrait.texture = player_portraits[Globals.player_entity]
 
 
 func start(scene: String):
