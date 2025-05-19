@@ -1,24 +1,21 @@
-[gd_scene load_steps=8 format=3 uid="uid://bslc78nxumklv"]
+[gd_scene load_steps=6 format=3 uid="uid://cqnko27h0qxmp"]
 
-[ext_resource type="Script" path="res://scenes/UI/multiplier/multiplier.gd" id="1_bl8h2"]
-[ext_resource type="Texture2D" uid="uid://dtkesdewmkakx" path="res://assets/souls.png" id="2_br0tq"]
-[ext_resource type="FontFile" uid="uid://e4xw2xsn1u5k" path="res://assets/tinypixel.otf" id="3_n428j"]
+[ext_resource type="Script" path="res://scenes/UI/attackbar/attackbar.gd" id="1_al8cs"]
+[ext_resource type="Texture2D" uid="uid://dshj12hxfllmp" path="res://assets/swords.png" id="2_y7fqs"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e3sx0"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 corner_detail = 20
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kirro"]
-bg_color = Color(0.169088, 0.000106561, 0.224135, 1)
+bg_color = Color(0, 0, 0, 1)
+border_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tamin"]
-bg_color = Color(1, 0.956863, 0, 0.639216)
+bg_color = Color(0.486275, 0.552941, 0.843137, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_s8mjj"]
-font = ExtResource("3_n428j")
-
-[node name="Multiplier" type="CanvasLayer"]
-script = ExtResource("1_bl8h2")
+[node name="AttackBar" type="CanvasLayer"]
+script = ExtResource("1_al8cs")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 10
@@ -50,11 +47,10 @@ layout_mode = 2
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
-texture = ExtResource("2_br0tq")
-expand_mode = 2
-stretch_mode = 6
+texture = ExtResource("2_y7fqs")
+expand_mode = 3
 
-[node name="MulitplierBar" type="ProgressBar" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="AttackBar" type="ProgressBar" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
@@ -66,8 +62,6 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_tamin")
 value = 50.0
 show_percentage = false
 
-[node name="MultiplierLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="AttackTimer" type="Timer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
-layout_mode = 2
-text = "X 1.0"
-label_settings = SubResource("LabelSettings_s8mjj")
+one_shot = true

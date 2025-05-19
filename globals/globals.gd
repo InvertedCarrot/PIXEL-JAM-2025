@@ -4,6 +4,7 @@ extends Node
 var player_health = -1
 var souls_harvested = 0
 var max_player_health = -1
+var player_entity = "cat"
 
 # Constants
 var SOUL_CAPACITY = 10
@@ -90,6 +91,16 @@ var ENTITIES_DATA = {
 		"attack_cooldown": 0.5,
 		"idle_position_cooldown": 5,
 	},
+	"npc_cat":{
+		"health": 10,
+		"damage": 0,
+		"speed": 200,
+		"max_momentum_scalar": 1,
+		"detect_zone_ranges": [150, 0, 0, 0] as Array[float],
+		"knockback_scalar": 1,
+		"attack_cooldown": 1,
+		"idle_position_cooldown": 1,
+	}
 }
 
 
@@ -155,3 +166,6 @@ var dialogue_scene: String = "start"
 const DIALOGUE_BOX_SCENE = preload("res://scenes/UI/dialogue/dialogue_box.tscn")
 
 var CUTSCENES_GDSCRIPT = load("res://scenes/UI/dialogue/dialogue_logs.gd")
+
+# Level maintaining
+var current_dungeon = 0

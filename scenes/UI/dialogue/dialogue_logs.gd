@@ -10,11 +10,10 @@ with the name of the scene you want to instantiate
 
 func _setup() -> void:
 	match Globals.dialogue_scene:
-		"start":		
-			add_text_entry("Hey...").set_metadata("author", "npc")
-			add_text_entry("We should enter this dungeon. The skull gave me a good feeling about this!").set_metadata("author","npc")
-			add_text_entry("It's so [i][shake rate=20.0 level=5 connected=1]spoooky[/shake][/i]").set_metadata("author", "npc")
-		"second":
-			add_text_entry("Hey... this is a second time").set_metadata("author", "npc")
-			add_text_entry("Did you get memory loss?").set_metadata("author","npc")
-			add_text_entry("Seems like it...").set_metadata("author", "npc")
+		"intro":
+			add_text_entry("Hi ").set_metadata("author", "npc")
+			add_text_entry("I was looking for you! Where do you keep wandering off to??").set_metadata("author", "npc")
+			add_text_entry("I was chasing a monster, but it's dead now.").set_metadata("author", "you")
+			add_text_entry("[i][shake rate=20.0 level=5 connected=1]That skull has nothing to do with it[/shake][/i]").set_metadata("author", "you")
+			add_text_entry("I believe you").set_metadata("author","npc")
+			add_text_entry("We should go explore the rest of the dungeon! Follow me").set_metadata("author", "npc")
