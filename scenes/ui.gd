@@ -18,6 +18,12 @@ This script only handles stuff for the dialogue, and the logic is:
 func _ready() -> void:
 	$DialogueBox.queue_free()
 
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	if (!Globals.dialogue_active and dialogue_box!=null):
+		dialogue_box.queue_free()
+		dialogue_box = null
+
 
 func start(scene: String):
 	if (dialogue_box==null):
@@ -29,19 +35,24 @@ func start(scene: String):
 		add_child(dialogue_box)
 		dialogue_box.begin()
 
+# Attack timer updates
+func attack():
+	%AttackBar.atk_timer.start()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	if (!Globals.dialogue_active and dialogue_box!=null):
-		dialogue_box.queue_free()
-		dialogue_box = null
+func update_attack_timer():
+	%AttackBar.atk_timer.wait_time = Globals.ENTITIES_DATA[Globals.player_entity]["attack_cooldown"]
 
+func reset_timer():
+	%AttackBar.atk_timer.stop()
 
 ## Connect any newly entering entity to signal
 func safe_connect(entity: Node):
 	if entity.is_in_group("Entity"):
 		if not entity.is_connected("dialogue_activate", start):
 			entity.connect("dialogue_activate", start)
+			entity.connect("attack_started", attack)
+			entity.connect("update_attack_timer", update_attack_timer)
+			entity.connect("reset_timer", reset_timer)
 
 func _on_player_child_entered_tree(node: Node) -> void:
 	safe_connect(node)

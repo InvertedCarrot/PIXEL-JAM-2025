@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://eleagudjkq11" path="res://scenes/levels/rooms/room2.tscn" id="3_obtpb"]
 
 [node name="Dungeon1" instance=ExtResource("1_7eu1p")]
+player_entity = "Reaper"
 
 [node name="Room1" parent="Rooms" index="0" instance=ExtResource("2_x023l")]
 

@@ -4,6 +4,7 @@ extends Node
 var player_health = -1
 var souls_harvested = 0
 var max_player_health = -1
+var player_entity = "cat"
 
 # Constants
 var SOUL_CAPACITY = 10

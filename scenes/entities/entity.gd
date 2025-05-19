@@ -50,6 +50,11 @@ var entity_data: Dictionary
 
 signal dialogue_activate(scene)
 
+# Custom signals for attacks
+signal attack_started
+signal update_attack_timer
+signal reset_timer
+
 # related to the level template (i.e. the level will set this up)
 var player_node # refers to the node that contains the player (enemies need this for targeting)
 var enemies_node # the node that contains all alive enemies
@@ -176,6 +181,7 @@ func _process(delta: float) -> void:
 		if Input.is_action_just_pressed("attack") and atk_timer.is_stopped():
 			attack()
 			atk_timer.start()
+			attack_started.emit()
 		if Input.is_action_just_pressed("harvest") && entity_name != "soul":
 			for dead_enemy in dead_entities_in_range:
 				dead_enemy.queue_free()
@@ -183,7 +189,10 @@ func _process(delta: float) -> void:
 
 		if Input.is_action_just_pressed("swap_souls"):
 			swap_souls = true # the level script will handle the rest
-
+		
+		# Update the attack timer of the UI every frame
+		update_attack_timer.emit()
+		
 	# damage calculations
 	if entities_in_hurtbox.size() > 0:
 		take_damage()
@@ -255,6 +264,9 @@ func turn_into_player(): # change collision masks when possessing?
 	set_layers()
 	Globals.max_player_health = health
 	Globals.player_health = health
+	Globals.player_entity = entity_name
+	atk_timer.stop()
+	reset_timer.emit()
 
 func turn_into_enemy(): # change collision masks when possessing?
 	is_player = false
