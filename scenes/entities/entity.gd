@@ -48,7 +48,7 @@ var curr_behaviour: Callable = idle_behaviour # chosen behaviour determined by z
 
 var entity_data: Dictionary
 
-signal dialogue_activate(scene)
+signal dialogue_activate(scene, start_speaker)
 
 # Custom signals for attacks
 signal attack_started
@@ -223,10 +223,10 @@ func _process(delta: float) -> void:
 	reflect_velocity(delta)
 
 	if (Input.is_action_just_pressed("debug")):
-		dialogue_activate.emit("start")
+		dialogue_activate.emit("start", "cat")
 
 	if (Input.is_action_just_pressed("debug2")):
-		dialogue_activate.emit("second")
+		dialogue_activate.emit("second", "cat")
 
 
 # used by both the player and enemies

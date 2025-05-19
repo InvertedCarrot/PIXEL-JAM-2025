@@ -52,6 +52,7 @@ size_flags_horizontal = 3
 [node name="PlayerPortraitColumn" type="VBoxContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 script = ExtResource("2_0f65r")
+portrait_type = "PlayerStats"
 
 [node name="PlayerPortraitOutline" type="PanelContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/PlayerPortraitColumn"]
 unique_name_in_owner = true

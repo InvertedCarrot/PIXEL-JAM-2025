@@ -39,9 +39,10 @@ func __on_dialogue_continued(p_dialogue_entry : DialogueEntry) -> void:
 	label.set_fit_content(true)
 	if p_dialogue_entry.has_metadata("author"):
 		var author : String = p_dialogue_entry.get_metadata("author")
-		label.set_text("  > " + author + ": " + p_dialogue_entry.get_formatted_text())
-	else:
+		Globals.current_speaker = author
 		label.set_text("  > " + p_dialogue_entry.get_formatted_text())
+	else:
+		assert(false, "Provide an author for every dialogue")
 	#add_child(label, true)
 
 	# Setup the animation:

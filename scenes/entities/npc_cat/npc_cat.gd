@@ -24,7 +24,7 @@ func idle_behaviour() -> void:
 func zone_0_behaviour() -> void:
 	if Globals.check_dialogue_state("intro", 0, Globals.NOT_STARTED):
 		default_stop(false, false)
-		dialogue_activate.emit("intro")
+		dialogue_activate.emit("intro", "npc")
 
 
 func zone_1_behaviour() -> void:
