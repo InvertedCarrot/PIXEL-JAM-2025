@@ -1,11 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://bd1cbg6g1gbro"]
+[gd_scene load_steps=6 format=3 uid="uid://bd1cbg6g1gbro"]
 
 [ext_resource type="PackedScene" uid="uid://c5djsy4nr40ou" path="res://scenes/levels/abstract_dungeon.tscn" id="1_d6ixh"]
 [ext_resource type="PackedScene" uid="uid://b3vlnynryyloy" path="res://scenes/levels/rooms/room0.tscn" id="2_jvcp0"]
 [ext_resource type="Texture2D" uid="uid://dcw0m0wqthfkv" path="res://assets/skull.png" id="3_m7k3x"]
+[ext_resource type="PackedScene" uid="uid://t04n6ng22pl4" path="res://scenes/levels/areas/transition_area.tscn" id="4_o8ab2"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wrhk3"]
-size = Vector2(142.5, 706.5)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_251lp"]
+size = Vector2(97, 710)
 
 [node name="Dungeon0" instance=ExtResource("1_d6ixh")]
 spawn_npc = true
@@ -18,11 +19,8 @@ position = Vector2(112, -118)
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("3_m7k3x")
 
-[node name="TransitionArea" parent="." index="8"]
-collision_mask = 3
+[node name="TransitionArea" parent="TransitionAreas" index="0" instance=ExtResource("4_o8ab2")]
 
-[node name="CollisionShape2D" parent="TransitionArea" index="0"]
-position = Vector2(972.75, 29.75)
-shape = SubResource("RectangleShape2D_wrhk3")
-
-[connection signal="body_entered" from="TransitionArea" to="." method="_on_transition_area_body_entered"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TransitionAreas/TransitionArea" index="0"]
+position = Vector2(941.5, 30)
+shape = SubResource("RectangleShape2D_251lp")

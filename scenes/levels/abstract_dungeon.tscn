@@ -69,13 +69,9 @@ unique_name_in_owner = true
 
 [node name="Decorations" type="Node2D" parent="."]
 
-[node name="TransitionArea" type="Area2D" parent="."]
+[node name="TransitionAreas" type="Node2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TransitionArea"]
-
-[node name="CutsceneArea" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CutsceneArea"]
+[node name="CutsceneAreas" type="Node2D" parent="."]
 
 [connection signal="child_entered_tree" from="Player" to="UI" method="_on_player_child_entered_tree"]
 [connection signal="child_entered_tree" from="Enemies" to="UI" method="_on_enemies_child_entered_tree"]

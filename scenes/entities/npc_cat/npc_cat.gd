@@ -12,7 +12,7 @@ func _process(delta: float) -> void:
 	if Globals.check_dialogue_state("intro", 0, Globals.DONE):
 		direction = Vector2(1,0)
 		raw_velocity = direction * speed * 1.5
-		if (position.x >= 600):
+		if (position.x >= 1200):
 			queue_free()
 		
 

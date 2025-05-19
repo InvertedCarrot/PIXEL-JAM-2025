@@ -395,3 +395,14 @@ func default_flee(speed_scale: float = 1) -> void:
 		direction = -dir_to_player # flip direction
 		flee_timer.start()
 	raw_velocity = direction * speed * speed_scale
+
+
+func _on_transition_area_area_entered(area: Area2D) -> void:
+	if (is_player):
+		Globals.current_dungeon+=1
+		Transition.change_scene("res://scenes/levels/dungeons/dungeon" + str(Globals.current_dungeon) +".tscn")
+
+
+func _on_cutscene_area_area_entered(area: Area2D) -> void:
+	if (is_player):
+		print("Cutscene start")

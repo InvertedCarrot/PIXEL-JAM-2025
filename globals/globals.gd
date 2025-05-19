@@ -170,16 +170,22 @@ var dialogue_active: bool = false
 
 var dialogue_scene: String = ""
 
+var dialogue_index: int = 0
+
+var dialogues_in_order = ["intro"]
+
 const DIALOGUE_BOX_SCENE = preload("res://scenes/UI/dialogue/dialogue_box.tscn")
 
 var CUTSCENES_GDSCRIPT = load("res://scenes/UI/dialogue/dialogue_logs.gd")
 
+# Dialogue states
 enum{
 	NOT_STARTED,
 	IN_PROGRESS, 
 	DONE
 }
 
+# This is to ensure specific actions happen during states of dialogues
 var dialogue_stages = {
 	"intro": NOT_STARTED
 }

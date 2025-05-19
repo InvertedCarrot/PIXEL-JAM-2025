@@ -194,10 +194,3 @@ func take_over(target: CharacterBody2D):
 	if target.health > 0:
 		added_entity.health = target.health
 		Globals.player_health = target.health
-
-
-func _on_transition_area_body_entered(body: Node2D) -> void:
-	print("Happened")
-	Globals.current_dungeon+=1
-	Transition.change_scene("res://scenes/levels/dungeons/dungeon" + str(Globals.current_dungeon) +".tscn")
-	
