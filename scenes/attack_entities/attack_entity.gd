@@ -63,17 +63,20 @@ func abstract_properties_checks() -> void:
 
 func set_layers():
 	var hitbox_node = get_node("AttackHitbox")
-	# attack entities should not keep track of anything, they should just despawn on their own
-	hitbox_node.collision_mask = Globals.NO_LAYER
-	# meanwhile, the player hurtbox should keep track of enemy projectiles (and vice versa)
+	
+	# the player hurtbox should keep track of enemy projectiles (and vice versa)
 	if from_player:
-		hitbox_node.collision_layer = Globals.ATTACK_LAYER
+		hitbox_node.collision_layer = Globals.PLAYER_ATTACK_LAYER
 		if remove_upon_hit:
-			hitbox_node.collision_mask += Globals.ENEMY_LAYER # look for enemies to hit (and thus remove)
+			hitbox_node.collision_mask = Globals.ENEMY_LAYER # look for enemies to hit (and thus remove)
 	else:
-		hitbox_node.collision_layer = Globals.ENEMY_LAYER
+		hitbox_node.collision_layer = Globals.ENEMY_ATTACK_LAYER
 		if remove_upon_hit:
-			hitbox_node.collision_mask += Globals.PLAYER_LAYER # same thing
+			hitbox_node.collision_mask = Globals.PLAYER_LAYER # same thing
+	
+	# wall collision shapes should not see anything but the wall
+	collision_layer = Globals.NO_LAYER
+	collision_mask = Globals.WALL_LAYER
 
 
 func _ready() -> void:
@@ -90,7 +93,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	# get velocity and deccelerate
 	velocity = velocity.normalized() * max(0, velocity.length() - decceleration*delta)
-	move_and_slide()
+	reflect_velocity(delta)
 
 func _on_uptime_timer_timeout() -> void:
 	destroy()
@@ -105,3 +108,10 @@ func destroy() -> void:
 func _on_attack_hitbox_area_entered(area: Area2D) -> void:
 	if remove_upon_hit:
 		destroy()
+
+
+func reflect_velocity(delta) -> void:
+	# function for reflecting an enemy's movement
+	var collision = move_and_collide(velocity * delta)
+	if collision:
+		velocity = velocity.bounce(collision.get_normal())

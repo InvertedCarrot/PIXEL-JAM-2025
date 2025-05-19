@@ -94,21 +94,22 @@ func set_layers() -> void: # invoked at _ready()
 
 	if (is_player): # this is a PLAYER
 		damage_hitbox.collision_layer = Globals.PLAYER_LAYER
-		damage_hitbox.collision_mask = Globals.ENEMY_LAYER # only the player can be "attacked" through body contact (enemies are immune)
-		collision_layer = Globals.PLAYER_LAYER
+		damage_hitbox.collision_mask = Globals.ENEMY_LAYER + Globals.ENEMY_ATTACK_LAYER
+		collision_layer = Globals.NO_LAYER
 		collision_mask = Globals.WALL_LAYER
 
 	else: # this is an ENEMY
 		damage_hitbox.collision_layer = Globals.ENEMY_LAYER
-		damage_hitbox.collision_mask = Globals.PLAYER_LAYER + Globals.ATTACK_LAYER # wrt the player, enemies can only get damaged by the melee attack
-		collision_layer = Globals.ENEMY_LAYER
+		damage_hitbox.collision_mask = Globals.PLAYER_LAYER + Globals.PLAYER_ATTACK_LAYER
+		collision_layer = Globals.NO_LAYER
 		collision_mask = Globals.WALL_LAYER
 
 	# any dead entity should take these layers as priority
 	if (is_dead):
 		damage_hitbox.collision_layer = Globals.DEAD_ENEMIES_LAYER
-		damage_hitbox.collision_mask = Globals.NO_LAYER # TODO: change later
-
+		damage_hitbox.collision_mask = Globals.NO_LAYER
+	
+	# we only want this zone to look for dead enemies (no interactions otherwise)
 	dead_entities_range_node.collision_layer = Globals.NO_LAYER
 	dead_entities_range_node.collision_mask = Globals.DEAD_ENEMIES_LAYER
 

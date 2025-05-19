@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cv6uwcfht3nek"]
+[gd_scene load_steps=9 format=3 uid="uid://cv6uwcfht3nek"]
 
 [ext_resource type="PackedScene" uid="uid://cwovyro2ljkds" path="res://scenes/attack_entities/attack_entity.tscn" id="1_7ecfd"]
 [ext_resource type="Script" path="res://scenes/attack_entities/potion/potion.gd" id="2_3jrtn"]
@@ -6,6 +6,9 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_h8g4r"]
 radius = 13.0384
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j6wu7"]
+radius = 17.0
 
 [sub_resource type="Animation" id="Animation_77xrk"]
 length = 0.001
@@ -56,6 +59,9 @@ hframes = 8
 [node name="CollisionShape2D" parent="AttackHitbox" index="0"]
 position = Vector2(0, 2)
 shape = SubResource("CircleShape2D_h8g4r")
+
+[node name="WallCollideShape" parent="." index="2"]
+shape = SubResource("CircleShape2D_j6wu7")
 
 [node name="AnimationPlayer" parent="." index="3"]
 libraries = {
