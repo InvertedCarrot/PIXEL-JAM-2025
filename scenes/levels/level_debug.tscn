@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=4 uid="uid://dj2n5d0o8cbec"]
+[gd_scene load_steps=5 format=4 uid="uid://5ef8pmq4sjcj"]
 
-[ext_resource type="PackedScene" uid="uid://dxg4ddslja36" path="res://scenes/levels/level_template.tscn" id="1_pyjq8"]
-[ext_resource type="Texture2D" uid="uid://ch35wa3g86x6r" path="res://assets/tilemap.png" id="2_wcoa0"]
+[ext_resource type="Texture2D" uid="uid://ptrrww0qehe7" path="res://assets/tilemap.png" id="2_wcoa0"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_78sc6"]
 bounce = 1.0
@@ -43,7 +42,7 @@ physics_layer_0/collision_mask = 3
 physics_layer_0/physics_material = SubResource("PhysicsMaterial_78sc6")
 sources/0 = SubResource("TileSetAtlasSource_fa116")
 
-[node name="LevelDebug" instance=ExtResource("1_pyjq8")]
+[node name="LevelDebug"]
 position = Vector2(-1, 0)
 num_enemies = {
 "Bird": 2,
