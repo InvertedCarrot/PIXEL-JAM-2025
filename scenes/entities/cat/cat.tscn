@@ -291,3 +291,7 @@ wait_time = 2.0
 
 [node name="ImmunityCooldownTimer" parent="Timers" index="4"]
 wait_time = 1.5
+
+[node name="StateSwitchTimer" type="Timer" parent="." index="9"]
+
+[connection signal="timeout" from="StateSwitchTimer" to="." method="_on_state_switch_timer_timeout"]

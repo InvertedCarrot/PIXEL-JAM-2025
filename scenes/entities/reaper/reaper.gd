@@ -19,7 +19,7 @@ func zone_0_behaviour() -> void:
 	default_pursuit()
 
 func zone_1_behaviour() -> void:
-	default_stop()
+	default_pursuit()
 
 func zone_2_behaviour() -> void:
 	default_stop()

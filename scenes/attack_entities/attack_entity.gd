@@ -13,6 +13,8 @@ var speed: float
 var remove_upon_hit = null
 var uptime_autostart = null
 var knockback_scalar = null
+var can_bounce = null
+
 
 # regular properties
 var decceleration: float
@@ -35,6 +37,7 @@ func set_properties() -> void:
 	remove_upon_hit = attack_entity_data["remove_upon_hit"]
 	uptime_autostart = attack_entity_data["uptime_autostart"]
 	knockback_scalar = attack_entity_data["knockback_scalar"]
+	can_bounce = attack_entity_data["can_bounce"]
 	uptime_timer.wait_time = attack_entity_data["uptime"]
 
 
@@ -53,6 +56,8 @@ func abstract_properties_checks() -> void:
 		assert(false, "Error: uptime_autostart must be defined")
 	if (knockback_scalar == null):
 		assert(false, "Error: knockback_scalar must be defined")
+	if (can_bounce == null):
+		assert(false, "Error: can_bounce must be defined")
 	# for PackedScene initialization
 	if (start_global_position == null):
 		assert(false, "Error: start_global_position must be initialized when adding a PackedScene")
@@ -74,9 +79,13 @@ func set_layers():
 		if remove_upon_hit:
 			hitbox_node.collision_mask = Globals.PLAYER_LAYER # same thing
 	
+	
 	# wall collision shapes should not see anything but the wall
 	collision_layer = Globals.NO_LAYER
-	collision_mask = Globals.WALL_LAYER
+	if can_bounce:
+		collision_mask = Globals.WALL_LAYER
+	else:
+		collision_mask = Globals.NO_LAYER
 
 
 func _ready() -> void:

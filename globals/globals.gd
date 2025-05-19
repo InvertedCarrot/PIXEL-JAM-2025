@@ -24,14 +24,17 @@ var ENEMY_ATTACK_LAYER = 0b100000
 # Entities metadata
 var ENTITIES_DATA = {
 	"cat": {
-		"health": 20,
+		"health": 100,
 		"damage": 1,
-		"speed": 300,
-		"max_momentum_scalar": 400,
-		"detect_zone_ranges": [400, 300, 200, 100] as Array[float],
-		"knockback_scalar": 150,
-		"attack_cooldown": 1,
+		"speed": 150,
+		"max_momentum_scalar": 450,
+		"detect_zone_ranges": [550, 350, 200, 125] as Array[float],
+		"knockback_scalar": 300,
+		"attack_cooldown": 1.5,
 		"idle_position_cooldown": 2,
+		"strafe_timer": 1,
+		"flee_timer": 2,
+		"state_switch_cooldown": 15
 	},
 	"bird": {
 		"health": 7,
@@ -82,8 +85,8 @@ var ENTITIES_DATA = {
 	"soul": {
 		"health": 10,
 		"damage": 0,
-		"speed": 400,
-		"max_momentum_scalar": 400,
+		"speed": 300,
+		"max_momentum_scalar": 500,
 		"detect_zone_ranges": [0, 0, 0, 0] as Array[float],
 		"knockback_scalar": 50,
 		"attack_cooldown": 0.5,
@@ -109,15 +112,17 @@ var ATTACK_ENTITIES_DATA = {
 		"decceleration": 1000, # DON'T CHANGE
 		"knockback_scalar": 200,
 		"uptime_autostart": true,
+		"can_bounce": false,
 		"remove_upon_hit": false,
 		"uptime": 1,
 	},
 	"potion": {
-		"damage": 8,
+		"damage": 2,
 		"speed": 500,
 		"decceleration": 200,
 		"knockback_scalar": 150,
 		"uptime_autostart": true,
+		"can_bounce": true,
 		"remove_upon_hit": true,
 		"uptime": 2,
 	},
@@ -127,6 +132,7 @@ var ATTACK_ENTITIES_DATA = {
 		"decceleration": 1000, # DON'T CHANGE
 		"knockback_scalar": 100,
 		"uptime_autostart": true,
+		"can_bounce": true,
 		"remove_upon_hit": false,
 		"uptime": 3,
 	},
@@ -136,6 +142,7 @@ var ATTACK_ENTITIES_DATA = {
 		"decceleration": 1000,
 		"knockback_scalar": 0,
 		"uptime_autostart": true,
+		"can_bounce": false,
 		"remove_upon_hit": false,
 		"uptime": 5
 	},
@@ -145,6 +152,7 @@ var ATTACK_ENTITIES_DATA = {
 		"decceleration": 0,
 		"knockback_scalar": 400,
 		"uptime_autostart": false,
+		"can_bounce": true,
 		"remove_upon_hit": false,
 		"uptime": 6,
 	}
