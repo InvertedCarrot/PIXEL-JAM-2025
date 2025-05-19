@@ -35,7 +35,7 @@ func zone_3_behaviour() -> void:
 	pass
 
 func attack() -> void:
-	var potion_amount = 8
+	var potion_amount = 5
 	var deg_between_potions: float = 6
 	var angle_offset_deg = -(potion_amount - 1) * deg_between_potions/2
 	for i in range(potion_amount):

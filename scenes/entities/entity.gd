@@ -128,7 +128,6 @@ func _ready() -> void:
 		t.one_shot = true
 
 	set_layers()
-	
 
 	# DEBUG: to see the zone areas
 	if !is_player:
