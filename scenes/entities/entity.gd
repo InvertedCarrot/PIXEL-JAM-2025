@@ -97,6 +97,7 @@ func abstract_properties_checks() -> void:
 func set_layers() -> void: # invoked at _ready()
 	var damage_hitbox = get_node("Hurtbox")
 	var transition_area = get_node("TransitionArea")
+	var cutscene_area = get_node("CutsceneArea")
 
 	if (entity_name=="npc_cat"):
 		damage_hitbox.collision_layer = Globals.NO_LAYER
@@ -105,6 +106,8 @@ func set_layers() -> void: # invoked at _ready()
 		collision_mask = Globals.WALL_LAYER
 		transition_area.collision_layer = Globals.NO_LAYER
 		transition_area.collision_mask = Globals.NO_LAYER
+		cutscene_area.collision_layer = Globals.NO_LAYER
+		cutscene_area.collision_mask = Globals.NO_LAYER
 
 	elif (is_player): # this is a PLAYER
 		damage_hitbox.collision_layer = Globals.PLAYER_LAYER
@@ -113,6 +116,8 @@ func set_layers() -> void: # invoked at _ready()
 		collision_mask = Globals.WALL_LAYER
 		transition_area.collision_layer = Globals.NO_LAYER
 		transition_area.collision_mask = Globals.TRANSITION_AREA_LAYER
+		cutscene_area.collision_layer = Globals.NO_LAYER
+		cutscene_area.collision_mask = Globals.CUTCENE_AREA_LAYER
 		
 
 	else: # this is an ENEMY
@@ -122,6 +127,8 @@ func set_layers() -> void: # invoked at _ready()
 		collision_mask = Globals.WALL_LAYER + Globals.TRANSITION_AREA_LAYER
 		transition_area.collision_layer = Globals.NO_LAYER
 		transition_area.collision_mask = Globals.NO_LAYER
+		cutscene_area.collision_layer = Globals.NO_LAYER
+		cutscene_area.collision_mask = Globals.NO_LAYER
 
 	# any dead entity should take these layers as priority
 	if (is_dead):

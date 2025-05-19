@@ -45,6 +45,7 @@ func idle_behaviour() -> void:
 	else:
 		idle_behaviour_hybrid()
 
+ 
 func zone_0_behaviour() -> void:
 	if curr_state == states.AGGRESSIVE:
 		zone_0_behaviour_aggressive()

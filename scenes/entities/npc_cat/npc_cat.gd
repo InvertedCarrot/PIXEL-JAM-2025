@@ -10,7 +10,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	super(delta)
 	if Globals.check_dialogue_state("intro", 0, Globals.DONE):
-		direction = Vector2(1,0)
+		if (!(position.y >=0 && position.y <=100)):
+			direction = Vector2(0, -1*abs(position.y)/position.y)
+		else:
+			direction = Vector2(1,0)
 		raw_velocity = direction * speed * 1.5
 		if (position.x >= 1200):
 			queue_free()

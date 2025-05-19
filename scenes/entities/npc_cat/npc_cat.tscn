@@ -208,21 +208,21 @@ shape = SubResource("RectangleShape2D_451ef")
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_cx7kx")
 
-[node name="AnimationPlayer" parent="." index="3"]
+[node name="AnimationPlayer" parent="." index="5"]
 libraries = {
 "": SubResource("AnimationLibrary_vxowr")
 }
 
-[node name="AnimationTree" parent="." index="4"]
+[node name="AnimationTree" parent="." index="6"]
 tree_root = ExtResource("4_8ytxk")
 parameters/Dead/blend_position = Vector2(0, 0)
 parameters/Idle/blend_position = Vector2(-0.793165, 0.00591707)
 parameters/Run/blend_position = Vector2(0, 0)
 
-[node name="EntityAnimation" parent="." index="5"]
+[node name="EntityAnimation" parent="." index="7"]
 script = ExtResource("5_0tfws")
 
-[node name="DetectZones" parent="." index="6"]
+[node name="DetectZones" parent="." index="8"]
 visible = true
 
 [node name="Zone0" parent="DetectZones" index="0"]

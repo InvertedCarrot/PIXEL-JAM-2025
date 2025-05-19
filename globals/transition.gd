@@ -2,8 +2,9 @@ extends CanvasLayer
 
 
 func _ready() -> void:
+	#print("children = ", get_tree())
+	#$ColorRect.modulate = Color(1,1,1,0)
 	pass
-
 
 func change_scene(target_scene: String):
 	#$AnimationPlayer.play("fade_out")

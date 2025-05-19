@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://t04n6ng22pl4" path="res://scenes/levels/areas/transition_area.tscn" id="4_o8ab2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_251lp"]
-size = Vector2(97, 710)
+size = Vector2(250, 287)
 
 [node name="Dungeon0" instance=ExtResource("1_d6ixh")]
 spawn_npc = true
@@ -22,5 +22,5 @@ texture = ExtResource("3_m7k3x")
 [node name="TransitionArea" parent="TransitionAreas" index="0" instance=ExtResource("4_o8ab2")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TransitionAreas/TransitionArea" index="0"]
-position = Vector2(941.5, 30)
+position = Vector2(1073, 0.5)
 shape = SubResource("RectangleShape2D_251lp")
