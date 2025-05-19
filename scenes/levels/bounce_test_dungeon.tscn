@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://evvajdfwqwd4"]
+
+[ext_resource type="PackedScene" uid="uid://c5djsy4nr40ou" path="res://scenes/levels/abstract_dungeon.tscn" id="1_1vt0l"]
+
+[node name="BounceTest" instance=ExtResource("1_1vt0l")]

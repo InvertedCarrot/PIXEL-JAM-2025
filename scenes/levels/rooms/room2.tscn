@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=4 uid="uid://n1xvscibiht5"]
 
-[ext_resource type="Texture2D" uid="uid://ch35wa3g86x6r" path="res://assets/tilemap.png" id="1_kwcbl"]
+[ext_resource type="Texture2D" uid="uid://ptrrww0qehe7" path="res://assets/tilemap.png" id="1_kwcbl"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3o2xx"]
 bounce = 1.0

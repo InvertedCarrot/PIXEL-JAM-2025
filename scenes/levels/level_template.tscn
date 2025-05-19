@@ -6,13 +6,7 @@
 
 [node name="LevelTemplate" type="Node2D" groups=["Enemies", "Player"]]
 script = ExtResource("1_6pynj")
-num_enemies = {
-"Bird": 3,
-"Cat": 3,
-"Fireball": 3,
-"Lily": 3,
-"Reaper": 3
-}
+player_entity = "Soul"
 
 [node name="TempBackground" type="Sprite2D" parent="."]
 position = Vector2(1200, 673)
