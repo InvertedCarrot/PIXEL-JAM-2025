@@ -88,6 +88,7 @@ func abstract_properties_checks() -> void:
 	if (!speed):
 		assert(false, "Error: speed must be defined")
 	if (!max_momentum_scalar):
+		
 		assert(false, "Error: max_momentum_scalar must be defined")
 	if (detect_zone_ranges.size() != 4):
 		assert(false, "Error: detect_zone_ranges must be given sizes for zones [0, 1, 2, 3]")
