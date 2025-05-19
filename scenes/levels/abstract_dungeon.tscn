@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://4ixo48h447bf" path="res://scenes/UI.tscn" id="1_fvsps"]
 [ext_resource type="Script" path="res://scenes/levels/set_dungeon.gd" id="1_snu1k"]
-[ext_resource type="Texture2D" uid="uid://s86be4ny2v0k" path="res://assets/tilemap.png" id="3_fmuyh"]
+[ext_resource type="Texture2D" uid="uid://ch35wa3g86x6r" path="res://assets/tilemap.png" id="3_fmuyh"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3o2xx"]
 bounce = 1.0
