@@ -6,7 +6,7 @@ var fireball_entity: PackedScene = preload("res://scenes/entities/fireball/fireb
 var lily_entity: PackedScene = preload("res://scenes/entities/lily/lily.tscn")
 var reaper_entity: PackedScene = preload("res://scenes/entities/reaper/reaper.tscn")
 var soul_entity: PackedScene = preload("res://scenes/entities/soul/soul.tscn")
-
+var npc_entity: PackedScene = preload("res://scenes/entities/npc_cat/npc_cat.tscn")
 
 @onready var player_node: Node2D = %Player
 @onready var enemies_node: Node2D = %Enemies
@@ -25,6 +25,9 @@ var player_entity: String = "Cat"
 	"Lily": 0,
 	"Reaper": 0,
 }
+
+@export var spawn_npc: bool = false
+@export var npc_position: Vector2 = Vector2.ZERO
 
 var entity_scenes := {
 	"Cat": cat_entity,
@@ -48,6 +51,9 @@ func _ready():
 	camera.zoom = Vector2(zoom_factor, zoom_factor)
 	# Add player
 	add_entity_to_level(entity_scenes[player_entity], Vector2(0,0), true)
+	
+	if (spawn_npc):
+		add_entity_to_level(npc_entity, npc_position)
 	
 	if (!num_enemies.has_all(["Cat","Bird","Fireball","Lily","Reaper"]) or num_enemies.size()!=5):
 		assert(false, "ERROR: Enemies dict must contain the exact enemy names")

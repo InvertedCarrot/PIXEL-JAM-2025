@@ -92,7 +92,13 @@ func abstract_properties_checks() -> void:
 func set_layers() -> void: # invoked at _ready()
 	var damage_hitbox = get_node("Hurtbox")
 
-	if (is_player): # this is a PLAYER
+	if (entity_name=="npc_cat"):
+		damage_hitbox.collision_layer = Globals.NO_LAYER
+		damage_hitbox.collision_mask = Globals.NO_LAYER
+		collision_layer = Globals.NO_LAYER
+		collision_mask = Globals.WALL_LAYER
+
+	elif (is_player): # this is a PLAYER
 		damage_hitbox.collision_layer = Globals.PLAYER_LAYER
 		damage_hitbox.collision_mask = Globals.ENEMY_LAYER # only the player can be "attacked" through body contact (enemies are immune)
 		collision_layer = Globals.PLAYER_LAYER
@@ -359,6 +365,7 @@ func default_pursuit(speed_scale: float = 1, strafe: bool = false, strafe_angle_
 
 func default_stop(abrupt: bool = false, look_at: bool = true) -> void:
 	if look_at: direction = dir_to_player # need this bc the AnimationTree uses direction to face the right way
+	else: direction = Vector2.ZERO
 	momentum = Vector2.ZERO if abrupt else velocity
 	raw_velocity = Vector2.ZERO
 
