@@ -1,11 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://bgt2y0j12di1b"]
+[gd_scene load_steps=9 format=3 uid="uid://bgt2y0j12di1b"]
 
 [ext_resource type="PackedScene" uid="uid://cwovyro2ljkds" path="res://scenes/attack_entities/attack_entity.tscn" id="1_xyfp2"]
 [ext_resource type="Texture2D" uid="uid://ccs23qbwk7i7w" path="res://assets/attack_entities/scythe_spritesheet.png" id="2_f3nxj"]
 [ext_resource type="Script" path="res://scenes/attack_entities/scythe/scythe.gd" id="2_lj2or"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_y8efl"]
-radius = 70.0
+radius = 63.0317
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ayp62"]
+radius = 72.0
 
 [sub_resource type="Animation" id="Animation_6p8bw"]
 length = 0.001
@@ -55,6 +58,9 @@ hframes = 8
 
 [node name="CollisionShape2D" parent="AttackHitbox" index="0"]
 shape = SubResource("CircleShape2D_y8efl")
+
+[node name="WallCollideShape" parent="." index="2"]
+shape = SubResource("CircleShape2D_ayp62")
 
 [node name="AnimationPlayer" parent="." index="3"]
 libraries = {
