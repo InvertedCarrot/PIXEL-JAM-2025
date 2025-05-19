@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cdk45om0htpgx" path="res://scenes/levels/rooms/room1.tscn" id="2_x023l"]
 [ext_resource type="PackedScene" uid="uid://eleagudjkq11" path="res://scenes/levels/rooms/room2.tscn" id="3_obtpb"]
 
-[node name="AbstractDungeon" instance=ExtResource("1_7eu1p")]
+[node name="Dungeon1" instance=ExtResource("1_7eu1p")]
 num_enemies = {
 "Bird": 1,
 "Cat": 0,
