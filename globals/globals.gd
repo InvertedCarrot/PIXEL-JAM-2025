@@ -28,12 +28,13 @@ var ENTITIES_DATA = {
 		"damage": 1,
 		"speed": 150,
 		"max_momentum_scalar": 450,
-		"detect_zone_ranges": [550, 350, 200, 100] as Array[float],
+		"detect_zone_ranges": [550, 350, 200, 125] as Array[float],
 		"knockback_scalar": 300,
-		"attack_cooldown": 2,
+		"attack_cooldown": 1.5,
 		"idle_position_cooldown": 2,
 		"strafe_timer": 1,
 		"flee_timer": 2,
+		"state_switch_cooldown": 15
 	},
 	"bird": {
 		"health": 7,

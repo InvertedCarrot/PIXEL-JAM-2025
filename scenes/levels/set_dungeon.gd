@@ -19,8 +19,8 @@ var camera: Camera2D = Camera2D.new()
 var player_entity: String = "Cat"
 
 @export var num_enemies = {
-	"Cat": 0,
 	"Bird": 0,
+	"Cat": 0,
 	"Fireball": 0,
 	"Lily": 0,
 	"Reaper": 0,
@@ -30,8 +30,8 @@ var player_entity: String = "Cat"
 @export var npc_position: Vector2 = Vector2.ZERO
 
 var entity_scenes := {
-	"Cat": cat_entity,
 	"Bird": bird_entity,
+	"Cat": cat_entity,
 	"Fireball": fireball_entity,
 	"Lily": lily_entity,
 	"Reaper": reaper_entity,
