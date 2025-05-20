@@ -4,7 +4,7 @@ extends Node
 var player_health: float = -1
 var souls_harvested: float = 0
 var max_player_health: float = -1
-var player_entity: String = "soul"
+var player_entity: String = "cat"
 
 # Constants
 var SOUL_CAPACITY: float = 10
@@ -36,9 +36,9 @@ func same(value): return [value, value]
 const no_data = [1, 1]
 var ENTITIES_DATA = {
 	"cat": {
-		"health": same(1),
+		"health": same(100),
 		"damage": same(1),
-		"speed": same(300),
+		"speed": same(150),
 		"max_momentum_scalar": same(450),
 		"detect_zone_ranges": [550, 350, 200, 125] as Array[float],
 		"knockback_scalar": same(300),
@@ -49,7 +49,7 @@ var ENTITIES_DATA = {
 		"state_switch_cooldown": same(15)
 	},
 	"bird": {
-		"health": [1,1],
+		"health": [7, 15],
 		"damage": same(1),
 		"speed": [120, 240],
 		"max_momentum_scalar": same(400),
@@ -59,8 +59,7 @@ var ENTITIES_DATA = {
 		"idle_position_cooldown": [2, 1],
 		"strafe_timer": [0.8, 0.6],
 		"flee_timer": [2.5, 2],
-		"potion_amount": [2, 2
-		],
+		"potion_amount": [2, 10],
 	},
 	"fireball": {
 		"health": [5, 15],
@@ -89,13 +88,13 @@ var ENTITIES_DATA = {
 		"spore_amount": [20, 50]
 	},
 	"reaper": {
-		"health": same(1000),
-		"damage": same(1000),
+		"health": [15, 25],
+		"damage": [2, 3],
 		"speed": [75, 120],
 		"max_momentum_scalar": same(200),
-		"detect_zone_ranges": [500, 200, 1000, 0] as Array[float],
+		"detect_zone_ranges": [500, 200, 100, 0] as Array[float],
 		"knockback_scalar": [250, 350],
-		"attack_cooldown": same(0.1),
+		"attack_cooldown": [6, 4],
 		"idle_position_cooldown": same(2),
 		"strafe_timer": no_data,
 		"flee_timer": no_data,
@@ -112,6 +111,18 @@ var ENTITIES_DATA = {
 		"strafe_timer": no_data,
 		"flee_timer": no_data,
 	},
+	"npc_cat":{
+		"health": same(10),
+		"damage": same(0),
+		"speed": same(200),
+		"max_momentum_scalar": same(1),
+		"detect_zone_ranges": [150, 0, 0, 0] as Array[float],
+		"knockback_scalar": same(1),
+		"attack_cooldown": same(1),
+		"idle_position_cooldown": same(1),
+		"strafe_timer": no_data,
+		"flee_timer": no_data,
+	},
 	"evil_soul": {
 		"health": no_data,
 		"damage": no_data,
@@ -124,19 +135,8 @@ var ENTITIES_DATA = {
 		"strafe_timer": no_data,
 		"flee_timer": no_data,
 	},
-	"npc_cat":{
-		"health": same(10),
-		"damage": same(0),
-		"speed": same(200),
-		"max_momentum_scalar": same(1),
-		"detect_zone_ranges": [150, 0, 0, 0] as Array[float],
-		"knockback_scalar": same(1),
-		"attack_cooldown": same(1),
-		"idle_position_cooldown": same(1),
-		"strafe_timer": no_data,
-		"flee_timer": no_data,
-	}
 }
+
 
 
 var ATTACK_ENTITIES_DATA = {
@@ -193,7 +193,7 @@ var ATTACK_ENTITIES_DATA = {
 }
 
 ## Level maintaining
-var current_dungeon = 5
+var current_dungeon = 0
 
 
 ## Dialogues
@@ -244,7 +244,7 @@ var dialogue_starters={
 	"game_over": "evil_soul"
 }
 
-var dialogue_index: int = 10
+var dialogue_index: int = 0
 
 var dialogues_in_order = dialogue_stages.keys()
 

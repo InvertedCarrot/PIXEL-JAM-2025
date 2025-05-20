@@ -212,6 +212,8 @@ func _process(delta: float) -> void:
 	
 	if (Globals.check_dialogue_state("game_over", 5, Globals.DONE) and entity_name=="evil_soul"):
 		queue_free()
+		Transition.change_scene("res://scenes/levels/dungeons/dungeon" + str(Globals.current_dungeon+1) +".tscn")
+		Globals.current_dungeon+=1
 	
 	var player_ref = player_node.get_child(0)
 	var prev_momentum: Vector2 = momentum # momentum value of the previous frame
@@ -245,13 +247,13 @@ func _process(delta: float) -> void:
 			attack()
 			atk_timer.start()
 			attack_started.emit()
-		if Input.is_action_just_pressed("harvest") && entity_name != "soul":
+		if Input.is_action_just_pressed("harvest") && entity_name != "soul" && Globals.current_dungeon>=2:
 			for dead_enemy in dead_entities_in_range:
 				dead_enemy.queue_free()
 				Globals.souls_harvested = min(Globals.souls_harvested + 1, Globals.SOUL_CAPACITY)
 				scale_entity_stats()
 
-		if Input.is_action_just_pressed("swap_souls"):
+		if Input.is_action_just_pressed("swap_souls") && Globals.current_dungeon>=2:
 			swap_souls = true # the level script will handle the rest
 		
 		# Update the attack timer of the UI every frame

@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6ckdmxbvdo0p"]
+
+[ext_resource type="PackedScene" uid="uid://c5djsy4nr40ou" path="res://scenes/levels/abstract_dungeon.tscn" id="1_6p6gr"]
+[ext_resource type="PackedScene" uid="uid://ceip7rxj8op5r" path="res://scenes/levels/rooms/closed_room.tscn" id="2_spxch"]
+
+[node name="Dungeon6" instance=ExtResource("1_6p6gr")]
+
+[node name="ClosedRoom" parent="Rooms" index="0" instance=ExtResource("2_spxch")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="11"]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" index="0"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer" index="1"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -11.5
+offset_right = 33.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(8, 8)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "You win!"
