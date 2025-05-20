@@ -85,7 +85,7 @@ func idle_behaviour_aggressive() -> void:
 func zone_0_behaviour_aggressive() -> void:
 	default_pursuit(1, true, 30)
 	if atk_timer.is_stopped() && zone_number == 0:
-		act_with_potion(4)
+		act_with_potion(6)
 		atk_timer.start()
 
 func zone_1_behaviour_aggressive() -> void:
@@ -95,7 +95,7 @@ func zone_1_behaviour_aggressive() -> void:
 		atk_timer.start()
 
 func zone_2_behaviour_aggressive() -> void:
-	default_pursuit(1)
+	default_pursuit(1, true, 5)
 	if atk_timer.is_stopped() && zone_number == 2:
 		attack()
 		atk_timer.start()
@@ -106,19 +106,19 @@ func zone_3_behaviour_aggressive() -> void:
 
 # defensive behaviours
 func idle_behaviour_defensive() -> void:
-	default_roam(0.2)
+	default_roam(0.3)
 
 func zone_0_behaviour_defensive() -> void:
-	default_flee(0.5)
+	default_flee(0.6)
 
 func zone_1_behaviour_defensive() -> void:
 	default_pursuit(0.7, true, 90)
 	if flee_timer.is_stopped() && zone_number == 1:
-		act_with_spore(6)
+		act_with_spore(8)
 		flee_timer.start()
 
 func zone_2_behaviour_defensive() -> void:
-	default_pursuit(0.7, true, 120)
+	default_pursuit(0.8, true, 120)
 	if flee_timer.is_stopped() && zone_number == 2:
 		act_with_scythe()
 		flee_timer.start()
@@ -126,7 +126,7 @@ func zone_2_behaviour_defensive() -> void:
 func zone_3_behaviour_defensive() -> void:
 	if flee_timer.is_stopped() && zone_number == 3:
 		momentum = direction * max_momentum_scalar # increase speed when dashing at player
-		act_with_fire(3)
+		act_with_fire(6)
 		flee_timer.start()
 	raw_velocity = Vector2.ZERO
 
@@ -138,7 +138,7 @@ func idle_behaviour_hybrid() -> void:
 func zone_0_behaviour_hybrid() -> void:
 	if atk_timer.is_stopped() && zone_number == 0:
 		act_with_fire(1)
-		act_with_potion(1)
+		act_with_potion(2)
 		atk_timer.start()
 	default_pursuit()
 
@@ -151,7 +151,7 @@ func zone_1_behaviour_hybrid() -> void:
 func zone_2_behaviour_hybrid() -> void:
 	default_flee()
 	if flee_timer.is_stopped() && zone_number == 2:
-		act_with_spore(4)
+		act_with_spore(5)
 		flee_timer.start()
 
 func zone_3_behaviour_hybrid() -> void:

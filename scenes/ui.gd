@@ -48,6 +48,12 @@ func start(scene: String, start_speaker: String):
 		add_child(dialogue_box)
 		dialogue_box.begin()
 
+func make_boss_healthbar_visible():
+	%BossHealthBar.visible = true
+
+func update_boss_healthbar(boss_ref, max_boss_health):
+	%BossHealthBar.update(boss_ref.health, max_boss_health)
+
 # Attack timer updates
 func attack():
 	%AttackBar.atk_timer.start()

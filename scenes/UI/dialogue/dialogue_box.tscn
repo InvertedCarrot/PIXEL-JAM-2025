@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes/UI/dialogue/dialogue_box.gd" id="1_6egxw"]
 [ext_resource type="PackedScene" uid="uid://dxmhk3caeu00h" path="res://scenes/UI/dialogue/dialogue.tscn" id="1_ehysd"]
 [ext_resource type="Script" path="res://scenes/UI/player_portrait_column.gd" id="3_k03rb"]
-[ext_resource type="Texture2D" uid="uid://2ey2qqbobha4" path="res://assets/portraits/soul_portrait.png" id="4_0fh7i"]
+[ext_resource type="Texture2D" uid="uid://cblka1215mad4" path="res://assets/portraits/soul_portrait.png" id="4_0fh7i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gr3s4"]
 bg_color = Color(0.65, 0.906667, 1, 1)

@@ -34,10 +34,21 @@ var level1_cutscene: bool = false
 var level2_cat: bool = false
 var level2_deadbird: bool = false
 var level5_evil_soul: bool = false
+var max_boss_health: float = 0
+var boss_ref = null
+var set_boss_ref: bool = false
 
 func _ready():
+	match Globals.current_dungeon:
+		3: Globals.enemy_damage_scale = 0.2
+		4: Globals.enemy_damage_scale = 0.7
+		5: Globals.enemy_damage_scale = 1
+		6: Globals.enemy_damage_scale = 1
+		_: Globals.enemy_damage_scale = 0
+	
 	var zoom_factor = 1.5
 	camera.zoom = Vector2(zoom_factor, zoom_factor)
+	
 	# add the player
 	add_entity_to_level(entity_scenes[Globals.player_entity], Vector2(0,0), true)
 	# add the npc
@@ -50,11 +61,10 @@ func _ready():
 		snap_room_to_tile(room)
 		
 		# only THEN do enemies spawn in
-		spawn_enemies_in_room(room)	
-
-
-
-	if (Globals.current_dungeon==5):
+		spawn_enemies_in_room(room)
+	
+	
+	if Globals.current_dungeon == 5:
 		$Music.stream = load("res://assets/music/daboss.wav")
 	$Music.play()
 
@@ -88,6 +98,19 @@ func spawn_enemies_in_room(room, enemy_dict = null):
 		$Decorations.add_child(decoration)
 
 func _process(delta: float):
+	if Globals.current_dungeon == 5 :
+		if !set_boss_ref:
+			for enemy in %Enemies.get_children():
+				if enemy.is_in_group("Cat"):
+					max_boss_health = enemy.health
+					$UI.make_boss_healthbar_visible()
+					boss_ref = enemy
+					set_boss_ref = true
+					break
+		else:
+			$UI.update_boss_healthbar(boss_ref, max_boss_health)
+		
+	
 	var player = player_node.get_child(0)
 	var closest_target = find_closest_dead_enemy() # get the closest dead_enemy to the player (if possible)
 	
@@ -112,7 +135,7 @@ func _process(delta: float):
 	#modify colours
 	for entity in player_node.get_children() + enemies_node.get_children():
 		if !entity.immune_timer.is_stopped():
-			entity.modulate = Color(1.7, 1, 1, 1)
+			entity.modulate = Color(2, 1, 1, 1)
 		else:
 			entity.modulate = Color(1, 1, 1, 1)
 		
@@ -122,9 +145,9 @@ func _process(delta: float):
 			# 2. if the player is not a soul, we harvest the souls of all enemies (i.e. highlight them all)
 			
 			if dead_enemy == closest_target && player.entity_name == "soul":
-				dead_enemy.modulate = Color(1.7, 1.7, 1, 1)
+				dead_enemy.modulate = Color(1.8, 1.8, 1, 1)
 			elif dead_enemy in player.dead_entities_in_range && player.entity_name != "soul":
-				dead_enemy.modulate = Color(1.1, 1.1, 1.1, 1)
+				dead_enemy.modulate = Color(1.2, 1.2, 1.2, 1)
 			else:
 				dead_enemy.modulate = Color(0.7, 0.7, 0.7, 1)
 	
@@ -167,10 +190,12 @@ func _process(delta: float):
 	
 	if (Globals.check_dialogue_state("game_over", 5, Globals.IN_PROGRESS) and !level5_evil_soul):
 		for enemy in $DeadEnemies.get_children():
-			print("DEBUG:",enemy)
 			if enemy.is_in_group("Cat"):
 				add_entity_to_level(evil_soul_entity, enemy.position + Vector2(50,50))
 		level5_evil_soul=true
+	
+	
+	
 	
 func add_entity_to_level(entity_packed_scene: PackedScene, spawn_location: Vector2, entity_is_player: bool = false, kill_on_spawn: bool = false):
 	var entity = entity_packed_scene.instantiate()
@@ -184,7 +209,6 @@ func add_entity_to_level(entity_packed_scene: PackedScene, spawn_location: Vecto
 	if entity_is_player:
 		if player_node.get_children().size() >= 1:
 			assert(false, "Error: There is already a player assigned to the Player node")
-	print("DEBUG:", node_adding_to)
 	node_adding_to.add_child(entity) # adding node to tree will automatically call the _ready() function
 	entity.global_position = spawn_location
 	

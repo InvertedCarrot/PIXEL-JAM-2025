@@ -16,6 +16,9 @@ size = Vector2(274, 135)
 
 [node name="Dungeon4" instance=ExtResource("1_a8ops")]
 
+[node name="TileMap" parent="." index="1"]
+metadata/_edit_lock_ = true
+
 [node name="SmallRoomRUL" parent="Rooms" index="0" instance=ExtResource("2_704kg")]
 
 [node name="SmallRoomRU" parent="Rooms" index="1" instance=ExtResource("4_f4pjx")]
@@ -45,7 +48,7 @@ num_enemies = {
 "cat": 0,
 "fireball": 2,
 "lily": 0,
-"reaper": 5
+"reaper": 4
 }
 
 [node name="SmallRoomUD2" parent="Rooms" index="4" instance=ExtResource("5_edmni")]
@@ -55,7 +58,7 @@ num_enemies = {
 "cat": 0,
 "fireball": 0,
 "lily": 0,
-"reaper": 2
+"reaper": 3
 }
 
 [node name="SmallRoomUD3" parent="Rooms" index="5" instance=ExtResource("5_edmni")]
@@ -71,7 +74,7 @@ num_enemies = {
 [node name="SmallRoomRD" parent="Rooms" index="6" instance=ExtResource("6_0rsj7")]
 position = Vector2(-1328, -1920)
 num_enemies = {
-"bird": 0,
+"bird": 1,
 "cat": 0,
 "fireball": 2,
 "lily": 2,
@@ -101,31 +104,31 @@ num_enemies = {
 [node name="SmallRoomRD2" parent="Rooms" index="9" instance=ExtResource("6_0rsj7")]
 position = Vector2(-6, -2880)
 num_enemies = {
-"bird": 0,
+"bird": 1,
 "cat": 0,
 "fireball": 2,
-"lily": 0,
+"lily": 2,
 "reaper": 3
 }
 
 [node name="SmallRoomRL" parent="Rooms" index="10" instance=ExtResource("9_t8qfw")]
 position = Vector2(1305, -2873)
 num_enemies = {
-"bird": 2,
+"bird": 1,
 "cat": 0,
-"fireball": 0,
+"fireball": 3,
 "lily": 2,
-"reaper": 0
+"reaper": 2
 }
 
 [node name="SmallRoomUL2" parent="Rooms" index="11" instance=ExtResource("4_gdeeg")]
 position = Vector2(2625, -2874)
 num_enemies = {
-"bird": 1,
+"bird": 4,
 "cat": 0,
-"fireball": 0,
-"lily": 0,
-"reaper": 0
+"fireball": 1,
+"lily": 1,
+"reaper": 1
 }
 
 [node name="TransitionArea" parent="TransitionAreas" index="0" instance=ExtResource("3_ypori")]

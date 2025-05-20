@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://i5811c1qqtxl"]
+
+[ext_resource type="FontFile" uid="uid://djeetqj63g71n" path="res://assets/tinypixel.otf" id="1_3lu5i"]
+[ext_resource type="Script" path="res://scenes/UI/boss_healthbar.gd" id="1_qo78b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tyb3e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_chk68"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_yqdvy"]
+font = ExtResource("1_3lu5i")
+font_size = 28
+
+[node name="BossHealthBar" type="CanvasLayer"]
+script = ExtResource("1_qo78b")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_tyb3e")
+
+[node name="PanelContainer2" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_chk68")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 10
+
+[node name="BossHealthBar" type="ProgressBar" parent="VBoxContainer/PanelContainer2/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_vertical = 8
+show_percentage = false
+
+[node name="Label" type="Label" parent="VBoxContainer/PanelContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "EVIL SOUL"
+label_settings = SubResource("LabelSettings_yqdvy")

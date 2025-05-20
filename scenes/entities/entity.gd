@@ -288,7 +288,7 @@ func take_damage():
 		if entity_name != "soul":
 			apply_damage() # apply damage (we deal with death below)
 		else:
-			Globals.souls_harvested = max(0, Globals.souls_harvested - 1)
+			Globals.souls_harvested = max(0, Globals.souls_harvested - 1.5)
 			scale_entity_stats()
 		if is_player:
 			Globals.player_health = health # assign current health to global file

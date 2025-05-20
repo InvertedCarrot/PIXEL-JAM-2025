@@ -7,7 +7,7 @@ var max_player_health: float = -1
 var player_entity: String = "cat"
 
 # Constants
-var SOUL_CAPACITY: float = 10
+var SOUL_CAPACITY: float = 20
 
 # enemy damage scaling
 var enemy_damage_scale = 0.2
@@ -36,17 +36,17 @@ func same(value): return [value, value]
 const no_data = [1, 1]
 var ENTITIES_DATA = {
 	"cat": {
-		"health": same(100),
-		"damage": same(1),
-		"speed": same(150),
-		"max_momentum_scalar": same(450),
+		"health": [100, 120],
+		"damage": [1, 3],
+		"speed": [250, 280],
+		"max_momentum_scalar": [300, 500],
 		"detect_zone_ranges": [550, 350, 200, 125] as Array[float],
-		"knockback_scalar": same(300),
-		"attack_cooldown": same(1.5),
-		"idle_position_cooldown": same(2),
-		"strafe_timer": same(1),
-		"flee_timer": same(2),
-		"state_switch_cooldown": same(15)
+		"knockback_scalar": [200, 400],
+		"attack_cooldown": [1, 1.2],
+		"idle_position_cooldown": same(1.5),
+		"strafe_timer": same(0.8),
+		"flee_timer": same(1.5),
+		"state_switch_cooldown": same(13)
 	},
 	"bird": {
 		"health": [7, 15],
@@ -56,27 +56,27 @@ var ENTITIES_DATA = {
 		"detect_zone_ranges": [450, 200, 0, 0] as Array[float],
 		"knockback_scalar": same(150),
 		"attack_cooldown": [3, 2],
-		"idle_position_cooldown": [2, 1],
+		"idle_position_cooldown": [2, 1.5],
 		"strafe_timer": [0.8, 0.6],
-		"flee_timer": [2.5, 2],
-		"potion_amount": [2, 10],
+		"flee_timer": [2.5, 1.8],
+		"potion_amount": [2,10],
 	},
 	"fireball": {
-		"health": [5, 15],
+		"health": [5, 10],
 		"damage": [3, 6],
 		"speed": [150, 300],
-		"max_momentum_scalar": same(500),
+		"max_momentum_scalar": [300, 500],
 		"detect_zone_ranges": [400, 200, 0, 0] as Array[float],
-		"knockback_scalar": [150, 200],
-		"attack_cooldown": [4, 3],
+		"knockback_scalar": [125, 200],
+		"attack_cooldown": [4, 2],
 		"idle_position_cooldown": same(2),
 		"strafe_timer": no_data,
 		"flee_timer": no_data,
-		"fire_trail_amount": [6, 15], # unique to fireballs
+		"fire_trail_amount": [4, 15], # unique to fireballs
 	},
 	"lily": {
 		"health": [10, 20],
-		"damage": same(1),
+		"damage": [1, 2],
 		"speed": [120, 200],
 		"max_momentum_scalar": same(300),
 		"detect_zone_ranges": [500, 250, 0, 0] as Array[float],
@@ -85,16 +85,16 @@ var ENTITIES_DATA = {
 		"idle_position_cooldown": same(2),
 		"strafe_timer": [1, 0.8],
 		"flee_timer": no_data,
-		"spore_amount": [20, 50]
+		"spore_amount": [20, 80]
 	},
 	"reaper": {
-		"health": [15, 25],
-		"damage": [2, 3],
-		"speed": [75, 120],
+		"health": [15, 30],
+		"damage": [2, 4],
+		"speed": [100, 150],
 		"max_momentum_scalar": same(200),
 		"detect_zone_ranges": [500, 200, 100, 0] as Array[float],
 		"knockback_scalar": [250, 350],
-		"attack_cooldown": [6, 4],
+		"attack_cooldown": [6, 3.5],
 		"idle_position_cooldown": same(2),
 		"strafe_timer": no_data,
 		"flee_timer": no_data,
@@ -102,10 +102,10 @@ var ENTITIES_DATA = {
 	"strong_reaper": {
 		"health": same(1000),
 		"damage": same(50),
-		"speed": [75, 120],
+		"speed": same(100),
 		"max_momentum_scalar": same(200),
 		"detect_zone_ranges": [500, 200, 0, 0] as Array[float],
-		"knockback_scalar": [250, 350],
+		"knockback_scalar": same(300),
 		"attack_cooldown": same(0.2),
 		"idle_position_cooldown": same(2),
 		"strafe_timer": no_data,
@@ -177,7 +177,7 @@ var ATTACK_ENTITIES_DATA = {
 		"speed": same(10), # DON'T CHANGE
 		"decceleration": same(1000), # DON'T CHANGE
 		"knockback_scalar": [100, 150],
-		"uptime": [3, 4],
+		"uptime": [3, 4.5],
 		"uptime_autostart": true,
 		"can_bounce": true,
 		"remove_upon_hit": false,
@@ -187,17 +187,27 @@ var ATTACK_ENTITIES_DATA = {
 		"speed": [400, 700],
 		"decceleration": [1000, 900],
 		"knockback_scalar": same(0),
-		"uptime": [5, 6],
+		"uptime": [4, 6],
 		"uptime_autostart": true,
 		"can_bounce": false,
 		"remove_upon_hit": false,
 	},
 	"scythe": {
 		"damage": [5, 10],
-		"speed": [175, 250],
+		"speed": [175, 300],
 		"decceleration": same(0),
 		"knockback_scalar": [400, 500],
-		"uptime": [5, 7],
+		"uptime": [5, 8],
+		"uptime_autostart": false,
+		"can_bounce": true,
+		"remove_upon_hit": false,
+	},
+	"strong_scythe": {
+		"damage": same(40),
+		"speed": same(300),
+		"decceleration": same(0),
+		"knockback_scalar": same(400),
+		"uptime": same(4),
 		"uptime_autostart": false,
 		"can_bounce": true,
 		"remove_upon_hit": false,
@@ -205,7 +215,7 @@ var ATTACK_ENTITIES_DATA = {
 }
 
 ## Level maintaining
-var current_dungeon = 3
+var current_dungeon = 0
 
 
 ## Dialogues
@@ -246,13 +256,13 @@ var dialogue_starters={
 	"first_fight": "npc",
 	"bird_dead": "npc",
 	"kill_player0": "npc",
-	"kill_player1": "reaper",
-	"player_dead": "reaper",
+	"kill_player1": "cat",
+	"player_dead": "soul",
 	"evil_soul_possess": "evil_soul",
 	"level2_start": "cat",
 	"possessing_tutorial": "soul",
-	"possessed_tutorial": "soul",
-	"final_boss_intro": "cat",
+	"possessed_tutorial": "bird",
+	"final_boss_intro": "npc",
 	"game_over": "evil_soul"
 }
 
@@ -288,18 +298,18 @@ var player_portrait_outlines = {
 	"strong_reaper": Color("#00376e"),
 	"reaper": Color("#00376e"),
 	"soul": Color("#a6e7ff"),
-	"evil_soul": Color("#a6e7ff"),
+	"evil_soul": Color("#ff5567"),
 	"npc": Color("#a6e7ff"),
 }
 
 var player_portrait_backgrounds = {
 	"bird": Color("#b2b2b2"),
 	"cat": Color("#fce9c7"),
-	"fireball": Color("#8101c5"),
+	"fireball": Color("#dfc1ff"),
 	"lily": Color("#ffd3ef"),
 	"strong_reaper": Color("#00376e"),
 	"reaper": Color("#6d8bbf"),
 	"soul": Color("#6d9aab"),
-	"evil_soul": Color("#6d9aab"),
+	"evil_soul": Color("#ffcbd1"),
 	"npc": Color("#a6e7ff"),
 }

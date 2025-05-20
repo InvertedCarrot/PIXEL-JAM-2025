@@ -30,7 +30,7 @@ num_enemies = {
 "bird": 0,
 "cat": 0,
 "fireball": 1,
-"lily": 0,
+"lily": 1,
 "reaper": 0
 }
 
@@ -40,8 +40,8 @@ num_enemies = {
 "bird": 0,
 "cat": 0,
 "fireball": 0,
-"lily": 1,
-"reaper": 0
+"lily": 0,
+"reaper": 1
 }
 
 [node name="TransitionArea" parent="TransitionAreas" index="0" instance=ExtResource("3_t86m3")]
@@ -69,4 +69,4 @@ position = Vector2(1019, -4.25)
 shape = SubResource("RectangleShape2D_tpie6")
 
 [node name="DeadBirdEnemy" type="Marker2D" parent="." index="11"]
-position = Vector2(602, -255)
+position = Vector2(655, -192)

@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://cn36omkasf8ja"]
+
+[ext_resource type="PackedScene" uid="uid://bgt2y0j12di1b" path="res://scenes/attack_entities/scythe/scythe.tscn" id="1_67s50"]
+[ext_resource type="Script" path="res://scenes/attack_entities/scythe/strong_scythe.gd" id="2_b5twh"]
+
+[node name="StrongScythe" instance=ExtResource("1_67s50")]
+script = ExtResource("2_b5twh")
