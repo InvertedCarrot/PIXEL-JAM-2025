@@ -285,7 +285,6 @@ func take_damage():
 	if immune_timer.is_stopped(): # if immune, don't take damage
 		if (is_player):
 			$HurtSound.play()
-		apply_damage() # apply damage (we deal with death below)
 		if entity_name != "soul":
 			apply_damage() # apply damage (we deal with death below)
 		else:

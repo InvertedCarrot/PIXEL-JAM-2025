@@ -104,7 +104,7 @@ var ENTITIES_DATA = {
 		"damage": same(50),
 		"speed": [75, 120],
 		"max_momentum_scalar": same(200),
-		"detect_zone_ranges": [500, 200, 1000, 0] as Array[float],
+		"detect_zone_ranges": [500, 200, 0, 0] as Array[float],
 		"knockback_scalar": [250, 350],
 		"attack_cooldown": same(0.2),
 		"idle_position_cooldown": same(2),
@@ -205,7 +205,7 @@ var ATTACK_ENTITIES_DATA = {
 }
 
 ## Level maintaining
-var current_dungeon = 0
+var current_dungeon = 3
 
 
 ## Dialogues

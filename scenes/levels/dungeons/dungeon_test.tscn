@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://bxvvgpbha0vgj"]
+
+[ext_resource type="PackedScene" uid="uid://c5djsy4nr40ou" path="res://scenes/levels/abstract_dungeon.tscn" id="1_ap4x5"]
+[ext_resource type="PackedScene" uid="uid://6khy1d77e6i3" path="res://scenes/levels/rooms/small_rooms/small_room_r.tscn" id="2_trwvn"]
+[ext_resource type="PackedScene" uid="uid://cwiecej1h1mp6" path="res://scenes/levels/rooms/small_rooms/small_room_ld.tscn" id="3_41in6"]
+[ext_resource type="PackedScene" uid="uid://dse3a5vw35rba" path="res://scenes/levels/rooms/small_rooms/small_room_ul.tscn" id="4_hgbx4"]
+[ext_resource type="PackedScene" uid="uid://cq22t7whq1oaf" path="res://scenes/levels/rooms/small_rooms/small_room_rld.tscn" id="5_r1fmo"]
+[ext_resource type="PackedScene" uid="uid://ccncnajquthwk" path="res://scenes/levels/rooms/small_rooms/small_room_ru.tscn" id="6_j35ht"]
+[ext_resource type="PackedScene" uid="uid://eraoyp800fk3" path="res://scenes/levels/rooms/small_rooms/small_room_rl.tscn" id="7_8fi85"]
+
+[node name="DungeonTest" instance=ExtResource("1_ap4x5")]
+
+[node name="SmallRoomR" parent="Rooms" index="0" instance=ExtResource("2_trwvn")]
+
+[node name="SmallRoomLD" parent="Rooms" index="1" instance=ExtResource("3_41in6")]
+position = Vector2(1323, 1)
+num_enemies = {
+"bird": 0,
+"cat": 0,
+"fireball": 0,
+"lily": 0,
+"reaper": 3
+}
+
+[node name="SmallRoomUL" parent="Rooms" index="2" instance=ExtResource("4_hgbx4")]
+position = Vector2(1324, 962)
+num_enemies = {
+"bird": 0,
+"cat": 0,
+"fireball": 5,
+"lily": 0,
+"reaper": 0
+}
+
+[node name="SmallRoomRLD" parent="Rooms" index="3" instance=ExtResource("5_r1fmo")]
+position = Vector2(5, 962)
+num_enemies = {
+"bird": 3,
+"cat": 0,
+"fireball": 0,
+"lily": 3,
+"reaper": 2
+}
+
+[node name="SmallRoomRU" parent="Rooms" index="4" instance=ExtResource("6_j35ht")]
+position = Vector2(1, 1918)
+
+[node name="SmallRoomR2" parent="Rooms" index="5" instance=ExtResource("2_trwvn")]
+position = Vector2(-1316, 962)
+
+[node name="SmallRoomRL" parent="Rooms" index="6" instance=ExtResource("7_8fi85")]
+position = Vector2(1326, 1919)

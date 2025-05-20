@@ -36,8 +36,7 @@ var level2_deadbird: bool = false
 var level5_evil_soul: bool = false
 
 func _ready():
-	var zoom_factor = 1.2
-	
+	var zoom_factor = 1.5
 	camera.zoom = Vector2(zoom_factor, zoom_factor)
 	# add the player
 	add_entity_to_level(entity_scenes[Globals.player_entity], Vector2(0,0), true)
@@ -48,18 +47,45 @@ func _ready():
 	
 	
 	for room in %Rooms.get_children():
-		var spawn_pos_markers = room.get_spawn_positions().map(func(marker_node): return marker_node.global_position)
-		print("Places to spawn: ", spawn_pos_markers)
+		snap_room_to_tile(room)
 		
-		var enemies_to_spawn = room.get_enemies_to_spawn()
-		print("What enemies to spawn: ", enemies_to_spawn)
+		# only THEN do enemies spawn in
+		spawn_enemies_in_room(room)	
+
+
+
+	if (Globals.current_dungeon==5):
+		$Music.stream = load("res://assets/music/daboss.wav")
+	$Music.play()
+
+func snap_room_to_tile(room):
+	# get the room's global position and find which tile (i.e. 60 x 60 square) it lies in
+	var room_pos_as_tile = room.global_position / 60.0
+	room_pos_as_tile = Vector2(round(room_pos_as_tile.x), round(room_pos_as_tile.y))
+	# round this position to the nearest integer point
+	room.global_position = room_pos_as_tile * 60
+
+func spawn_enemies_in_room(room, enemy_dict = null):
+	var spawn_pos_markers = room.get_spawn_positions().map(func(marker_node): return marker_node.global_position)
+	var enemies_to_spawn: Dictionary
+	if enemy_dict == null:
+		enemies_to_spawn = room.get_enemies_to_spawn()
+	else:
+		enemies_to_spawn = enemy_dict
 		
+	print("What enemies to spawn: ", enemies_to_spawn)
+	
+	if spawn_pos_markers.size() > 0:
 		for enemy_type in enemies_to_spawn:
 			for i in range(enemies_to_spawn[enemy_type]):
-				if spawn_pos_markers.size() == 0:
-					assert(false, "Error: tried to spawn enemy in room with no spawn positions")
 				var enemy_spawn_location = spawn_pos_markers.pick_random()
 				add_entity_to_level(entity_scenes[enemy_type], enemy_spawn_location)
+	
+	for marker_pos in spawn_pos_markers:
+		var decoration: Sprite2D = Sprite2D.new()
+		decoration.texture = load("res://assets/" + ["skull", "grave", "cobweb"].pick_random() +".png")
+		decoration.global_position = marker_pos + Vector2(randf_range(-100,100), randf_range(-100,100))
+		$Decorations.add_child(decoration)
 
 func _process(delta: float):
 	var player = player_node.get_child(0)
@@ -114,6 +140,8 @@ func _process(delta: float):
 		add_entity_to_level(entity_scenes["bird"], $BirdPosition.position)
 		add_entity_to_level(entity_scenes["strong_reaper"], $GrimReaperposition.position)
 		level1_cutscene = true
+		$Music.stream = load("res://assets/music/daboss.wav")
+		$Music.play()
 	
 	if (Globals.check_dialogue_state("kill_player0", 1, Globals.DONE)) and (Globals.check_dialogue_state("kill_player1", 1, Globals.NOT_STARTED)):
 		delete_projectiles()
@@ -126,6 +154,8 @@ func _process(delta: float):
 		reaper.turn_dead()
 		add_entity_to_level(evil_soul_entity, reaper.position)
 		reaper.dialogue_activate.emit("evil_soul_possess", "evil_soul")
+		$Music.stream = load("res://assets/music/dungeon.wav")
+		$Music.play()
 	
 	if (Globals.current_dungeon==2 and !level2_cat):
 		add_entity_to_level(cat_entity, Vector2(300,0))
@@ -141,8 +171,7 @@ func _process(delta: float):
 			if enemy.is_in_group("Cat"):
 				add_entity_to_level(evil_soul_entity, enemy.position + Vector2(50,50))
 		level5_evil_soul=true
-		
-
+	
 func add_entity_to_level(entity_packed_scene: PackedScene, spawn_location: Vector2, entity_is_player: bool = false, kill_on_spawn: bool = false):
 	var entity = entity_packed_scene.instantiate()
 	entity.player_node = player_node # set this for enemies to track the player
@@ -243,3 +272,7 @@ func take_over(target: CharacterBody2D):
 func delete_projectiles():
 	for attack_entity in %AttackEntities.get_children():
 		attack_entity.destroy()
+
+
+func _on_music_finished() -> void:
+	$Music.play()

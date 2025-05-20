@@ -34,12 +34,16 @@ func idle_behaviour() -> void:
 	if (Globals.check_dialogue_state("first_fight", 1, Globals.DONE) and 
 			Globals.check_dialogue_state("kill_player0",1,Globals.NOT_STARTED)):
 		default_pursuit()
+	if Globals.current_dungeon==6:
+		default_pursuit()
 	
 func zone_0_behaviour() -> void:
 	if Globals.check_dialogue_state("intro", 0, Globals.NOT_STARTED):
 		default_stop(false, false)
 		dialogue_activate.emit("intro", "npc")
 	if Globals.check_dialogue_state("kill_player0", 1, Globals.NOT_STARTED):
+		default_stop(false, false)
+	if Globals.current_dungeon==6:
 		default_stop(false, false)
 	
 

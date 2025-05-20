@@ -20,18 +20,25 @@ func _process(delta: float) -> void:
 
 func idle_behaviour() -> void:
 	default_roam(1)
+	if atk_timer.is_stopped():
+		attack()
+		atk_timer.start()
+
 
 func zone_0_behaviour() -> void:
 	default_pursuit()
+	if atk_timer.is_stopped():
+		attack()
+		atk_timer.start()
 
 func zone_1_behaviour() -> void:
-	default_stop()
-
-func zone_2_behaviour() -> void:
 	default_stop()
 	if atk_timer.is_stopped():
 		attack()
 		atk_timer.start()
+
+func zone_2_behaviour() -> void:
+	pass
 
 func zone_3_behaviour() -> void:
 	pass
