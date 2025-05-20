@@ -26,12 +26,13 @@ Transition="*res://globals/transition.tscn"
 
 [display]
 
-window/size/viewport_width=1600
-window/size/viewport_height=900
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 
 [global_group]
 
 Entity=""
+Cat=""
 
 [input]
 

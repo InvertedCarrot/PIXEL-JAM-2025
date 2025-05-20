@@ -7,12 +7,15 @@ var potion_amount: float
 
 func set_properties() -> void:
 	super()
-	potion_amount = entity_data["potion_amount"]
+	potion_amount = entity_data["potion_amount"][0]
 
 func abstract_properties_checks() -> void:
 	super()
-	if (!potion_amount):
-		assert(false, "Error: potion_amount must be defined")
+	check_array_property_exists("potion_amount")
+
+func scale_entity_stats():
+	super()
+	potion_amount = scale_property("potion_amount")
 
 func _ready() -> void:
 	entity_name = "bird"
@@ -20,6 +23,13 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	super(delta)
+	if Globals.check_dialogue_state("first_fight", 1, Globals.IN_PROGRESS):
+		direction = Vector2(-1,0)
+	
+	if Globals.check_dialogue_state("kill_player0", 1, Globals.DONE):
+		raw_velocity = direction * speed * 1.5
+		if (position.x >= 1300):
+			queue_free()
 
 # for birds, we need 2 zones ("pursuit", "flee")
 # idle = -1, pursuit = 0, flee = 1

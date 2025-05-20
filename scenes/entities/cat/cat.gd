@@ -22,14 +22,13 @@ func set_properties() -> void:
 
 func abstract_properties_checks() -> void:
 	super()
-	if (!state_switch_cooldown):
-		assert(false, "Error: state_switch_cooldown must be defined")
+	check_array_property_exists("state_switch_cooldown")
 
 func _ready() -> void:
 	entity_name = "cat"
 	super()
 	curr_state = 0
-	ss_timer.wait_time = state_switch_cooldown # states switch every (this amonut) seconds
+	ss_timer.wait_time = state_switch_cooldown[0] # states switch every (this amonut) seconds
 	
 	# TODO: fix later, only activate timer when cutscene is done
 	ss_timer.start()

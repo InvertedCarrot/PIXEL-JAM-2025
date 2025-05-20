@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://bifsintbqiwvw"]
+
+[ext_resource type="PackedScene" uid="uid://c5djsy4nr40ou" path="res://scenes/levels/abstract_dungeon.tscn" id="1_7c136"]
+[ext_resource type="PackedScene" uid="uid://eleagudjkq11" path="res://scenes/levels/rooms/room2.tscn" id="2_l8dqf"]
+[ext_resource type="PackedScene" uid="uid://t04n6ng22pl4" path="res://scenes/levels/areas/transition_area.tscn" id="3_42cmy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c33le"]
+size = Vector2(81.5, 226)
+
+[node name="Dungeon3" instance=ExtResource("1_7c136")]
+
+[node name="Room2" parent="Rooms" index="0" instance=ExtResource("2_l8dqf")]
+position = Vector2(264, 3)
+
+[node name="TransitionArea" parent="TransitionAreas" index="0" instance=ExtResource("3_42cmy")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TransitionAreas/TransitionArea" index="0"]
+position = Vector2(1059.75, -26)
+shape = SubResource("RectangleShape2D_c33le")

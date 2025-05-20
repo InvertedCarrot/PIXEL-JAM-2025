@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxvvgpbha0vgj"]
+
+[ext_resource type="PackedScene" uid="uid://c5djsy4nr40ou" path="res://scenes/levels/abstract_dungeon.tscn" id="1_rgmlx"]
+[ext_resource type="PackedScene" uid="uid://cshfb2dhfqpfc" path="res://scenes/levels/rooms/test_room.tscn" id="2_frrr3"]
+
+[node name="EnemySpawnTestDungeon" instance=ExtResource("1_rgmlx")]
+
+[node name="Rooms" parent="." index="2"]
+unique_name_in_owner = true
+
+[node name="TestRoom" parent="Rooms" index="0" instance=ExtResource("2_frrr3")]
+num_enemies = {
+"bird": 0,
+"cat": 0,
+"fireball": 3,
+"lily": 0,
+"reaper": 0
+}

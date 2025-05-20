@@ -245,7 +245,7 @@ radius = 44.0
 resource_local_to_scene = true
 radius = 32.0
 
-[node name="Cat" instance=ExtResource("1_6euje")]
+[node name="Cat" groups=["Cat"] instance=ExtResource("1_6euje")]
 script = ExtResource("2_tub6y")
 
 [node name="EntityImage" parent="." index="0"]

@@ -52,8 +52,8 @@ func start(scene: String, start_speaker: String):
 func attack():
 	%AttackBar.atk_timer.start()
 
-func update_attack_timer():
-	%AttackBar.atk_timer.wait_time = Globals.ENTITIES_DATA[Globals.player_entity]["attack_cooldown"]
+func update_attack_timer(time: float):
+	%AttackBar.atk_timer.wait_time = time
 
 func reset_timer():
 	%AttackBar.atk_timer.stop()

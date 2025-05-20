@@ -8,17 +8,21 @@ var fire_trail_amount: float
 
 func set_properties() -> void:
 	super()
-	fire_trail_amount = entity_data["fire_trail_amount"]
+	fire_trail_amount = entity_data["fire_trail_amount"][0]
 
 func abstract_properties_checks() -> void:
 	super()
-	if (!fire_trail_amount):
-		assert(false, "Error: fire_trail_amount must be defined")
+	check_array_property_exists("fire_trail_amount")
+
+func scale_entity_stats():
+	super()
+	fire_trail_amount = scale_property("fire_trail_amount")
 
 func _ready() -> void:
 	entity_name = "fireball"
 	super()
 	pi_timer.wait_time = (3.0/4.0)*atk_timer.wait_time
+
 
 func _process(delta: float) -> void:
 	super(delta)

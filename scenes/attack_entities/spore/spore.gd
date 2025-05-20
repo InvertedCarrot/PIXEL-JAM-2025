@@ -9,6 +9,7 @@ func _ready() -> void:
 	attack_entity_name = "spore"
 	super()
 	scale_spore(randf_range(0.6, 0.8))
+	velocity *= randf_range(0.5, 1)
 	
 
 func _process(delta: float) -> void:
