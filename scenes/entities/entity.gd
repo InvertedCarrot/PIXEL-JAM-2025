@@ -205,10 +205,7 @@ func _process(delta: float) -> void:
 		Globals.current_dungeon+=1
 
 	if (Globals.check_dialogue_state("level2_start",2,Globals.DONE) and entity_name=="cat"):
-		direction = Vector2(1,0)
-		raw_velocity = direction * speed * 4
-		if (position.x >= 1000):
-			queue_free()
+		queue_free()
 	
 	if (Globals.check_dialogue_state("game_over", 5, Globals.DONE) and entity_name=="evil_soul"):
 		queue_free()

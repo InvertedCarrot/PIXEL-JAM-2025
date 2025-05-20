@@ -4,13 +4,13 @@ extends Node
 var player_health: float = -1
 var souls_harvested: float = 0
 var max_player_health: float = -1
-var player_entity: String = "soul"
+var player_entity: String = "cat"
 
 # Constants
 var SOUL_CAPACITY: float = 10
 
 # enemy damage scaling
-var enemy_damage_scale = 1
+var enemy_damage_scale = 0.2
 
 # Layers (to set dynamically depending on whether its an enemy or player)
 # Store in binary repr, each bit represents whether that layer is included or not (right to left)
@@ -95,6 +95,18 @@ var ENTITIES_DATA = {
 		"detect_zone_ranges": [500, 200, 100, 0] as Array[float],
 		"knockback_scalar": [250, 350],
 		"attack_cooldown": [6, 4],
+		"idle_position_cooldown": same(2),
+		"strafe_timer": no_data,
+		"flee_timer": no_data,
+	},
+	"strong_reaper": {
+		"health": same(1000),
+		"damage": same(50),
+		"speed": [75, 120],
+		"max_momentum_scalar": same(200),
+		"detect_zone_ranges": [500, 200, 1000, 0] as Array[float],
+		"knockback_scalar": [250, 350],
+		"attack_cooldown": same(0.2),
 		"idle_position_cooldown": same(2),
 		"strafe_timer": no_data,
 		"flee_timer": no_data,
@@ -193,7 +205,7 @@ var ATTACK_ENTITIES_DATA = {
 }
 
 ## Level maintaining
-var current_dungeon = 2
+var current_dungeon = 0
 
 
 ## Dialogues
@@ -244,7 +256,7 @@ var dialogue_starters={
 	"game_over": "evil_soul"
 }
 
-var dialogue_index: int = 7
+var dialogue_index: int = 0
 
 var dialogues_in_order = dialogue_stages.keys()
 
@@ -262,6 +274,7 @@ var player_portraits = {
 	"fireball": load("res://assets/portraits/fireball_portrait.png"),
 	"lily": load("res://assets/portraits/lily_portrait.png"),
 	"reaper": load("res://assets/portraits/reaper_portrait.png"),
+	"strong_reaper": load("res://assets/portraits/reaper_portrait.png"),
 	"soul": load("res://assets/portraits/soul_portrait.png"),
 	"npc": load("res://assets/portraits/black_cat_portrait.png"),
 	"evil_soul": load("res://assets/portraits/evil_soul_portrait.png")
@@ -272,6 +285,7 @@ var player_portrait_outlines = {
 	"cat": Color("#bd810e"),
 	"fireball": Color("#aa20ff"),
 	"lily": Color("#266700"),
+	"strong_reaper": Color("#00376e"),
 	"reaper": Color("#00376e"),
 	"soul": Color("#a6e7ff"),
 	"evil_soul": Color("#a6e7ff"),
@@ -283,6 +297,7 @@ var player_portrait_backgrounds = {
 	"cat": Color("#fce9c7"),
 	"fireball": Color("#8101c5"),
 	"lily": Color("#ffd3ef"),
+	"strong_reaper": Color("#00376e"),
 	"reaper": Color("#6d8bbf"),
 	"soul": Color("#6d9aab"),
 	"evil_soul": Color("#6d9aab"),

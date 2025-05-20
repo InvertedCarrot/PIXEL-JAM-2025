@@ -10,7 +10,7 @@ size = Vector2(250, 287)
 
 [node name="Dungeon0" instance=ExtResource("1_d6ixh")]
 spawn_npc = true
-npc_position = Vector2(400, 0)
+npc_position = Vector2(600, 0)
 
 [node name="Room0" parent="Rooms" index="0" instance=ExtResource("2_jvcp0")]
 

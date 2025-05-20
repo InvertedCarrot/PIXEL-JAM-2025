@@ -8,6 +8,7 @@ var reaper_entity: PackedScene = preload("res://scenes/entities/reaper/reaper.ts
 var soul_entity: PackedScene = preload("res://scenes/entities/soul/soul.tscn")
 var npc_entity: PackedScene = preload("res://scenes/entities/npc_cat/npc_cat.tscn")
 var evil_soul_entity: PackedScene = preload("res://scenes/entities/soul/evil_soul.tscn")
+var strong_reaper_entity: PackedScene = preload("res://scenes/entities/reaper/strong_reaper.tscn")
 
 @onready var player_node: Node2D = %Player
 @onready var enemies_node: Node2D = %Enemies
@@ -25,7 +26,8 @@ var entity_scenes = {
 	"fireball": fireball_entity,
 	"lily": lily_entity,
 	"reaper": reaper_entity,
-	"soul": soul_entity
+	"soul": soul_entity,
+	"strong_reaper": strong_reaper_entity
 }
 
 var level1_cutscene: bool = false
@@ -110,7 +112,7 @@ func _process(delta: float):
 			and Globals.check_dialogue_state("kill_player0", 1, Globals.IN_PROGRESS)
 			and !level1_cutscene):
 		add_entity_to_level(entity_scenes["bird"], $BirdPosition.position)
-		add_entity_to_level(entity_scenes["reaper"], $GrimReaperposition.position)
+		add_entity_to_level(entity_scenes["strong_reaper"], $GrimReaperposition.position)
 		level1_cutscene = true
 	
 	if (Globals.check_dialogue_state("kill_player0", 1, Globals.DONE)) and (Globals.check_dialogue_state("kill_player1", 1, Globals.NOT_STARTED)):
