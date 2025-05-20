@@ -80,6 +80,12 @@ func spawn_enemies_in_room(room, enemy_dict = null):
 			for i in range(enemies_to_spawn[enemy_type]):
 				var enemy_spawn_location = spawn_pos_markers.pick_random()
 				add_entity_to_level(entity_scenes[enemy_type], enemy_spawn_location)
+	
+	for marker_pos in spawn_pos_markers:
+		var decoration: Sprite2D = Sprite2D.new()
+		decoration.texture = load("res://assets/" + ["skull", "grave", "cobweb"].pick_random() +".png")
+		decoration.global_position = marker_pos + Vector2(randf_range(-100,100), randf_range(-100,100))
+		$Decorations.add_child(decoration)
 
 func _process(delta: float):
 	var player = player_node.get_child(0)

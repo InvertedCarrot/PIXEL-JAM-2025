@@ -205,7 +205,7 @@ var ATTACK_ENTITIES_DATA = {
 }
 
 ## Level maintaining
-var current_dungeon = 0
+var current_dungeon = 3
 
 
 ## Dialogues

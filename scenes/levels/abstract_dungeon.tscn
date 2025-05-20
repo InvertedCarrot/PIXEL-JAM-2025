@@ -65,6 +65,9 @@ tile_set = SubResource("TileSet_tnuq8")
 [node name="Rooms" type="Node2D" parent="."]
 unique_name_in_owner = true
 
+[node name="Decorations" type="Node2D" parent="."]
+visible = false
+
 [node name="Player" type="Node2D" parent="."]
 unique_name_in_owner = true
 
@@ -78,8 +81,6 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 
 [node name="UI" parent="." instance=ExtResource("1_fvsps")]
-
-[node name="Decorations" type="Node2D" parent="."]
 
 [node name="TransitionAreas" type="Node2D" parent="."]
 

@@ -76,6 +76,9 @@ num_enemies = {
 "reaper": 1
 }
 
+[node name="Decorations" parent="." index="3"]
+visible = true
+
 [node name="TransitionArea" parent="TransitionAreas" index="0" instance=ExtResource("3_42cmy")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TransitionAreas/TransitionArea" index="0"]
