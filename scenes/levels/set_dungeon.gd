@@ -50,8 +50,13 @@ func _ready():
 		snap_room_to_tile(room)
 		
 		# only THEN do enemies spawn in
-		spawn_enemies_in_room(room)
+		spawn_enemies_in_room(room)	
 
+
+
+	if (Globals.current_dungeon==5):
+		$Music.stream = load("res://assets/music/daboss.wav")
+	$Music.play()
 
 func snap_room_to_tile(room):
 	# get the room's global position and find which tile (i.e. 60 x 60 square) it lies in
@@ -129,6 +134,8 @@ func _process(delta: float):
 		add_entity_to_level(entity_scenes["bird"], $BirdPosition.position)
 		add_entity_to_level(entity_scenes["strong_reaper"], $GrimReaperposition.position)
 		level1_cutscene = true
+		$Music.stream = load("res://assets/music/daboss.wav")
+		$Music.play()
 	
 	if (Globals.check_dialogue_state("kill_player0", 1, Globals.DONE)) and (Globals.check_dialogue_state("kill_player1", 1, Globals.NOT_STARTED)):
 		delete_projectiles()
@@ -141,6 +148,8 @@ func _process(delta: float):
 		reaper.turn_dead()
 		add_entity_to_level(evil_soul_entity, reaper.position)
 		reaper.dialogue_activate.emit("evil_soul_possess", "evil_soul")
+		$Music.stream = load("res://assets/music/dungeon.wav")
+		$Music.play()
 	
 	if (Globals.current_dungeon==2 and !level2_cat):
 		add_entity_to_level(cat_entity, Vector2(300,0))
@@ -156,8 +165,7 @@ func _process(delta: float):
 			if enemy.is_in_group("Cat"):
 				add_entity_to_level(evil_soul_entity, enemy.position + Vector2(50,50))
 		level5_evil_soul=true
-		
-
+	
 func add_entity_to_level(entity_packed_scene: PackedScene, spawn_location: Vector2, entity_is_player: bool = false, kill_on_spawn: bool = false):
 	var entity = entity_packed_scene.instantiate()
 	entity.player_node = player_node # set this for enemies to track the player
@@ -258,3 +266,7 @@ func take_over(target: CharacterBody2D):
 func delete_projectiles():
 	for attack_entity in %AttackEntities.get_children():
 		attack_entity.destroy()
+
+
+func _on_music_finished() -> void:
+	$Music.play()

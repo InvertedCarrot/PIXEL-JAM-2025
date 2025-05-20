@@ -1,19 +1,83 @@
-[gd_scene load_steps=5 format=3 uid="uid://b2y44qgu246t5"]
+[gd_scene load_steps=10 format=3 uid="uid://b2y44qgu246t5"]
 
 [ext_resource type="PackedScene" uid="uid://c5djsy4nr40ou" path="res://scenes/levels/abstract_dungeon.tscn" id="1_7c136"]
-[ext_resource type="PackedScene" uid="uid://eleagudjkq11" path="res://scenes/levels/rooms/room2.tscn" id="2_l8dqf"]
+[ext_resource type="PackedScene" uid="uid://6khy1d77e6i3" path="res://scenes/levels/rooms/small_rooms/small_room_r.tscn" id="2_lb2fb"]
 [ext_resource type="PackedScene" uid="uid://t04n6ng22pl4" path="res://scenes/levels/areas/transition_area.tscn" id="3_42cmy"]
+[ext_resource type="PackedScene" uid="uid://cwiecej1h1mp6" path="res://scenes/levels/rooms/small_rooms/small_room_ld.tscn" id="3_rbh0p"]
+[ext_resource type="PackedScene" uid="uid://dse3a5vw35rba" path="res://scenes/levels/rooms/small_rooms/small_room_ul.tscn" id="4_taq1i"]
+[ext_resource type="PackedScene" uid="uid://cq22t7whq1oaf" path="res://scenes/levels/rooms/small_rooms/small_room_rld.tscn" id="5_vmuu1"]
+[ext_resource type="PackedScene" uid="uid://ccncnajquthwk" path="res://scenes/levels/rooms/small_rooms/small_room_ru.tscn" id="6_hwxq1"]
+[ext_resource type="PackedScene" uid="uid://eraoyp800fk3" path="res://scenes/levels/rooms/small_rooms/small_room_rl.tscn" id="7_tc1uw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c33le"]
-size = Vector2(81.5, 226)
+size = Vector2(86.75, 288)
 
 [node name="Dungeon3" instance=ExtResource("1_7c136")]
 
-[node name="Room2" parent="Rooms" index="0" instance=ExtResource("2_l8dqf")]
-position = Vector2(264, 3)
+[node name="SmallRoomR" parent="Rooms" index="0" instance=ExtResource("2_lb2fb")]
+
+[node name="SmallRoomLD" parent="Rooms" index="1" instance=ExtResource("3_rbh0p")]
+position = Vector2(1320, -2)
+num_enemies = {
+"bird": 2,
+"cat": 0,
+"fireball": 0,
+"lily": 0,
+"reaper": 0
+}
+
+[node name="SmallRoomUL" parent="Rooms" index="2" instance=ExtResource("4_taq1i")]
+position = Vector2(1318, 950)
+num_enemies = {
+"bird": 0,
+"cat": 0,
+"fireball": 2,
+"lily": 0,
+"reaper": 0
+}
+
+[node name="SmallRoomRLD" parent="Rooms" index="3" instance=ExtResource("5_vmuu1")]
+position = Vector2(2, 951)
+num_enemies = {
+"bird": 0,
+"cat": 0,
+"fireball": 0,
+"lily": 2,
+"reaper": 0
+}
+
+[node name="SmallRoomR2" parent="Rooms" index="4" instance=ExtResource("2_lb2fb")]
+position = Vector2(-1313, 950)
+num_enemies = {
+"bird": 1,
+"cat": 0,
+"fireball": 1,
+"lily": 1,
+"reaper": 1
+}
+
+[node name="SmallRoomRU" parent="Rooms" index="5" instance=ExtResource("6_hwxq1")]
+position = Vector2(-4, 1911)
+num_enemies = {
+"bird": 0,
+"cat": 0,
+"fireball": 1,
+"lily": 0,
+"reaper": 2
+}
+
+[node name="SmallRoomRL" parent="Rooms" index="6" instance=ExtResource("7_tc1uw")]
+position = Vector2(1314, 1911)
+num_enemies = {
+"bird": 0,
+"cat": 0,
+"fireball": 0,
+"lily": 2,
+"reaper": 1
+}
 
 [node name="TransitionArea" parent="TransitionAreas" index="0" instance=ExtResource("3_42cmy")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TransitionAreas/TransitionArea" index="0"]
-position = Vector2(1059.75, -26)
+position = Vector2(1943, 1910)
 shape = SubResource("RectangleShape2D_c33le")

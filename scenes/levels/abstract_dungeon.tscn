@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=4 uid="uid://c5djsy4nr40ou"]
+[gd_scene load_steps=9 format=4 uid="uid://c5djsy4nr40ou"]
 
 [ext_resource type="PackedScene" uid="uid://4ixo48h447bf" path="res://scenes/UI.tscn" id="1_fvsps"]
 [ext_resource type="Script" path="res://scenes/levels/set_dungeon.gd" id="1_snu1k"]
 [ext_resource type="Texture2D" uid="uid://c3pmigul2vsx" path="res://assets/grid_debug.png" id="2_nh1dj"]
 [ext_resource type="Texture2D" uid="uid://ch35wa3g86x6r" path="res://assets/tilemap.png" id="3_fmuyh"]
+[ext_resource type="AudioStream" uid="uid://bu0kd4ce4cveg" path="res://assets/music/dungeon.wav" id="5_0cnfs"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3o2xx"]
 bounce = 1.0
@@ -50,7 +51,6 @@ sources/0 = SubResource("TileSetAtlasSource_eqn51")
 script = ExtResource("1_snu1k")
 
 [node name="DebugBackground" type="Sprite2D" parent="."]
-visible = false
 texture_repeat = 2
 position = Vector2(25, 22)
 texture = ExtResource("2_nh1dj")
@@ -85,5 +85,10 @@ unique_name_in_owner = true
 
 [node name="CutsceneAreas" type="Node2D" parent="."]
 
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_0cnfs")
+autoplay = true
+
 [connection signal="child_entered_tree" from="Player" to="UI" method="_on_player_child_entered_tree"]
 [connection signal="child_entered_tree" from="Enemies" to="UI" method="_on_enemies_child_entered_tree"]
+[connection signal="finished" from="Music" to="." method="_on_music_finished"]
