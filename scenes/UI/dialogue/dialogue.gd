@@ -7,6 +7,8 @@ var dialogue_engine : DialogueEngine = null
 
 const dialogue_box_scene = preload("res://scenes/UI/dialogue/dialogue_box.tscn")
 
+@onready var clicking_audio: AudioStreamPlayer2D = $ClickingAudio
+
 #func _ready() -> void:
 
 func begin():
@@ -91,6 +93,9 @@ func create_visible_characters_animation_per_character(p_text : String, p_time_p
 	var track_index : int = animation.add_track(Animation.TYPE_VALUE)
 	animation.track_set_path(track_index, ".:visible_characters")
 	animation.track_set_interpolation_type(track_index, Animation.INTERPOLATION_LINEAR)
+
+	# Play audio
+	clicking_audio.play()
 
 	# Configure keys
 	var total_time : float = 0.0
