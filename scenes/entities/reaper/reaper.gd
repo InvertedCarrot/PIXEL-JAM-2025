@@ -8,7 +8,13 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	super(delta)
-
+	if Globals.check_dialogue_state("kill_player1", 1, Globals.DONE):
+		## When the player dies
+		if (is_player):
+			dialogue_activate.emit("player_dead", "reaper")
+	
+	
+	
 # for reapers, we need 3 zones ("pursuit", "stalk" and "attack")
 # idle = -1, pursuit = 0, stalk = 1, attack = 2
 

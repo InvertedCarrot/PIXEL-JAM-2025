@@ -7,6 +7,7 @@ var lily_entity: PackedScene = preload("res://scenes/entities/lily/lily.tscn")
 var reaper_entity: PackedScene = preload("res://scenes/entities/reaper/reaper.tscn")
 var soul_entity: PackedScene = preload("res://scenes/entities/soul/soul.tscn")
 var npc_entity: PackedScene = preload("res://scenes/entities/npc_cat/npc_cat.tscn")
+var evil_soul_entity: PackedScene = preload("res://scenes/entities/soul/evil_soul.tscn")
 
 @onready var player_node: Node2D = %Player
 @onready var enemies_node: Node2D = %Enemies
@@ -27,10 +28,14 @@ var entity_scenes = {
 	"soul": soul_entity
 }
 
-
+var level1_cutscene: bool = false
+var level2_cat: bool = false
+var level2_deadbird: bool = false
+var level5_evil_soul: bool = false
 
 func _ready():
-	var zoom_factor = 0.4
+	var zoom_factor = 1.2
+	
 	camera.zoom = Vector2(zoom_factor, zoom_factor)
 	# add the player
 	add_entity_to_level(entity_scenes[Globals.player_entity], Vector2(0,0), true)
@@ -53,7 +58,6 @@ func _ready():
 					assert(false, "Error: tried to spawn enemy in room with no spawn positions")
 				var enemy_spawn_location = spawn_pos_markers.pick_random()
 				add_entity_to_level(entity_scenes[enemy_type], enemy_spawn_location)
-
 
 func _process(delta: float):
 	var player = player_node.get_child(0)
@@ -95,7 +99,41 @@ func _process(delta: float):
 				dead_enemy.modulate = Color(1.1, 1.1, 1.1, 1)
 			else:
 				dead_enemy.modulate = Color(0.7, 0.7, 0.7, 1)
+	if (Globals.check_dialogue_state("bird_dead",1, Globals.DONE)
+			and Globals.check_dialogue_state("kill_player0", 1, Globals.IN_PROGRESS)
+			and !level1_cutscene):
+		add_entity_to_level(entity_scenes["bird"], $BirdPosition.position)
+		add_entity_to_level(entity_scenes["reaper"], $GrimReaperposition.position)
+		level1_cutscene = true
+	
+	if (Globals.check_dialogue_state("kill_player0", 1, Globals.DONE)) and (Globals.check_dialogue_state("kill_player1", 1, Globals.NOT_STARTED)):
+		delete_projectiles()
+	
+	if (Globals.check_dialogue_state("player_dead", 1, Globals.IN_PROGRESS)):
+		delete_projectiles()
+	
+	if (Globals.check_dialogue_state("player_dead",1,Globals.DONE)):
+		var reaper = $Enemies.get_child(0)
+		reaper.turn_dead()
+		add_entity_to_level(evil_soul_entity, reaper.position)
+		reaper.dialogue_activate.emit("evil_soul_possess", "evil_soul")
+	
+	if (Globals.current_dungeon==2 and !level2_cat):
+		add_entity_to_level(cat_entity, Vector2(300,0))
+		level2_cat=true
 
+	if (Globals.check_dialogue_state("possessing_tutorial", 2, Globals.IN_PROGRESS) and !level2_deadbird):
+		add_entity_to_level(bird_entity, $DeadBirdEnemy.position)
+		$Enemies.get_child(0).turn_dead()
+		level2_deadbird = true
+	
+	if (Globals.check_dialogue_state("game_over", 5, Globals.IN_PROGRESS) and !level5_evil_soul):
+		for enemy in $DeadEnemies.get_children():
+			print("DEBUG:",enemy)
+			if enemy.is_in_group("Cat"):
+				add_entity_to_level(evil_soul_entity, enemy.position + Vector2(50,50))
+		level5_evil_soul=true
+		
 
 func add_entity_to_level(entity_packed_scene: PackedScene, spawn_location: Vector2, entity_is_player: bool = false):
 	var entity = entity_packed_scene.instantiate()
@@ -139,7 +177,14 @@ func eject_soul(eject_forcefully: bool = false):
 	var eject_location: Vector2 = player.global_position
 	player.remove_child(camera)
 	if eject_forcefully:
-		player_node.remove_child(player) # dispose of the body if ejected forcefully
+		if Globals.check_dialogue_state("kill_player1", 1, Globals.DONE):
+			## When the player dies
+			move_entity_to_dead(player, true)
+			add_entity_to_level(soul_entity, eject_location, true)
+			player.dialogue_activate.emit("player_dead", "reaper")
+			return
+		else:
+			player_node.remove_child(player) # dispose of the body if ejected forcefully
 	else:
 		move_entity_to_dead(player, true) # else, move the player body to dead enemies (for re-possession)
 	add_entity_to_level(soul_entity, eject_location, true) # replace the player with the soul
@@ -182,3 +227,7 @@ func take_over(target: CharacterBody2D):
 	if target.health > 0:
 		added_entity.health = target.health
 		Globals.player_health = target.health
+
+func delete_projectiles():
+	for attack_entity in %AttackEntities.get_children():
+		attack_entity.destroy()

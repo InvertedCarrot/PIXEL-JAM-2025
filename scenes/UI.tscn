@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" path="res://scenes/ui.gd" id="1_vjo20"]
 [ext_resource type="Script" path="res://scenes/UI/player_portrait_column.gd" id="2_0f65r"]
-[ext_resource type="Texture2D" uid="uid://cblka1215mad4" path="res://assets/portraits/soul_portrait.png" id="3_5d076"]
+[ext_resource type="Texture2D" uid="uid://2ey2qqbobha4" path="res://assets/portraits/soul_portrait.png" id="3_5d076"]
 [ext_resource type="PackedScene" uid="uid://dad4hp2wo7bg0" path="res://scenes/UI/dialogue/dialogue_box.tscn" id="3_387sr"]
-[ext_resource type="Texture2D" uid="uid://blp1lckbxo3du" path="res://assets/heart.png" id="5_b5oox"]
-[ext_resource type="Texture2D" uid="uid://dem16q75udr1r" path="res://assets/soul.png" id="7_4mpse"]
+[ext_resource type="Texture2D" uid="uid://c6lnj10vajqis" path="res://assets/heart.png" id="5_b5oox"]
+[ext_resource type="Texture2D" uid="uid://dsrtf13nsgcxy" path="res://assets/soul.png" id="7_4mpse"]
 [ext_resource type="Script" path="res://scenes/UI/attack_bar.gd" id="7_djk1g"]
 [ext_resource type="Script" path="res://scenes/UI/health_bar.gd" id="7_sjwx2"]
 [ext_resource type="Script" path="res://scenes/UI/soul_bar.gd" id="8_385kd"]
@@ -52,6 +52,7 @@ size_flags_horizontal = 3
 [node name="PlayerPortraitColumn" type="VBoxContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 script = ExtResource("2_0f65r")
+portrait_type = "PlayerStats"
 
 [node name="PlayerPortraitOutline" type="PanelContainer" parent="UINode/HBoxContainer/MarginContainer/HBoxContainer/PlayerPortraitColumn"]
 unique_name_in_owner = true

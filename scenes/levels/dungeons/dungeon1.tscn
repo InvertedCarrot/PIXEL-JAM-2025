@@ -1,14 +1,36 @@
-[gd_scene load_steps=4 format=3 uid="uid://d26b3yqskthn7"]
+[gd_scene load_steps=6 format=3 uid="uid://d26b3yqskthn7"]
 
 [ext_resource type="PackedScene" uid="uid://c5djsy4nr40ou" path="res://scenes/levels/abstract_dungeon.tscn" id="1_7eu1p"]
 [ext_resource type="PackedScene" uid="uid://cdk45om0htpgx" path="res://scenes/levels/rooms/room1.tscn" id="2_x023l"]
-[ext_resource type="PackedScene" uid="uid://eleagudjkq11" path="res://scenes/levels/rooms/room2.tscn" id="3_obtpb"]
+[ext_resource type="PackedScene" uid="uid://bvbowx3i22ei2" path="res://scenes/levels/areas/cutscene_area.tscn" id="4_uk2eu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ggn7m"]
+size = Vector2(229, 1006)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a66v7"]
+size = Vector2(227.5, 283.5)
 
 [node name="Dungeon1" instance=ExtResource("1_7eu1p")]
+spawn_npc = true
+npc_position = Vector2(-100, -100)
 
 [node name="Room1" parent="Rooms" index="0" instance=ExtResource("2_x023l")]
-script = null
+position = Vector2(362, 0)
 
-[node name="Room2" parent="Rooms" index="1" instance=ExtResource("3_obtpb")]
-position = Vector2(3180, 0)
-script = null
+[node name="CutsceneArea" parent="CutsceneAreas" index="0" instance=ExtResource("4_uk2eu")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CutsceneAreas/CutsceneArea" index="0"]
+position = Vector2(173.5, 0)
+shape = SubResource("RectangleShape2D_ggn7m")
+
+[node name="CutsceneArea2" parent="CutsceneAreas" index="1" instance=ExtResource("4_uk2eu")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CutsceneAreas/CutsceneArea2" index="0"]
+position = Vector2(1176, 2)
+shape = SubResource("RectangleShape2D_a66v7")
+
+[node name="BirdPosition" type="Marker2D" parent="." index="11"]
+position = Vector2(1395, 1)
+
+[node name="GrimReaperposition" type="Marker2D" parent="." index="12"]
+position = Vector2(813, 2)

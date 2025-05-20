@@ -36,10 +36,12 @@ func _process(delta: float) -> void:
 	%PlayerPortrait.texture = player_portraits[Globals.player_entity]
 
 
-func start(scene: String):
+func start(scene: String, start_speaker: String):
 	if (dialogue_box==null):
+		Globals.current_speaker = start_speaker
 		Globals.dialogue_active = true
 		Globals.dialogue_scene = scene
+		Globals.dialogue_stages[scene] = Globals.IN_PROGRESS
 		dialogue_box = Globals.DIALOGUE_BOX_SCENE.instantiate()
 		dialogue_box.dialogue_gdscript = Globals.CUTSCENES_GDSCRIPT
 		# add dialogue_box as child
