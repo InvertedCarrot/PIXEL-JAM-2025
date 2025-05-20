@@ -35,7 +35,7 @@ func _setup() -> void:
 		"kill_player0":
 			add_text_entry("Ooooh another bird!").set_metadata("author", "npc")
 			add_text_entry("Wait-").set_metadata("author", Globals.player_entity)
-			add_text_entry("Just you wait, I'm gonna get you like my brother just did!").set_metadata("author", "npc")
+			add_text_entry("Just you wait, I'm gonna get you like my sibling just did!").set_metadata("author", "npc")
 			add_text_entry("O_O (did they just kill my cousin??)").set_metadata("author", "bird")
 		"kill_player1":
 			add_text_entry("... I got left behind").set_metadata("author", Globals.player_entity)
@@ -49,10 +49,10 @@ func _setup() -> void:
 			add_text_entry("Your sibling will have no idea it's me! Hehehehe I'm so evil...").set_metadata("author", "evil_soul")
 			add_text_entry("You're not gonna get away with this!").set_metadata("author", Globals.player_entity)
 		"level2_start":
-			add_text_entry("Welp, I gotta go reunite with my [i][shake rate=20.0 level=5 connected=1]beloved brother[/shake][/i]. See ya, sucker :P").set_metadata("author", "cat")
+			add_text_entry("Welp, I gotta go reunite with my [i][shake rate=20.0 level=5 connected=1]beloved sibling[/shake][/i]. See ya, sucker :P").set_metadata("author", "cat")
 			add_text_entry("NO").set_metadata("author", Globals.player_entity)
 		"possessing_tutorial":
-			add_text_entry("Drats. I have to save my brother from that possessive freak!").set_metadata("author", Globals.player_entity)
+			add_text_entry("Drats. I have to save my sibling from that possessive freak!").set_metadata("author", Globals.player_entity)
 			add_text_entry("If only I weren't so weak as a soul...").set_metadata("author", Globals.player_entity)
 			add_text_entry("...Wait!").set_metadata("author", Globals.player_entity)
 			add_text_entry("If that [i][shake rate=20.0 level=5 connected=1]thing[/shake][/i] could possess my dead body, maybe I could do the same?").set_metadata("author", Globals.player_entity)
@@ -65,13 +65,13 @@ func _setup() -> void:
 			add_text_entry("I think pressing <V> lets me harvest the dead and powers me up for tougher enemies? Something like that.").set_metadata("author", Globals.player_entity)
 			add_text_entry("I think that's only possible if I'm possessing a body, right? I really should've payed attention in class").set_metadata("author", Globals.player_entity)
 			add_text_entry("...").set_metadata("author", Globals.player_entity)
-			add_text_entry("Get it together, dude. You gotta save your brother!").set_metadata("author", Globals.player_entity)
+			add_text_entry("Get it together, dude. You gotta save your sibling!").set_metadata("author", Globals.player_entity)
 		"final_boss_intro":
 			add_text_entry("...so as I was saying-").set_metadata("author", "npc")
 			add_text_entry("HEY! I FOUND YOU").set_metadata("author", Globals.player_entity)
 			add_text_entry("Oho! So we meet again.").set_metadata("author", "cat")
 			add_text_entry("Hey, what's the matter? You've been acting strange for a while.").set_metadata("author", "npc")
-			add_text_entry("Oh nothing of significance, brother. Let me pulverize this [i][shake rate=20.0 level=5 connected=1]pesky vermin[/shake][/i]").set_metadata("author", "cat")
+			add_text_entry("Oh nothing of significance, sibling. Let me pulverize this [i][shake rate=20.0 level=5 connected=1]pesky vermin[/shake][/i]").set_metadata("author", "cat")
 			add_text_entry("Ok then...?").set_metadata("author", "npc")
 			add_text_entry("Don't fall for it! That isn't me, I'm me!").set_metadata("author", Globals.player_entity)
 			add_text_entry("Psssh, just a typical dungeon scallywag baiting you to drop your guard. Pay no attention to it.").set_metadata("author", "cat")
