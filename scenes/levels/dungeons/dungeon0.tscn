@@ -12,6 +12,7 @@ spawn_npc = true
 npc_position = Vector2(400, 0)
 
 [node name="Room0" parent="Rooms" index="0" instance=ExtResource("2_jvcp0")]
+script = null
 
 [node name="Sprite2D" type="Sprite2D" parent="Decorations" index="0"]
 position = Vector2(112, -118)

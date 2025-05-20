@@ -15,18 +15,6 @@ var npc_entity: PackedScene = preload("res://scenes/entities/npc_cat/npc_cat.tsc
 
 var camera: Camera2D = Camera2D.new()
 
-@export_enum("cat", "bird", "fireball", "lily", "reaper", "soul")
-var player_entity: String = "cat"
-
-
-@export var num_enemies = {
-	"bird": 0,
-	"cat": 0,
-	"fireball": 0,
-	"lily": 0,
-	"reaper": 0,
-}
-
 @export var spawn_npc: bool = false
 @export var npc_position: Vector2 = Vector2.ZERO
 
@@ -39,33 +27,33 @@ var entity_scenes = {
 	"soul": soul_entity
 }
 
-# DEBUG
-func start_pos():
-	var x_reflect = [-1, 1].pick_random()
-	var y_reflect = [-1, 1].pick_random()
-	var x_range = [300, 400]
-	var y_range = [200, 300]
-	return Vector2(randf_range(x_range[0], x_range[1])*x_reflect, randf_range(y_range[0], y_range[1])*y_reflect)
+
 
 func _ready():
-	var zoom_factor = 0.9
+	var zoom_factor = 0.4
 	camera.zoom = Vector2(zoom_factor, zoom_factor)
-	# Add player
-	add_entity_to_level(entity_scenes[player_entity], Vector2(0,0), true)
-	
+	# add the player
+	add_entity_to_level(entity_scenes[Globals.player_entity], Vector2(0,0), true)
+	# add the npc
 	if (spawn_npc):
 		add_entity_to_level(npc_entity, npc_position)
 	
-	if (!num_enemies.has_all(["cat","bird","fireball","lily","reaper"]) or num_enemies.size()!=5):
-		assert(false, "ERROR: Enemies dict must contain the exact enemy names")
 	
-	# Add each enemy the right amount of times
-	for enemy in num_enemies:
-		if (type_string(typeof(num_enemies[enemy]))!="int"):
-			assert(false, "ERROR: Enter numbers for the number of entities!")
-		for i in range(num_enemies[enemy]):
-			# TODO: Make the position be within range of the stage
-			add_entity_to_level(entity_scenes[enemy], start_pos())
+	
+	for room in %Rooms.get_children():
+		var spawn_pos_markers = room.get_spawn_positions().map(func(marker_node): return marker_node.global_position)
+		print("Places to spawn: ", spawn_pos_markers)
+		
+		var enemies_to_spawn = room.get_enemies_to_spawn()
+		print("What enemies to spawn: ", enemies_to_spawn)
+		
+		for enemy_type in enemies_to_spawn:
+			for i in range(enemies_to_spawn[enemy_type]):
+				if spawn_pos_markers.size() == 0:
+					assert(false, "Error: tried to spawn enemy in room with no spawn positions")
+				var enemy_spawn_location = spawn_pos_markers.pick_random()
+				add_entity_to_level(entity_scenes[enemy_type], enemy_spawn_location)
+
 
 func _process(delta: float):
 	var player = player_node.get_child(0)
