@@ -14,13 +14,13 @@ npc_position = Vector2(400, 0)
 [node name="Room0" parent="Rooms" index="0" instance=ExtResource("2_jvcp0")]
 script = null
 
-[node name="Sprite2D" type="Sprite2D" parent="Decorations" index="0"]
-position = Vector2(112, -118)
-scale = Vector2(0.6, 0.6)
-texture = ExtResource("3_m7k3x")
-
 [node name="Area2D" type="Area2D" parent="." index="8"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
 position = Vector2(1044, 25)
 shape = SubResource("RectangleShape2D_t8cmh")
+
+[node name="Sprite2D" type="Sprite2D" parent="Decorations" index="0"]
+position = Vector2(112, -118)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("3_m7k3x")

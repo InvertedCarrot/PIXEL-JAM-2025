@@ -30,7 +30,7 @@ var entity_scenes = {
 
 
 func _ready():
-	var zoom_factor = 0.4
+	var zoom_factor = 0.5
 	camera.zoom = Vector2(zoom_factor, zoom_factor)
 	# add the player
 	add_entity_to_level(entity_scenes[Globals.player_entity], Vector2(0,0), true)
@@ -41,18 +41,35 @@ func _ready():
 	
 	
 	for room in %Rooms.get_children():
-		var spawn_pos_markers = room.get_spawn_positions().map(func(marker_node): return marker_node.global_position)
-		print("Places to spawn: ", spawn_pos_markers)
+		snap_room_to_tile(room)
 		
-		var enemies_to_spawn = room.get_enemies_to_spawn()
-		print("What enemies to spawn: ", enemies_to_spawn)
+		# only THEN do enemies spawn in
+		spawn_enemies_in_room(room)
+
+
+func snap_room_to_tile(room):
+	# get the room's global position and find which tile (i.e. 60 x 60 square) it lies in
+	var room_pos_as_tile = room.global_position / 60.0
+	room_pos_as_tile = Vector2(round(room_pos_as_tile.x), round(room_pos_as_tile.y))
+	# round this position to the nearest integer point
+	room.global_position = room_pos_as_tile * 60
+
+func spawn_enemies_in_room(room, enemy_dict = null):
+	var spawn_pos_markers = room.get_spawn_positions().map(func(marker_node): return marker_node.global_position)
+	var enemies_to_spawn: Dictionary
+	if enemy_dict == null:
+		enemies_to_spawn = room.get_enemies_to_spawn()
+	else:
+		enemies_to_spawn = enemy_dict
 		
+	print("What enemies to spawn: ", enemies_to_spawn)
+	
+	if spawn_pos_markers.size() > 0:
 		for enemy_type in enemies_to_spawn:
 			for i in range(enemies_to_spawn[enemy_type]):
-				if spawn_pos_markers.size() == 0:
-					assert(false, "Error: tried to spawn enemy in room with no spawn positions")
 				var enemy_spawn_location = spawn_pos_markers.pick_random()
 				add_entity_to_level(entity_scenes[enemy_type], enemy_spawn_location)
+
 
 
 func _process(delta: float):

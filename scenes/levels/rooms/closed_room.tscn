@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=4 uid="uid://ceip7rxj8op5r"]
 
-[ext_resource type="PackedScene" uid="uid://bojyfl33f0dvg" path="res://scenes/levels/rooms/abstract_room.tscn" id="1_f5qb5"]
+[ext_resource type="PackedScene" uid="uid://bojyfl33f0dvg" path="res://scenes/levels/abstract_room.tscn" id="1_f5qb5"]
 
 [node name="ClosedRoom" instance=ExtResource("1_f5qb5")]
 
