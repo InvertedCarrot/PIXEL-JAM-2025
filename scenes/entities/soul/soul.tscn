@@ -1,14 +1,20 @@
-[gd_scene load_steps=29 format=3 uid="uid://c41my2fbrae3u"]
+[gd_scene load_steps=31 format=3 uid="uid://c41my2fbrae3u"]
 
 [ext_resource type="PackedScene" uid="uid://cy4th7add1tw0" path="res://scenes/entities/entity.tscn" id="1_1dcsr"]
 [ext_resource type="Script" path="res://scenes/entities/soul/soul.gd" id="2_cfaw6"]
-[ext_resource type="Texture2D" uid="uid://dmsbeb01yexmh" path="res://assets/entities/soul_spritesheet.png" id="2_w7f0w"]
+[ext_resource type="Texture2D" uid="uid://dvyw0wi4w6vq7" path="res://assets/entities/soul_spritesheet.png" id="2_w7f0w"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_st5hs"]
 radius = 19.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_26vit"]
 radius = 24.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7gvg1"]
+radius = 24.0208
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u2jut"]
+radius = 24.0832
 
 [sub_resource type="Animation" id="Animation_gnwae"]
 length = 0.001
@@ -193,12 +199,18 @@ shape = SubResource("CircleShape2D_st5hs")
 [node name="WallCollideShape" parent="." index="2"]
 shape = SubResource("CircleShape2D_26vit")
 
-[node name="AnimationPlayer" parent="." index="3"]
+[node name="CollisionShape2D" parent="TransitionArea" index="0"]
+shape = SubResource("CircleShape2D_7gvg1")
+
+[node name="CollisionShape2D" parent="CutsceneArea" index="0"]
+shape = SubResource("CircleShape2D_u2jut")
+
+[node name="AnimationPlayer" parent="." index="5"]
 libraries = {
 "": SubResource("AnimationLibrary_vtkap")
 }
 
-[node name="AnimationTree" parent="." index="4"]
+[node name="AnimationTree" parent="." index="6"]
 tree_root = SubResource("AnimationNodeStateMachine_3wekc")
 parameters/Idle/blend_position = Vector2(-0.391331, -0.0155441)
 parameters/Run/blend_position = Vector2(0.000619173, 0.982783)

@@ -1,7 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://dad4hp2wo7bg0"]
+[gd_scene load_steps=8 format=3 uid="uid://dad4hp2wo7bg0"]
 
 [ext_resource type="Script" path="res://scenes/UI/dialogue/dialogue_box.gd" id="1_6egxw"]
 [ext_resource type="PackedScene" uid="uid://dxmhk3caeu00h" path="res://scenes/UI/dialogue/dialogue.tscn" id="1_ehysd"]
+[ext_resource type="Script" path="res://scenes/UI/player_portrait_column.gd" id="3_k03rb"]
+[ext_resource type="Texture2D" uid="uid://2ey2qqbobha4" path="res://assets/portraits/soul_portrait.png" id="4_0fh7i"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gr3s4"]
+bg_color = Color(0.65, 0.906667, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_of5ll"]
+bg_color = Color(0.4288, 0.60568, 0.67, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7xn30"]
 bg_color = Color(0.0027673, 1.20327e-08, 0.0721846, 0.584314)
@@ -21,19 +29,50 @@ grow_horizontal = 2
 grow_vertical = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer3"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer3"]
+layout_mode = 2
+
+[node name="PlayerPortraitColumn" type="VBoxContainer" parent="MarginContainer3/HBoxContainer"]
+layout_mode = 2
+script = ExtResource("3_k03rb")
+portrait_type = "Speaker"
+
+[node name="PlayerPortraitOutline" type="PanelContainer" parent="MarginContainer3/HBoxContainer/PlayerPortraitColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_gr3s4")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer3/HBoxContainer/PlayerPortraitColumn/PlayerPortraitOutline"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="PlayerPortraitBackground" type="PanelContainer" parent="MarginContainer3/HBoxContainer/PlayerPortraitColumn/PlayerPortraitOutline/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_of5ll")
+
+[node name="PlayerPortrait" type="TextureRect" parent="MarginContainer3/HBoxContainer/PlayerPortraitColumn/PlayerPortraitOutline/MarginContainer/PlayerPortraitBackground"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("4_0fh7i")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer3/HBoxContainer"]
+custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_7xn30")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer3/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer3/HBoxContainer/PanelContainer"]
 layout_mode = 2
 
-[node name="Dialogue" parent="MarginContainer3/PanelContainer/MarginContainer" instance=ExtResource("1_ehysd")]
+[node name="Dialogue" parent="MarginContainer3/HBoxContainer/PanelContainer/MarginContainer" instance=ExtResource("1_ehysd")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 4
 alignment = 1
-
-[node name="NinePatchRect" type="NinePatchRect" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0

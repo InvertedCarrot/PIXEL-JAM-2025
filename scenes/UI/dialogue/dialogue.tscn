@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dxmhk3caeu00h"]
+[gd_scene load_steps=4 format=3 uid="uid://dxmhk3caeu00h"]
 
 [ext_resource type="Script" path="res://scenes/UI/dialogue/dialogue.gd" id="1_ntmpk"]
 [ext_resource type="FontFile" uid="uid://e4xw2xsn1u5k" path="res://assets/tinypixel.otf" id="3_mc6fx"]
+[ext_resource type="AudioStream" uid="uid://b27pl6460fxnq" path="res://assets/SFX/click.wav" id="3_pwitn"]
 
 [node name="Dialogue" type="VBoxContainer"]
 offset_right = 1200.0
@@ -11,8 +12,11 @@ script = ExtResource("1_ntmpk")
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("3_mc6fx")
-theme_override_font_sizes/normal_font_size = 15
+theme_override_font_sizes/normal_font_size = 25
 fit_content = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../RichTextLabel")
+
+[node name="ClickingAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_pwitn")

@@ -4,13 +4,13 @@ extends Node
 var player_health: float = -1
 var souls_harvested: float = 0
 var max_player_health: float = -1
-var player_entity: String = "reaper"
+var player_entity: String = "cat"
 
 # Constants
 var SOUL_CAPACITY: float = 10
 
 # enemy damage scaling
-var enemy_damage_scale = 1
+var enemy_damage_scale = 0.2
 
 # Layers (to set dynamically depending on whether its an enemy or player)
 # Store in binary repr, each bit represents whether that layer is included or not (right to left)
@@ -22,6 +22,8 @@ var PLAYER_ATTACK_LAYER = 0b0100
 var WALL_LAYER = 0b1000
 var DEAD_ENEMIES_LAYER = 0b10000
 var ENEMY_ATTACK_LAYER = 0b100000
+var TRANSITION_AREA_LAYER = 0b1000000
+var CUTCENE_AREA_LAYER = 0b10000000
 
 
 
@@ -97,6 +99,18 @@ var ENTITIES_DATA = {
 		"strafe_timer": no_data,
 		"flee_timer": no_data,
 	},
+	"strong_reaper": {
+		"health": same(1000),
+		"damage": same(50),
+		"speed": [75, 120],
+		"max_momentum_scalar": same(200),
+		"detect_zone_ranges": [500, 200, 1000, 0] as Array[float],
+		"knockback_scalar": [250, 350],
+		"attack_cooldown": same(0.2),
+		"idle_position_cooldown": same(2),
+		"strafe_timer": no_data,
+		"flee_timer": no_data,
+	},
 	"soul": {
 		"health": same(10),
 		"damage": same(0),
@@ -120,8 +134,21 @@ var ENTITIES_DATA = {
 		"idle_position_cooldown": same(1),
 		"strafe_timer": no_data,
 		"flee_timer": no_data,
-	}
+	},
+	"evil_soul": {
+		"health": no_data,
+		"damage": no_data,
+		"speed": no_data,
+		"max_momentum_scalar": no_data,
+		"detect_zone_ranges": [0, 0, 0, 0] as Array[float],
+		"knockback_scalar": no_data,
+		"attack_cooldown": no_data,
+		"idle_position_cooldown": no_data,
+		"strafe_timer": no_data,
+		"flee_timer": no_data,
+	},
 }
+
 
 
 var ATTACK_ENTITIES_DATA = {
@@ -177,15 +204,102 @@ var ATTACK_ENTITIES_DATA = {
 	}
 }
 
+## Level maintaining
+var current_dungeon = 0
+
+
 ## Dialogues
 
 var dialogue_active: bool = false
 
-var dialogue_scene: String = "start"
+var dialogue_scene: String = ""
 
 const DIALOGUE_BOX_SCENE = preload("res://scenes/UI/dialogue/dialogue_box.tscn")
 
 var CUTSCENES_GDSCRIPT = load("res://scenes/UI/dialogue/dialogue_logs.gd")
 
-# Level maintaining
-var current_dungeon = 0
+# Dialogue states
+enum{
+	NOT_STARTED,
+	IN_PROGRESS, 
+	DONE
+}
+
+# This is to ensure specific actions happen during states of dialogues
+var dialogue_stages = {
+	"intro": NOT_STARTED,
+	"first_fight": NOT_STARTED,
+	"bird_dead": NOT_STARTED,
+	"kill_player0": NOT_STARTED,
+	"kill_player1": NOT_STARTED,
+	"player_dead": NOT_STARTED,
+	"evil_soul_possess": NOT_STARTED,
+	"level2_start": NOT_STARTED,
+	"possessing_tutorial": NOT_STARTED,
+	"possessed_tutorial": NOT_STARTED,
+	"final_boss_intro": NOT_STARTED,
+	"game_over": NOT_STARTED
+}
+
+var dialogue_starters={
+	"intro": "npc",
+	"first_fight": "npc",
+	"bird_dead": "npc",
+	"kill_player0": "npc",
+	"kill_player1": "reaper",
+	"player_dead": "reaper",
+	"evil_soul_possess": "evil_soul",
+	"level2_start": "cat",
+	"possessing_tutorial": "soul",
+	"possessed_tutorial": "soul",
+	"final_boss_intro": "cat",
+	"game_over": "evil_soul"
+}
+
+var dialogue_index: int = 0
+
+var dialogues_in_order = dialogue_stages.keys()
+
+func check_dialogue_state(dialogue: String, dungeon: int, state) -> bool:
+	## Check if dialogue is in a given state in a given dungeon
+	return dungeon==current_dungeon and dialogue_stages[dialogue]==state
+
+## Entity potrait info
+
+var current_speaker = ""
+
+var player_portraits = {
+	"bird": load("res://assets/portraits/bird_portrait.png"),
+	"cat": load("res://assets/portraits/cat_portrait.png"),
+	"fireball": load("res://assets/portraits/fireball_portrait.png"),
+	"lily": load("res://assets/portraits/lily_portrait.png"),
+	"reaper": load("res://assets/portraits/reaper_portrait.png"),
+	"strong_reaper": load("res://assets/portraits/reaper_portrait.png"),
+	"soul": load("res://assets/portraits/soul_portrait.png"),
+	"npc": load("res://assets/portraits/black_cat_portrait.png"),
+	"evil_soul": load("res://assets/portraits/evil_soul_portrait.png")
+}
+
+var player_portrait_outlines = {
+	"bird": Color("#3d3d3d"),
+	"cat": Color("#bd810e"),
+	"fireball": Color("#aa20ff"),
+	"lily": Color("#266700"),
+	"strong_reaper": Color("#00376e"),
+	"reaper": Color("#00376e"),
+	"soul": Color("#a6e7ff"),
+	"evil_soul": Color("#a6e7ff"),
+	"npc": Color("#a6e7ff"),
+}
+
+var player_portrait_backgrounds = {
+	"bird": Color("#b2b2b2"),
+	"cat": Color("#fce9c7"),
+	"fireball": Color("#8101c5"),
+	"lily": Color("#ffd3ef"),
+	"strong_reaper": Color("#00376e"),
+	"reaper": Color("#6d8bbf"),
+	"soul": Color("#6d9aab"),
+	"evil_soul": Color("#6d9aab"),
+	"npc": Color("#a6e7ff"),
+}

@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://t04n6ng22pl4"]
+
+[node name="TransitionArea" type="Area2D"]
+collision_layer = 64

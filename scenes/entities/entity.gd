@@ -44,7 +44,7 @@ var entity_data: Dictionary
 
 var stats_scale = 0
 
-signal dialogue_activate(scene)
+signal dialogue_activate(scene, start_speaker)
 
 # Custom signals for attacks
 signal attack_started
@@ -123,24 +123,39 @@ func scale_property(property_name: String):
 
 func set_layers() -> void: # invoked at _ready()
 	var damage_hitbox = get_node("Hurtbox")
+	var transition_area = get_node("TransitionArea")
+	var cutscene_area = get_node("CutsceneArea")
 
 	if (entity_name=="npc_cat"):
 		damage_hitbox.collision_layer = Globals.NO_LAYER
 		damage_hitbox.collision_mask = Globals.NO_LAYER
 		collision_layer = Globals.NO_LAYER
 		collision_mask = Globals.WALL_LAYER
+		transition_area.collision_layer = Globals.NO_LAYER
+		transition_area.collision_mask = Globals.NO_LAYER
+		cutscene_area.collision_layer = Globals.NO_LAYER
+		cutscene_area.collision_mask = Globals.NO_LAYER
 
 	elif (is_player): # this is a PLAYER
 		damage_hitbox.collision_layer = Globals.PLAYER_LAYER
 		damage_hitbox.collision_mask = Globals.ENEMY_LAYER + Globals.ENEMY_ATTACK_LAYER
 		collision_layer = Globals.NO_LAYER
 		collision_mask = Globals.WALL_LAYER
+		transition_area.collision_layer = Globals.NO_LAYER
+		transition_area.collision_mask = Globals.TRANSITION_AREA_LAYER
+		cutscene_area.collision_layer = Globals.NO_LAYER
+		cutscene_area.collision_mask = Globals.CUTCENE_AREA_LAYER
+		
 
 	else: # this is an ENEMY
 		damage_hitbox.collision_layer = Globals.ENEMY_LAYER
 		damage_hitbox.collision_mask = Globals.PLAYER_LAYER + Globals.PLAYER_ATTACK_LAYER
 		collision_layer = Globals.NO_LAYER
-		collision_mask = Globals.WALL_LAYER
+		collision_mask = Globals.WALL_LAYER + Globals.TRANSITION_AREA_LAYER
+		transition_area.collision_layer = Globals.NO_LAYER
+		transition_area.collision_mask = Globals.NO_LAYER
+		cutscene_area.collision_layer = Globals.NO_LAYER
+		cutscene_area.collision_mask = Globals.NO_LAYER
 
 	# any dead entity should take these layers as priority
 	if (is_dead):
@@ -184,6 +199,19 @@ func _process(delta: float) -> void:
 	
 	if (Globals.dialogue_active):
 		return
+	
+	if (is_player and Globals.check_dialogue_state("evil_soul_possess",1,Globals.DONE)):
+		Transition.change_scene("res://scenes/levels/dungeons/dungeon" + str(Globals.current_dungeon+1) +".tscn")
+		Globals.current_dungeon+=1
+
+	if (Globals.check_dialogue_state("level2_start",2,Globals.DONE) and entity_name=="cat"):
+		queue_free()
+	
+	if (Globals.check_dialogue_state("game_over", 5, Globals.DONE) and entity_name=="evil_soul"):
+		queue_free()
+		Transition.change_scene("res://scenes/levels/dungeons/dungeon" + str(Globals.current_dungeon+1) +".tscn")
+		Globals.current_dungeon+=1
+	
 	var player_ref = player_node.get_child(0)
 	var prev_momentum: Vector2 = momentum # momentum value of the previous frame
 
@@ -216,13 +244,13 @@ func _process(delta: float) -> void:
 			attack()
 			atk_timer.start()
 			attack_started.emit()
-		if Input.is_action_just_pressed("harvest") && entity_name != "soul":
+		if Input.is_action_just_pressed("harvest") && entity_name != "soul" && Globals.current_dungeon>=2:
 			for dead_enemy in dead_entities_in_range:
 				dead_enemy.queue_free()
 				Globals.souls_harvested = min(Globals.souls_harvested + 1, Globals.SOUL_CAPACITY)
 				scale_entity_stats()
 
-		if Input.is_action_just_pressed("swap_souls"):
+		if Input.is_action_just_pressed("swap_souls") && Globals.current_dungeon>=2:
 			swap_souls = true # the level script will handle the rest
 		
 		# Update the attack timer of the UI every frame
@@ -248,12 +276,6 @@ func _process(delta: float) -> void:
 	
 	reflect_velocity(delta)
 
-	if (Input.is_action_just_pressed("debug")):
-		dialogue_activate.emit("start")
-
-	if (Input.is_action_just_pressed("debug2")):
-		dialogue_activate.emit("second")
-
 
 # used by both the player and enemies
 func attack():
@@ -261,6 +283,9 @@ func attack():
 
 func take_damage():
 	if immune_timer.is_stopped(): # if immune, don't take damage
+		if (is_player):
+			$HurtSound.play()
+		apply_damage() # apply damage (we deal with death below)
 		if entity_name != "soul":
 			apply_damage() # apply damage (we deal with death below)
 		else:
@@ -317,6 +342,16 @@ func turn_dead():
 	immune_timer.stop()
 	is_player = false
 	is_dead = true
+	if (Globals.current_dungeon==1 and entity_name=="bird"):
+		dialogue_activate.emit("bird_dead", "npc")
+		queue_free()
+		return
+	
+	if (Globals.current_dungeon==5 and entity_name=="cat"):
+		dialogue_activate.emit("game_over", "evil_soul")
+		return
+	
+	
 	set_layers()
 
 func reflect_velocity(delta) -> void:
@@ -426,3 +461,23 @@ func default_flee(speed_scale: float = 1) -> void:
 		direction = -dir_to_player # flip direction
 		flee_timer.start()
 	raw_velocity = direction * speed * speed_scale
+
+
+func _on_transition_area_area_entered(area: Area2D) -> void:
+	if (is_player):
+		Globals.current_dungeon+=1
+		Transition.change_scene("res://scenes/levels/dungeons/dungeon" + str(Globals.current_dungeon) +".tscn")
+
+
+func _on_cutscene_area_area_entered(area: Area2D) -> void:
+	if (is_player):
+		var current_dialogue = Globals.dialogues_in_order[Globals.dialogue_index]
+		
+		## Hard-code all invalid dialogue states
+		if (Globals.check_dialogue_state("first_fight",1, Globals.DONE) 
+			and Globals.check_dialogue_state("bird_dead", 1, Globals.NOT_STARTED)):
+			return 
+
+		dialogue_activate.emit(current_dialogue, Globals.dialogue_starters[current_dialogue])
+		area.collision_layer = Globals.NO_LAYER
+		area.collision_mask = Globals.NO_LAYER

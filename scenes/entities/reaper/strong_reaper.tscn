@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://b8vgocvdjaihg"]
+
+[ext_resource type="PackedScene" uid="uid://dhr52l8yyg2hc" path="res://scenes/entities/reaper/reaper.tscn" id="1_11w2e"]
+[ext_resource type="Script" path="res://scenes/entities/reaper/strong_reaper.gd" id="2_3jlvg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e1sjr"]
+resource_local_to_scene = true
+radius = 53.0377
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_000p6"]
+resource_local_to_scene = true
+radius = 44.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wp07n"]
+resource_local_to_scene = true
+radius = 32.0
+
+[node name="StrongReaper" instance=ExtResource("1_11w2e")]
+script = ExtResource("2_3jlvg")
+
+[node name="CollisionShape2D" parent="DetectZones/Zone0" index="0"]
+shape = SubResource("CircleShape2D_e1sjr")
+
+[node name="CollisionShape2D" parent="DetectZones/Zone1" index="0"]
+shape = SubResource("CircleShape2D_000p6")
+
+[node name="CollisionShape2D" parent="DetectZones/Zone2" index="0"]
+shape = SubResource("CircleShape2D_wp07n")

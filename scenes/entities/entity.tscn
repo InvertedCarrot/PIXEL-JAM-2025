@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://cy4th7add1tw0"]
+[gd_scene load_steps=9 format=3 uid="uid://cy4th7add1tw0"]
 
 [ext_resource type="Script" path="res://scenes/entities/entity.gd" id="1_ipa0w"]
+[ext_resource type="AudioStream" uid="uid://b3ncp3rtbk3vr" path="res://assets/SFX/hitHurt.wav" id="3_kfadp"]
 [ext_resource type="Script" path="res://scenes/entities/entity_animation.gd" id="3_tf2at"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5jfjd"]
@@ -36,6 +37,14 @@ metadata/_edit_group_ = true
 debug_color = Color(0.970564, 0, 0.453872, 0.42)
 
 [node name="WallCollideShape" type="CollisionShape2D" parent="."]
+
+[node name="TransitionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TransitionArea"]
+
+[node name="CutsceneArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CutsceneArea"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
@@ -112,7 +121,13 @@ one_shot = true
 shape = SubResource("CircleShape2D_wvw65")
 debug_color = Color(0.564706, 0.392157, 1, 0.0392157)
 
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_kfadp")
+volume_db = -5.943
+
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="area_exited" from="Hurtbox" to="." method="_on_hurtbox_area_exited"]
+[connection signal="area_entered" from="TransitionArea" to="." method="_on_transition_area_area_entered"]
+[connection signal="area_entered" from="CutsceneArea" to="." method="_on_cutscene_area_area_entered"]
 [connection signal="area_entered" from="DeadEntitiesRange" to="." method="_on_dead_entities_range_area_entered"]
 [connection signal="area_exited" from="DeadEntitiesRange" to="." method="_on_dead_entities_range_area_exited"]

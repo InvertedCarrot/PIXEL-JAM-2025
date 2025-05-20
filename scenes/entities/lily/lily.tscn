@@ -1,8 +1,8 @@
-[gd_scene load_steps=23 format=3 uid="uid://uog3n06gpx2s"]
+[gd_scene load_steps=25 format=3 uid="uid://uog3n06gpx2s"]
 
 [ext_resource type="PackedScene" uid="uid://cy4th7add1tw0" path="res://scenes/entities/entity.tscn" id="1_x056f"]
 [ext_resource type="Script" path="res://scenes/entities/lily/lily.gd" id="2_1wixg"]
-[ext_resource type="Texture2D" uid="uid://bodxoyy0m6b5o" path="res://assets/entities/lily_spritesheet.png" id="3_j8ppr"]
+[ext_resource type="Texture2D" uid="uid://cx8emdlkawl45" path="res://assets/entities/lily_spritesheet.png" id="3_j8ppr"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://chvy8d8i31nmg" path="res://scenes/entities/lily/lily_animation_sm.tres" id="3_o1aml"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mebsn"]
@@ -10,6 +10,12 @@ size = Vector2(40.5, 56)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ygkec"]
 size = Vector2(55.5, 63)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tn0xp"]
+size = Vector2(56, 63)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ktxys"]
+size = Vector2(56, 63)
 
 [sub_resource type="Animation" id="Animation_yrip7"]
 length = 0.001
@@ -255,12 +261,20 @@ position = Vector2(0, -2.5)
 shape = SubResource("RectangleShape2D_ygkec")
 metadata/_edit_lock_ = true
 
-[node name="AnimationPlayer" parent="." index="3"]
+[node name="CollisionShape2D" parent="TransitionArea" index="0"]
+position = Vector2(0, -2.5)
+shape = SubResource("RectangleShape2D_tn0xp")
+
+[node name="CollisionShape2D" parent="CutsceneArea" index="0"]
+position = Vector2(0, -2.5)
+shape = SubResource("RectangleShape2D_ktxys")
+
+[node name="AnimationPlayer" parent="." index="5"]
 libraries = {
 "": SubResource("AnimationLibrary_ic5tj")
 }
 
-[node name="AnimationTree" parent="." index="4"]
+[node name="AnimationTree" parent="." index="6"]
 tree_root = ExtResource("3_o1aml")
 parameters/Dead/blend_position = Vector2(0, 0)
 parameters/Idle/blend_position = Vector2(0.0235199, 0.630607)

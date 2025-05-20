@@ -1,9 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://bj82rneyy0a02"]
+[gd_scene load_steps=5 format=3 uid="uid://bj82rneyy0a02"]
 
 [ext_resource type="PackedScene" uid="uid://c5djsy4nr40ou" path="res://scenes/levels/abstract_dungeon.tscn" id="1_hgrq6"]
 [ext_resource type="PackedScene" uid="uid://ceip7rxj8op5r" path="res://scenes/levels/rooms/closed_room.tscn" id="2_0m0h8"]
+[ext_resource type="PackedScene" uid="uid://bvbowx3i22ei2" path="res://scenes/levels/areas/cutscene_area.tscn" id="3_3n2su"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j00cu"]
+size = Vector2(131, 182)
 
 [node name="Dungeon5" instance=ExtResource("1_hgrq6")]
 
 [node name="ClosedRoom" parent="Rooms" index="0" instance=ExtResource("2_0m0h8")]
-script = null
+
+[node name="CutsceneArea" parent="CutsceneAreas" index="0" instance=ExtResource("3_3n2su")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CutsceneAreas/CutsceneArea" index="0"]
+shape = SubResource("RectangleShape2D_j00cu")
