@@ -99,6 +99,13 @@ func _process(delta: float):
 				dead_enemy.modulate = Color(1.1, 1.1, 1.1, 1)
 			else:
 				dead_enemy.modulate = Color(0.7, 0.7, 0.7, 1)
+	
+	if ($DeadEnemies.get_child_count()==0 and Globals.current_dungeon>=3):
+		for room in %Rooms.get_children():
+			var spawn_pos_markers = room.get_spawn_positions().map(func(marker_node): return marker_node.global_position)
+			add_entity_to_level(entity_scenes[["reaper","lily","bird","fireball"].pick_random()], spawn_pos_markers.pick_random(), false, true)
+			
+	
 	if (Globals.check_dialogue_state("bird_dead",1, Globals.DONE)
 			and Globals.check_dialogue_state("kill_player0", 1, Globals.IN_PROGRESS)
 			and !level1_cutscene):
@@ -123,8 +130,7 @@ func _process(delta: float):
 		level2_cat=true
 
 	if (Globals.check_dialogue_state("possessing_tutorial", 2, Globals.IN_PROGRESS) and !level2_deadbird):
-		add_entity_to_level(bird_entity, $DeadBirdEnemy.position)
-		$Enemies.get_child(0).turn_dead()
+		add_entity_to_level(bird_entity, $DeadBirdEnemy.position, false, true)
 		level2_deadbird = true
 	
 	if (Globals.check_dialogue_state("game_over", 5, Globals.IN_PROGRESS) and !level5_evil_soul):
@@ -135,12 +141,13 @@ func _process(delta: float):
 		level5_evil_soul=true
 		
 
-func add_entity_to_level(entity_packed_scene: PackedScene, spawn_location: Vector2, entity_is_player: bool = false):
+func add_entity_to_level(entity_packed_scene: PackedScene, spawn_location: Vector2, entity_is_player: bool = false, kill_on_spawn: bool = false):
 	var entity = entity_packed_scene.instantiate()
 	entity.player_node = player_node # set this for enemies to track the player
 	entity.enemies_node = enemies_node
 	entity.dead_enemies_node = dead_enemies_node
 	entity.attack_entities_node = attack_entities_node # need to know where to add attack_entities to
+	
 	var node_adding_to: Node2D = player_node if entity_is_player else enemies_node
 	# raise error if the Player node already has one player
 	if entity_is_player:
@@ -156,6 +163,9 @@ func add_entity_to_level(entity_packed_scene: PackedScene, spawn_location: Vecto
 	else: # trying to add enemy
 		node_adding_to = enemies_node
 		entity.turn_into_enemy()
+	
+	if (kill_on_spawn):
+		entity.turn_dead()
 	
 	return entity
 

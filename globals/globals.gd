@@ -4,7 +4,7 @@ extends Node
 var player_health: float = -1
 var souls_harvested: float = 0
 var max_player_health: float = -1
-var player_entity: String = "cat"
+var player_entity: String = "soul"
 
 # Constants
 var SOUL_CAPACITY: float = 10
@@ -193,7 +193,7 @@ var ATTACK_ENTITIES_DATA = {
 }
 
 ## Level maintaining
-var current_dungeon = 0
+var current_dungeon = 2
 
 
 ## Dialogues
@@ -244,7 +244,7 @@ var dialogue_starters={
 	"game_over": "evil_soul"
 }
 
-var dialogue_index: int = 0
+var dialogue_index: int = 7
 
 var dialogues_in_order = dialogue_stages.keys()
 
