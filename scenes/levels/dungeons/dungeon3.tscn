@@ -32,7 +32,7 @@ num_enemies = {
 "bird": 0,
 "cat": 0,
 "fireball": 2,
-"lily": 0,
+"lily": 1,
 "reaper": 0
 }
 
@@ -43,7 +43,7 @@ num_enemies = {
 "cat": 0,
 "fireball": 0,
 "lily": 2,
-"reaper": 0
+"reaper": 1
 }
 
 [node name="SmallRoomR2" parent="Rooms" index="4" instance=ExtResource("2_lb2fb")]
@@ -69,10 +69,10 @@ num_enemies = {
 [node name="SmallRoomRL" parent="Rooms" index="6" instance=ExtResource("7_tc1uw")]
 position = Vector2(1314, 1911)
 num_enemies = {
-"bird": 0,
+"bird": 1,
 "cat": 0,
-"fireball": 0,
-"lily": 2,
+"fireball": 1,
+"lily": 1,
 "reaper": 1
 }
 

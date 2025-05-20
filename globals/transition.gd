@@ -2,7 +2,6 @@ extends CanvasLayer
 
 
 func _ready() -> void:
-	print("children = ", get_tree())
 	$ColorRect.modulate = Color(1,1,1,0)
 
 func change_scene(target_scene: String):

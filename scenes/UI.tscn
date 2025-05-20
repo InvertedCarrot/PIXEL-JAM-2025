@@ -1,22 +1,23 @@
-[gd_scene load_steps=16 format=3 uid="uid://4ixo48h447bf"]
+[gd_scene load_steps=17 format=3 uid="uid://4ixo48h447bf"]
 
 [ext_resource type="Script" path="res://scenes/ui.gd" id="1_vjo20"]
 [ext_resource type="Script" path="res://scenes/UI/player_portrait_column.gd" id="2_0f65r"]
-[ext_resource type="Texture2D" uid="uid://2ey2qqbobha4" path="res://assets/portraits/soul_portrait.png" id="3_5d076"]
 [ext_resource type="PackedScene" uid="uid://dad4hp2wo7bg0" path="res://scenes/UI/dialogue/dialogue_box.tscn" id="3_387sr"]
-[ext_resource type="Texture2D" uid="uid://c6lnj10vajqis" path="res://assets/heart.png" id="5_b5oox"]
-[ext_resource type="Texture2D" uid="uid://dsrtf13nsgcxy" path="res://assets/soul.png" id="7_4mpse"]
+[ext_resource type="Texture2D" uid="uid://bhf75wclrrcat" path="res://assets/portraits/evil_soul_portrait.png" id="3_y7gkc"]
+[ext_resource type="Texture2D" uid="uid://blp1lckbxo3du" path="res://assets/heart.png" id="5_b5oox"]
+[ext_resource type="Texture2D" uid="uid://dem16q75udr1r" path="res://assets/soul.png" id="7_4mpse"]
 [ext_resource type="Script" path="res://scenes/UI/attack_bar.gd" id="7_djk1g"]
 [ext_resource type="Script" path="res://scenes/UI/health_bar.gd" id="7_sjwx2"]
 [ext_resource type="Script" path="res://scenes/UI/soul_bar.gd" id="8_385kd"]
+[ext_resource type="PackedScene" uid="uid://i5811c1qqtxl" path="res://scenes/UI/boss_healthbar.tscn" id="10_c1201"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hycdd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_516jl"]
-bg_color = Color(0.65, 0.906667, 1, 1)
+bg_color = Color(1, 0.335035, 0.40229, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_do2vt"]
-bg_color = Color(0.4288, 0.60568, 0.67, 1)
+bg_color = Color(1, 0.796256, 0.819666, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5cqy1"]
 
@@ -76,7 +77,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_do2vt")
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-texture = ExtResource("3_5d076")
+texture = ExtResource("3_y7gkc")
 expand_mode = 3
 stretch_mode = 4
 
@@ -161,3 +162,7 @@ size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_4l2py")
 
 [node name="DialogueBox" parent="." instance=ExtResource("3_387sr")]
+
+[node name="BossHealthBar" parent="." instance=ExtResource("10_c1201")]
+unique_name_in_owner = true
+visible = false

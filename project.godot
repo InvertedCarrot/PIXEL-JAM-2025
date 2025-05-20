@@ -15,7 +15,7 @@ warnings/check_invalid_track_paths=false
 [application]
 
 config/name="Pixel-jam-2025"
-run/main_scene="res://scenes/levels/dungeons/dungeon5.tscn"
+run/main_scene="res://scenes/levels/dungeons/dungeon0.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 

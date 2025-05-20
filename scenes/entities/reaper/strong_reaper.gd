@@ -1,6 +1,6 @@
 extends Entity
 
-var scythe_scene: PackedScene = preload("res://scenes/attack_entities/scythe/scythe.tscn")
+var scythe_scene: PackedScene = preload("res://scenes/attack_entities/scythe/strong_scythe.tscn")
 
 func _ready() -> void:
 	entity_name = "strong_reaper"
