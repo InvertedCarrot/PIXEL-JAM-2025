@@ -4,13 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://ceip7rxj8op5r" path="res://scenes/levels/rooms/closed_room.tscn" id="2_0m0h8"]
 
 [node name="Dungeon5" instance=ExtResource("1_hgrq6")]
-player_entity = "soul"
-num_enemies = {
-"bird": 0,
-"cat": 1,
-"fireball": 0,
-"lily": 0,
-"reaper": 0
-}
 
 [node name="ClosedRoom" parent="Rooms" index="0" instance=ExtResource("2_0m0h8")]
+script = null
